@@ -1,0 +1,3083 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Once Human — Survive the contaminated open world. Build, craft, fight and uncover the truth. Free to play now."/>
+<meta property="og:title" content="Once Human — Survive What Humans Left Behind"/>
+<meta property="og:description" content="Open-world survival in a contaminated sci-fi world. Solo or squad. Free to play."/>
+<title>Once Human — Survive the Contamination</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TYMJ4HY4KE"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-TYMJ4HY4KE');
+function trackEvent(name,params){gtag('event',name,params||{});}
+</script>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+
+<style>
+/* ============================================================
+   RESET & VARIABLES
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cyan:#24C2C4;
+  --cyan-e:#28F0F2;
+  --red:#F6343B;
+  --magenta:#D60D42;
+  --bg:#0D121A;
+  --bg2:#04242C;
+  --bg3:#071520;
+  --text:#E8F4F5;
+  --text-muted:#8AACB0;
+  --text-dim:#4A7075;
+  --card-bg:rgba(4,36,44,0.85);
+  --card-border:rgba(36,194,196,0.18);
+  --glow:0 0 24px rgba(40,240,242,0.25);
+  --glow-sm:0 0 10px rgba(40,240,242,0.18);
+  --glow-red:0 0 20px rgba(246,52,59,0.35);
+  --radius:8px;
+  --radius-lg:16px;
+  --font-display:'Oxanium',sans-serif;
+  --font-body:'Barlow',sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif;
+  --topbar-h:48px;
+  --sticky-h:64px;
+}
+[data-theme="light"]{
+  --bg:#EAF4F5;
+  --bg2:#D0EBEE;
+  --bg3:#C8E5E8;
+  --text:#0D121A;
+  --text-muted:#2A5A60;
+  --text-dim:#4A7075;
+  --card-bg:rgba(208,235,238,0.9);
+  --card-border:rgba(36,194,196,0.3);
+  --glow:0 0 24px rgba(36,194,196,0.2);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-weight:400;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--cyan);text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+h1,h2,h3,h4,h5{font-family:var(--font-display);line-height:1.15;font-weight:700}
+p{color:var(--text-muted)}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--cyan);border-radius:3px}
+
+/* Focus */
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* ============================================================
+   NOISE OVERLAY
+   ============================================================ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9998;opacity:.5;
+}
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+#topbar{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--topbar-h);
+  background:rgba(13,18,26,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(36,194,196,0.12);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;z-index:1000;
+}
+.topbar-logo{
+  display:flex;align-items:center;gap:10px;
+}
+.topbar-logo-mark{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--cyan),var(--bg2));
+  border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:800;font-size:14px;
+  color:var(--bg);letter-spacing:1px;
+  box-shadow:var(--glow-sm);
+}
+.topbar-name{
+  font-family:var(--font-display);
+  font-weight:700;font-size:15px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--text);
+}
+.topbar-controls{display:flex;align-items:center;gap:8px;}
+.lang-btn,.theme-btn{
+  background:transparent;
+  border:1px solid rgba(36,194,196,0.25);
+  color:var(--text-muted);
+  font-family:var(--font-cond);
+  font-size:12px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:5px 10px;border-radius:4px;
+  transition:all .2s ease;
+}
+.lang-btn:hover,.lang-btn.active,
+.theme-btn:hover{
+  border-color:var(--cyan);color:var(--cyan);
+  background:rgba(36,194,196,0.08);
+}
+.lang-sep{color:var(--text-dim);font-size:11px;margin:0 2px}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero{
+  position:relative;
+  min-height:100svh;
+  display:flex;align-items:flex-end;
+  padding-top:var(--topbar-h);
+  overflow:hidden;
+}
+.hero-media{
+  position:absolute;inset:0;
+  background:var(--bg3);
+  z-index:0;
+}
+.hero-video{
+  width:100%;height:100%;
+  object-fit:cover;opacity:.55;
+}
+.hero-poster{
+  width:100%;height:100%;
+  object-fit:cover;
+  background:linear-gradient(160deg,#04242C 0%,#071A24 40%,#0D0A16 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-poster-svg{
+  width:100%;height:100%;
+  position:absolute;inset:0;
+}
+/* animated bg fallback */
+.hero-bg-anim{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 30%,rgba(36,194,196,0.07) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 70%,rgba(214,13,66,0.05) 0%,transparent 60%),
+    linear-gradient(180deg,#04242C 0%,#0D121A 50%,#07090F 100%);
+  z-index:1;
+}
+.hero-scanlines{
+  position:absolute;inset:0;z-index:2;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px
+  );pointer-events:none;
+}
+.hero-vignette{
+  position:absolute;inset:0;z-index:3;
+  background:radial-gradient(ellipse at center,transparent 30%,rgba(7,9,15,0.7) 100%);
+}
+.hero-gradient-bottom{
+  position:absolute;bottom:0;left:0;right:0;height:280px;z-index:4;
+  background:linear-gradient(to top,var(--bg) 0%,transparent 100%);
+}
+.hero-content{
+  position:relative;z-index:5;
+  width:100%;max-width:900px;
+  padding:60px 24px 80px;
+  margin:0 auto;
+  text-align:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-cond);
+  font-size:12px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--cyan);
+  border:1px solid rgba(36,194,196,0.3);
+  padding:5px 14px;border-radius:4px;
+  background:rgba(36,194,196,0.06);
+  margin-bottom:28px;
+  animation:fadeUp .6s ease both;
+}
+.hero-eyebrow-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 8px var(--red);
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.hero-title{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,7vw,5.2rem);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:-0.5px;
+  color:var(--text);
+  text-shadow:0 0 60px rgba(36,194,196,0.25);
+  margin-bottom:20px;
+  animation:fadeUp .7s .1s ease both;
+}
+.hero-title .accent-cyan{color:var(--cyan-e);text-shadow:0 0 30px rgba(40,240,242,0.5);}
+.hero-title .accent-red{color:var(--red);text-shadow:0 0 30px rgba(246,52,59,0.4);}
+.hero-subtitle{
+  font-size:clamp(1rem,2.5vw,1.25rem);
+  font-weight:300;
+  color:var(--text-muted);
+  max-width:600px;margin:0 auto 36px;
+  line-height:1.7;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-cta-row{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;
+  animation:fadeUp .9s .3s ease both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--cyan) 0%,#1AA8AA 100%);
+  color:#07090F;
+  font-family:var(--font-display);
+  font-size:15px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:15px 36px;border-radius:6px;
+  border:none;
+  box-shadow:0 4px 32px rgba(36,194,196,0.4),0 2px 8px rgba(0,0,0,0.4);
+  transition:all .25s ease;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.15),transparent);
+  opacity:0;transition:opacity .2s;
+}
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 48px rgba(36,194,196,0.55),0 4px 16px rgba(0,0,0,0.5);
+}
+.btn-primary:hover::before{opacity:1}
+.btn-primary:active{transform:translateY(0)}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;
+  color:var(--text-muted);
+  font-family:var(--font-cond);
+  font-size:13px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:14px 22px;border-radius:6px;
+  border:1px solid rgba(36,194,196,0.25);
+  transition:all .25s ease;
+}
+.btn-secondary:hover{
+  border-color:var(--cyan);color:var(--cyan);
+  background:rgba(36,194,196,0.05);
+}
+.hero-microcopy{
+  margin-top:18px;
+  font-family:var(--font-cond);
+  font-size:12px;font-weight:400;
+  color:var(--text-dim);
+  letter-spacing:.5px;
+  animation:fadeUp 1s .4s ease both;
+}
+.hero-scroll-hint{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:6;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--text-dim);font-family:var(--font-cond);font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  animation:fadeUp 1s .6s ease both;
+}
+.scroll-arrow{
+  width:20px;height:30px;border:1.5px solid rgba(36,194,196,0.3);
+  border-radius:10px;position:relative;
+}
+.scroll-arrow::after{
+  content:'';position:absolute;top:5px;left:50%;transform:translateX(-50%);
+  width:4px;height:4px;border-radius:50%;background:var(--cyan);
+  animation:scrollDot 1.5s infinite;
+}
+@keyframes scrollDot{0%{transform:translateX(-50%) translateY(0);opacity:1}100%{transform:translateX(-50%) translateY(14px);opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   PROOF STRIP
+   ============================================================ */
+#proof-strip{
+  background:var(--bg2);
+  border-top:1px solid rgba(36,194,196,0.1);
+  border-bottom:1px solid rgba(36,194,196,0.1);
+  padding:20px 0;overflow:hidden;
+  position:relative;z-index:2;
+}
+.proof-marquee{
+  display:flex;gap:0;animation:marquee 40s linear infinite;
+  width:max-content;
+}
+.proof-item{
+  display:flex;align-items:center;gap:10px;
+  padding:0 40px;
+  font-family:var(--font-cond);
+  font-size:13px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-muted);
+  white-space:nowrap;
+}
+.proof-item .pi-num{color:var(--cyan);font-size:16px;font-weight:700;}
+.proof-sep{color:rgba(36,194,196,0.25);font-size:18px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============================================================
+   SECTIONS SHARED
+   ============================================================ */
+.section{padding:100px 24px;}
+.section-sm{padding:70px 24px;}
+.container{max-width:1100px;margin:0 auto;}
+.container-sm{max-width:800px;margin:0 auto;}
+.section-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--font-cond);
+  font-size:11px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:14px;
+}
+.section-eyebrow::before{
+  content:'';display:block;width:20px;height:1.5px;background:var(--cyan);
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;
+  color:var(--text);
+  margin-bottom:16px;
+  line-height:1.1;
+}
+.section-title .c{color:var(--cyan-e);}
+.section-lead{
+  font-size:1.05rem;
+  color:var(--text-muted);
+  max-width:560px;
+  line-height:1.7;
+  margin-bottom:56px;
+}
+
+/* Divider */
+.hr-red{
+  border:none;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),transparent);
+  opacity:.4;margin:0;
+}
+.hr-cyan{
+  border:none;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:.25;margin:0;
+}
+
+/* ============================================================
+   CORE LOOP
+   ============================================================ */
+#core-loop{background:var(--bg);}
+.core-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:2px;
+}
+.core-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  padding:36px 28px;
+  position:relative;overflow:hidden;
+  transition:transform .3s ease,border-color .3s ease;
+}
+.core-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(36,194,196,0.04),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.core-card:hover{transform:translateY(-4px);border-color:rgba(36,194,196,0.35);}
+.core-card:hover::after{opacity:1}
+.core-icon{
+  font-size:28px;margin-bottom:18px;display:block;
+  filter:drop-shadow(0 0 8px rgba(36,194,196,0.4));
+}
+.core-card h3{
+  font-family:var(--font-display);
+  font-size:1.1rem;font-weight:700;
+  color:var(--text);margin-bottom:10px;
+  letter-spacing:.5px;
+}
+.core-card p{font-size:.9rem;color:var(--text-muted);line-height:1.6}
+.core-card-num{
+  position:absolute;top:16px;right:20px;
+  font-family:var(--font-display);
+  font-size:44px;font-weight:800;
+  color:rgba(36,194,196,0.06);
+  line-height:1;pointer-events:none;
+}
+
+/* ============================================================
+   CTA BAND
+   ============================================================ */
+.cta-band{
+  padding:80px 24px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-band-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);
+  z-index:0;
+}
+.cta-band-bg::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 80% at 50% 50%,rgba(36,194,196,0.07) 0%,transparent 70%);
+}
+.cta-band-content{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.cta-band h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.6rem,3.5vw,2.6rem);
+  font-weight:800;color:var(--text);
+  margin-bottom:16px;
+}
+.cta-band p{
+  color:var(--text-muted);font-size:1rem;
+  margin-bottom:32px;line-height:1.7;
+}
+
+/* ============================================================
+   WORLD & THREATS
+   ============================================================ */
+#world{background:var(--bg3);}
+.threat-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;margin-top:48px;
+}
+.threat-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  position:relative;
+  transition:transform .3s ease;
+}
+.threat-card:hover{transform:translateY(-6px);}
+.threat-img{
+  width:100%;aspect-ratio:16/9;
+  object-fit:cover;
+  background:linear-gradient(135deg,#071A24,#0F1E2A);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+}
+.threat-body{padding:24px;}
+.threat-tag{
+  display:inline-flex;
+  font-family:var(--font-cond);
+  font-size:10px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:3px;
+  margin-bottom:12px;
+}
+.tag-danger{background:rgba(246,52,59,0.15);color:var(--red);border:1px solid rgba(246,52,59,0.25);}
+.tag-mystery{background:rgba(36,194,196,0.1);color:var(--cyan);border:1px solid rgba(36,194,196,0.2);}
+.tag-world{background:rgba(214,13,66,0.1);color:var(--magenta);border:1px solid rgba(214,13,66,0.2);}
+.threat-card h3{font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.threat-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   WHY THIS WORLD
+   ============================================================ */
+#why-world{background:var(--bg);}
+.pull-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;margin-top:48px;
+}
+.pull-item{
+  display:flex;gap:18px;align-items:flex-start;
+}
+.pull-num{
+  flex-shrink:0;
+  width:36px;height:36px;
+  border:1.5px solid var(--cyan);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;color:var(--cyan);
+  box-shadow:var(--glow-sm);
+}
+.pull-item h4{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.pull-item p{font-size:.88rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   PLAYSTYLE
+   ============================================================ */
+#playstyle{background:var(--bg2);}
+.style-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px;}
+.style-tab{
+  background:transparent;
+  border:1px solid var(--card-border);
+  color:var(--text-muted);
+  font-family:var(--font-cond);
+  font-size:13px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:8px 18px;border-radius:4px;
+  transition:all .2s ease;
+}
+.style-tab.active,
+.style-tab:hover{
+  border-color:var(--cyan);color:var(--cyan);
+  background:rgba(36,194,196,0.08);
+}
+.style-content{display:none;}
+.style-content.active{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
+.style-text h3{font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--text);margin-bottom:14px;}
+.style-text p{font-size:.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:16px;}
+.style-perks{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.perk-chip{
+  background:rgba(36,194,196,0.08);
+  border:1px solid rgba(36,194,196,0.2);
+  color:var(--cyan);
+  font-family:var(--font-cond);
+  font-size:11px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;
+  padding:4px 12px;border-radius:3px;
+}
+.style-visual{
+  aspect-ratio:4/3;
+  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  border-radius:var(--radius-lg);
+  border:1px solid var(--card-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;
+  overflow:hidden;
+  position:relative;
+}
+.style-visual-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(36,194,196,0.08),transparent 70%);
+}
+@media(max-width:640px){
+  .style-content.active{grid-template-columns:1fr;}
+}
+
+/* ============================================================
+   BASE / TERRITORY
+   ============================================================ */
+#base{background:var(--bg3);}
+.base-split{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+.base-split-reverse{grid-template-columns:1fr 1fr;}
+.base-visual{
+  position:relative;
+  aspect-ratio:1;
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  background:linear-gradient(160deg,var(--bg2),var(--bg3));
+  border:1px solid var(--card-border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+}
+.base-visual-ring{
+  position:absolute;
+  width:70%;aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(36,194,196,0.15);
+  animation:ringPulse 3s ease-in-out infinite;
+}
+.base-visual-ring:nth-child(2){
+  width:85%;animation-delay:.5s;
+  border-color:rgba(36,194,196,0.08);
+}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.04);opacity:.4}}
+.base-text h2{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;color:var(--text);margin-bottom:16px;}
+.base-text p{font-size:.95rem;color:var(--text-muted);line-height:1.75;margin-bottom:14px;}
+.base-features{display:flex;flex-direction:column;gap:12px;margin-top:24px;}
+.base-feature{
+  display:flex;align-items:flex-start;gap:12px;
+}
+.bf-icon{
+  flex-shrink:0;color:var(--cyan);font-size:16px;margin-top:2px;
+  filter:drop-shadow(0 0 4px rgba(36,194,196,0.5));
+}
+.bf-text h5{font-family:var(--font-display);font-size:.95rem;font-weight:600;color:var(--text);}
+.bf-text p{font-size:.85rem;color:var(--text-muted);}
+@media(max-width:768px){
+  .base-split,.base-split-reverse{grid-template-columns:1fr;}
+}
+
+/* ============================================================
+   CRAFTING
+   ============================================================ */
+#crafting{background:var(--bg);}
+.craft-tree{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:2px;
+  margin-top:48px;
+}
+.craft-node{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  padding:28px 22px;
+  text-align:center;
+  position:relative;
+  transition:all .3s ease;
+}
+.craft-node:hover{
+  border-color:var(--cyan);
+  background:rgba(36,194,196,0.04);
+}
+.craft-node-icon{font-size:2rem;margin-bottom:12px;display:block}
+.craft-node h4{font-family:var(--font-display);font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.craft-node p{font-size:.8rem;color:var(--text-muted);line-height:1.5}
+.craft-node-tier{
+  position:absolute;top:10px;right:12px;
+  font-family:var(--font-cond);font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text-dim);
+}
+
+/* ============================================================
+   WEAPONS
+   ============================================================ */
+#weapons{background:var(--bg2);}
+.weapon-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;margin-top:48px;
+}
+.weapon-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+  transition:all .3s ease;
+}
+.weapon-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.weapon-card:hover{transform:translateY(-4px);border-color:rgba(36,194,196,0.3);}
+.weapon-card:hover::before{opacity:1}
+.weapon-icon{font-size:2.5rem;margin-bottom:14px;display:block}
+.weapon-card h3{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.weapon-card p{font-size:.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px;}
+.weapon-stats{display:flex;flex-direction:column;gap:6px;}
+.stat-bar{display:flex;align-items:center;gap:8px;}
+.stat-label{font-family:var(--font-cond);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);width:54px;flex-shrink:0;}
+.stat-track{flex:1;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.stat-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--cyan-e));border-radius:2px;transition:width .8s ease;}
+
+/* ============================================================
+   MODES
+   ============================================================ */
+#modes{background:var(--bg3);}
+.modes-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;margin-top:48px;
+}
+.mode-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-lg);
+  padding:40px 32px;
+  position:relative;overflow:hidden;
+  transition:all .3s ease;
+}
+.mode-card:hover{border-color:rgba(36,194,196,0.3);transform:translateY(-4px);}
+.mode-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--font-cond);font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:4px 12px;border-radius:3px;
+  margin-bottom:20px;
+}
+.badge-pve{background:rgba(36,194,196,0.1);color:var(--cyan);border:1px solid rgba(36,194,196,0.2);}
+.badge-pvp{background:rgba(246,52,59,0.1);color:var(--red);border:1px solid rgba(246,52,59,0.2);}
+.mode-card h3{font-family:var(--font-display);font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:12px;}
+.mode-card p{font-size:.9rem;color:var(--text-muted);line-height:1.65}
+.mode-features{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
+.mode-feat{
+  display:flex;align-items:center;gap:8px;
+  font-size:.85rem;color:var(--text-muted);
+}
+.mode-feat::before{content:'▸';color:var(--cyan);font-size:10px;}
+@media(max-width:640px){.modes-grid{grid-template-columns:1fr;}}
+
+/* ============================================================
+   CO-OP
+   ============================================================ */
+#coop{background:var(--bg);}
+.coop-moments{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:24px;margin-top:48px;
+}
+.coop-moment{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+}
+.coop-moment-head{
+  padding:28px 24px 0;
+  font-size:2rem;margin-bottom:12px;display:block;
+}
+.coop-moment-body{padding:0 24px 28px;}
+.coop-moment h4{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.coop-moment p{font-size:.85rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   START GUIDE
+   ============================================================ */
+#start-guide{background:var(--bg2);}
+.guide-steps{
+  display:flex;flex-direction:column;gap:0;
+  max-width:720px;margin:48px auto 0;
+  counter-reset:step;
+}
+.guide-step{
+  display:flex;gap:24px;
+  padding:28px 0;
+  border-bottom:1px solid rgba(36,194,196,0.08);
+  position:relative;
+  counter-increment:step;
+}
+.guide-step:last-child{border-bottom:none;}
+.guide-step-num{
+  flex-shrink:0;
+  width:44px;height:44px;
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  border:1.5px solid var(--cyan);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:14px;font-weight:800;
+  color:var(--cyan);
+  box-shadow:var(--glow-sm);
+}
+.guide-step-content h4{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.guide-step-content p{font-size:.88rem;color:var(--text-muted);line-height:1.6}
+
+/* ============================================================
+   COMPARISON
+   ============================================================ */
+#comparison{background:var(--bg3);}
+.compare-table{
+  width:100%;border-collapse:collapse;margin-top:48px;
+  font-size:.9rem;
+}
+.compare-table th{
+  font-family:var(--font-cond);
+  font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);
+  padding:14px 20px;
+  text-align:left;
+  border-bottom:1px solid rgba(36,194,196,0.12);
+}
+.compare-table th:not(:first-child){text-align:center}
+.compare-table td{
+  padding:14px 20px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  color:var(--text-muted);
+  vertical-align:middle;
+}
+.compare-table td:not(:first-child){text-align:center}
+.compare-table tr:hover td{background:rgba(36,194,196,0.03);}
+.compare-col-ours th,
+.compare-col-ours td{
+  color:var(--cyan) !important;
+  background:rgba(36,194,196,0.04);
+}
+.compare-table .check{color:var(--cyan);font-size:16px}
+.compare-table .cross{color:var(--text-dim);font-size:16px}
+.compare-table .partial{color:var(--text-dim);font-size:12px}
+@media(max-width:600px){
+  .compare-table{font-size:.78rem;}
+  .compare-table th,.compare-table td{padding:10px 12px;}
+}
+
+/* ============================================================
+   GALLERY
+   ============================================================ */
+#gallery{background:var(--bg);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:8px;
+  margin-top:48px;
+}
+.gallery-item{
+  border-radius:var(--radius);overflow:hidden;
+  aspect-ratio:16/9;
+  background:var(--bg2);
+  border:1px solid var(--card-border);
+  position:relative;cursor:pointer;
+  transition:transform .3s ease,border-color .3s ease;
+}
+.gallery-item:hover{transform:scale(1.02);border-color:rgba(36,194,196,0.4);}
+.gallery-item:nth-child(1){grid-column:span 7;}
+.gallery-item:nth-child(2){grid-column:span 5;}
+.gallery-item:nth-child(3){grid-column:span 4;}
+.gallery-item:nth-child(4){grid-column:span 4;}
+.gallery-item:nth-child(5){grid-column:span 4;}
+.gallery-item img{width:100%;height:100%;object-fit:cover}
+.gallery-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  color:var(--text-dim);
+}
+@media(max-width:640px){
+  .gallery-grid{grid-template-columns:1fr 1fr;}
+  .gallery-item,.gallery-item:nth-child(n){grid-column:span 1;}
+  .gallery-item:nth-child(1){grid-column:span 2;}
+}
+
+/* ============================================================
+   TRAILER
+   ============================================================ */
+#trailer{background:var(--bg2);}
+.trailer-wrap{
+  max-width:860px;margin:0 auto;
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  border:1px solid var(--card-border);
+  box-shadow:0 8px 60px rgba(0,0,0,0.6);
+}
+.trailer-placeholder{
+  width:100%;height:100%;
+  background:linear-gradient(135deg,var(--bg3),var(--bg));
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:20px;
+}
+.play-btn{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:rgba(36,194,196,0.15);
+  border:2px solid var(--cyan);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;
+  cursor:pointer;
+  transition:all .3s ease;
+  box-shadow:var(--glow);
+  color:var(--cyan);
+}
+.play-btn:hover{
+  background:rgba(36,194,196,0.25);
+  transform:scale(1.08);
+  box-shadow:0 0 40px rgba(36,194,196,0.4);
+}
+.trailer-label{
+  font-family:var(--font-cond);
+  font-size:13px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text-muted);
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+#faq{background:var(--bg3);}
+.faq-list{
+  max-width:760px;margin:48px auto 0;
+  display:flex;flex-direction:column;gap:2px;
+}
+.faq-item{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.faq-question{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 24px;
+  background:transparent;border:none;
+  text-align:left;cursor:pointer;
+  font-family:var(--font-display);
+  font-size:1rem;font-weight:600;
+  color:var(--text);
+  transition:color .2s ease;
+}
+.faq-question:hover{color:var(--cyan)}
+.faq-chevron{
+  flex-shrink:0;
+  width:20px;height:20px;
+  border:1.5px solid rgba(36,194,196,0.3);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--cyan);
+  transition:transform .3s ease,background .2s ease;
+}
+.faq-item[aria-expanded="true"] .faq-chevron{
+  transform:rotate(180deg);
+  background:rgba(36,194,196,0.1);
+  border-color:var(--cyan);
+}
+.faq-answer{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease;
+}
+.faq-answer-inner{
+  padding:0 24px 20px;
+  font-size:.9rem;color:var(--text-muted);line-height:1.7;
+}
+.faq-item[aria-expanded="true"] .faq-answer{max-height:300px;}
+
+/* ============================================================
+   REASSURANCE
+   ============================================================ */
+#reassurance{background:var(--bg2);padding:60px 24px;}
+.reassure-row{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:40px;
+  max-width:900px;margin:0 auto;
+}
+.reassure-item{
+  display:flex;align-items:center;gap:12px;
+  font-family:var(--font-cond);
+  font-size:13px;font-weight:600;letter-spacing:.5px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+.reassure-icon{font-size:20px;color:var(--cyan);filter:drop-shadow(0 0 6px rgba(36,194,196,0.5));}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+#footer{
+  background:var(--bg);
+  border-top:1px solid rgba(36,194,196,0.08);
+  padding:60px 24px 120px;
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:40px;
+}
+.footer-brand p{
+  font-size:.85rem;color:var(--text-dim);
+  line-height:1.7;margin-top:14px;max-width:260px;
+}
+.footer-col h5{
+  font-family:var(--font-cond);
+  font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:16px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.footer-col ul li a{
+  font-size:.85rem;color:var(--text-dim);
+  transition:color .2s ease;
+}
+.footer-col ul li a:hover{color:var(--cyan)}
+.footer-bottom{
+  max-width:1100px;margin:40px auto 0;
+  padding-top:24px;
+  border-top:1px solid rgba(36,194,196,0.06);
+  display:flex;flex-wrap:wrap;
+  justify-content:space-between;align-items:center;
+  gap:16px;
+}
+.footer-bottom p{font-size:.8rem;color:var(--text-dim);}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-size:.8rem;color:var(--text-dim);transition:color .2s ease;}
+.footer-links a:hover{color:var(--cyan)}
+@media(max-width:768px){
+  .footer-inner{grid-template-columns:1fr 1fr;}
+  .footer-brand{grid-column:span 2;}
+}
+@media(max-width:480px){
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-brand{grid-column:span 1;}
+}
+
+/* ============================================================
+   STICKY CTA BAR
+   ============================================================ */
+#sticky-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--sticky-h);
+  background:rgba(7,21,30,0.97);
+  backdrop-filter:blur(16px);
+  border-top:1px solid rgba(36,194,196,0.2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+  z-index:999;
+  transform:translateY(100%);
+  transition:transform .4s cubic-bezier(.22,1,.36,1);
+}
+#sticky-bar.visible{transform:translateY(0);}
+.sticky-left{
+  font-family:var(--font-cond);
+  font-size:12px;font-weight:600;
+  letter-spacing:.5px;color:var(--text-muted);
+  display:flex;align-items:center;gap:8px;
+}
+.sticky-live{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+  animation:pulse 1.5s infinite;
+}
+.sticky-right{display:flex;align-items:center;gap:16px;}
+.sticky-reassurance{
+  font-family:var(--font-cond);
+  font-size:11px;font-weight:500;
+  letter-spacing:.5px;
+  color:var(--text-dim);
+}
+.btn-sticky{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--cyan),#1AA8AA);
+  color:#07090F;
+  font-family:var(--font-display);
+  font-size:13px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:10px 24px;border-radius:5px;
+  border:none;
+  box-shadow:0 2px 20px rgba(36,194,196,0.35);
+  transition:all .2s ease;
+  white-space:nowrap;
+}
+.btn-sticky:hover{
+  box-shadow:0 4px 32px rgba(36,194,196,0.55);
+  transform:translateY(-1px);
+}
+@media(max-width:520px){
+  .sticky-left,.sticky-reassurance{display:none}
+  #sticky-bar{justify-content:center}
+  .sticky-right{width:100%;justify-content:center}
+}
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+#back-top{
+  position:fixed;bottom:80px;right:20px;
+  width:38px;height:38px;
+  background:rgba(36,194,196,0.12);
+  border:1px solid rgba(36,194,196,0.3);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-size:14px;
+  cursor:pointer;z-index:998;
+  opacity:0;pointer-events:none;
+  transition:all .3s ease;
+}
+#back-top.visible{opacity:1;pointer-events:auto}
+#back-top:hover{background:rgba(36,194,196,0.2);transform:translateY(-2px);}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(7,9,15,0.85);
+  backdrop-filter:blur(8px);
+  z-index:2000;
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{
+  background:var(--bg2);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  width:100%;max-width:720px;
+  max-height:85vh;
+  overflow-y:auto;
+  padding:40px 32px;
+  transform:translateY(40px);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.modal-overlay.open .modal-box{transform:translateY(0)}
+.modal-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;padding-bottom:16px;
+  border-bottom:1px solid rgba(36,194,196,0.1);
+}
+.modal-header h3{font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--text);}
+.modal-close{
+  background:transparent;border:1px solid var(--card-border);
+  color:var(--text-muted);
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;
+  transition:all .2s ease;
+}
+.modal-close:hover{border-color:var(--red);color:var(--red);}
+.modal-body p{font-size:.88rem;color:var(--text-muted);line-height:1.75;margin-bottom:14px;}
+.modal-body h4{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--text);margin:20px 0 8px;}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.text-center{text-align:center}
+.mt-0{margin-top:0!important}
+.highlight{
+  background:rgba(36,194,196,0.08);
+  border:1px solid rgba(36,194,196,0.2);
+  border-radius:4px;padding:2px 6px;
+  color:var(--cyan);
+}
+.big-stat{
+  font-family:var(--font-display);
+  font-size:3.5rem;font-weight:800;
+  color:var(--cyan-e);
+  text-shadow:var(--glow);
+  line-height:1;
+}
+.stat-block{text-align:center}
+.stat-block p{font-size:.85rem;color:var(--text-muted);margin-top:6px}
+.stats-row{
+  display:flex;flex-wrap:wrap;justify-content:center;
+  gap:48px;margin-top:56px;
+}
+
+/* Lazy-loaded images */
+img[data-src]{opacity:0;transition:opacity .4s ease;}
+img.loaded{opacity:1}
+
+/* Light mode adjustments */
+[data-theme="light"] .hero-bg-anim{
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 30%,rgba(36,194,196,0.12) 0%,transparent 70%),
+    linear-gradient(180deg,#C8E5E8 0%,#D0EBEE 100%);
+}
+[data-theme="light"] .hero-title{color:#0D121A;}
+[data-theme="light"] body::before{opacity:.15}
+[data-theme="light"] .btn-primary{color:#fff;background:linear-gradient(135deg,#1A9FA1,#0D8082);}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<nav id="topbar" role="navigation" aria-label="Site controls">
+  <div class="topbar-logo">
+    <div class="topbar-logo-mark" aria-hidden="true">OH</div>
+    <span class="topbar-name" data-i18n="site_name">Once Human</span>
+  </div>
+  <div class="topbar-controls">
+    <!-- Language -->
+    <div role="group" aria-label="Language selection">
+      <button class="lang-btn" data-lang="en" aria-label="English" onclick="setLang('en')">EN</button>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <button class="lang-btn" data-lang="fr" aria-label="Français" onclick="setLang('fr')">FR</button>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <button class="lang-btn" data-lang="de" aria-label="Deutsch" onclick="setLang('de')">DE</button>
+      <span class="lang-sep" aria-hidden="true">/</span>
+      <button class="lang-btn" data-lang="es" aria-label="Español" onclick="setLang('es')">ES</button>
+    </div>
+    <!-- Theme -->
+    <button class="theme-btn" id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">🌙</button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero" aria-label="Hero">
+  <div class="hero-media">
+    <video class="hero-video" id="hero-video"
+      autoplay muted loop playsinline
+      poster="hero_poster"
+      aria-hidden="true">
+      <source src="hero_video_mp4" type="video/mp4"/>
+    </video>
+    <div class="hero-bg-anim" aria-hidden="true"></div>
+  </div>
+  <div class="hero-scanlines" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-gradient-bottom" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+      <span data-i18n="hero_eyebrow">Free to Play · Open World Survival</span>
+    </div>
+    <h1 class="hero-title" id="hero-title"><!-- injected by A/B --></h1>
+    <p class="hero-subtitle" id="hero-subtitle"><!-- injected by A/B --></p>
+    <div class="hero-cta-row">
+      <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
+        target="_blank" rel="noopener"
+        class="btn-primary"
+        id="hero-cta"
+        onclick="trackEvent('cta_click',{location:'hero',variant:window.LP_VARIANT})"
+        data-i18n-btn="hero">
+        <!-- injected by A/B -->
+      </a>
+      <a href="#trailer" class="btn-secondary" data-i18n="watch_trailer">
+        ▶ Watch Trailer
+      </a>
+    </div>
+    <p class="hero-microcopy" id="hero-microcopy" data-i18n-micro="hero">
+      <!-- injected by A/B -->
+    </p>
+  </div>
+
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="scroll-arrow"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROOF STRIP
+     ============================================================ -->
+<div id="proof-strip" aria-label="Key facts">
+  <div class="proof-marquee" aria-hidden="true">
+    <!-- clone for seamless loop -->
+    <span class="proof-item"><span class="pi-num">10M+</span><span data-i18n="proof_1">Players Worldwide</span></span>
+    <span class="proof-sep">◆</span>
+    <span class="proof-item"><span class="pi-num" data-i18n="pnum_2">Open World</span><span data-i18n="proof_2">Massive Contaminated Map</span></span>
+    <span class="proof-sep">◆</span>
+    <span class="proof-item"><span class="pi-num" data-i18n="pnum_3">Free</span><span data-i18n="proof_3">No Paywalls, All Skill</span></span>
+    <span class="proof-sep">◆</span>
+    <span class="proof-item"><span class="pi-num" data-i18n="pnum_4">Solo &amp; Squad</span><span data-i18n="proof_4">Your Rules</span></span>
+    <span class="proof-sep">◆</span>
+    <span class="proof-item"><span class="pi-num" data-i18n="pnum_5">PvE-First</span><span data-i18n="proof_5">Optional PvP</span></span>
+    <span class="proof-sep">◆</span>
+    <span class="proof-item"><span class="pi-num" data-i18n="pnum_6">PC &amp; More</span><span data-i18n="proof_6">Multi-Platform</span></span>
+    <span class="proof-sep">◆</span>
+    <!-- duplicate (aria-hidden so screen readers skip repeated items) -->
+    <span class="proof-item" aria-hidden="true"><span class="pi-num">10M+</span><span data-i18n="proof_1">Players Worldwide</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+    <span class="proof-item" aria-hidden="true"><span class="pi-num" data-i18n="pnum_2">Open World</span><span data-i18n="proof_2">Massive Contaminated Map</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+    <span class="proof-item" aria-hidden="true"><span class="pi-num" data-i18n="pnum_3">Free</span><span data-i18n="proof_3">No Paywalls, All Skill</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+    <span class="proof-item" aria-hidden="true"><span class="pi-num" data-i18n="pnum_4">Solo &amp; Squad</span><span data-i18n="proof_4">Your Rules</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+    <span class="proof-item" aria-hidden="true"><span class="pi-num" data-i18n="pnum_5">PvE-First</span><span data-i18n="proof_5">Optional PvP</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+    <span class="proof-item" aria-hidden="true"><span class="pi-num" data-i18n="pnum_6">PC &amp; More</span><span data-i18n="proof_6">Multi-Platform</span></span>
+    <span class="proof-sep" aria-hidden="true">◆</span>
+  </div>
+</div>
+
+<hr class="hr-red"/>
+
+<!-- ============================================================
+     CORE LOOP
+     ============================================================ -->
+<section id="core-loop" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="core_eye">What You'll Actually Do</p>
+      <h2 class="section-title" data-i18n-html="core_title">The Loop That <span class="c">Never Gets Old</span></h2>
+      <p class="section-lead" style="margin:0 auto 56px" data-i18n="core_lead">Every session in Once Human builds on the last. Explore. Scavenge. Build. Fight. Level up. Repeat — but it never feels like a treadmill.</p>
+    </div>
+
+    <div class="core-grid">
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">01</span>
+        <span class="core-icon" aria-hidden="true">🌫️</span>
+        <h3 data-i18n="c1_h">Explore the Mist</h3>
+        <p data-i18n="c1_p">Venture into contaminated zones. Every biome hides different threats, loot tiers, and world events. The map punishes carelessness and rewards boldness.</p>
+      </div>
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">02</span>
+        <span class="core-icon" aria-hidden="true">🧰</span>
+        <h3 data-i18n="c2_h">Scavenge & Craft</h3>
+        <p data-i18n="c2_p">Strip abandoned facilities. Salvage electronics from mutant corpses. Combine raw materials into gear that actually changes how you play.</p>
+      </div>
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">03</span>
+        <span class="core-icon" aria-hidden="true">🏗️</span>
+        <h3 data-i18n="c3_h">Build Your Base</h3>
+        <p data-i18n="c3_p">Claim territory. Raise walls. Wire electricity. Fortify against raids. Your base isn't just shelter — it's a statement about who you are in this world.</p>
+      </div>
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">04</span>
+        <span class="core-icon" aria-hidden="true">⚔️</span>
+        <h3 data-i18n="c4_h">Fight & Overcome</h3>
+        <p data-i18n="c4_p">Face Stardust Aberrations, corrupted bosses, and rival survivors. Combat rewards positioning, loadout prep, and co-op coordination — not just button mashing.</p>
+      </div>
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">05</span>
+        <span class="core-icon" aria-hidden="true">🔬</span>
+        <h3 data-i18n="c5_h">Research & Upgrade</h3>
+        <p data-i18n="c5_p">Unlock blueprints, evolve your Metahuman abilities, and push your power ceiling. Every research point shapes a different kind of survivor.</p>
+      </div>
+      <div class="core-card">
+        <span class="core-card-num" aria-hidden="true">06</span>
+        <span class="core-icon" aria-hidden="true">🤝</span>
+        <h3 data-i18n="c6_h">Connect or Conquer</h3>
+        <p data-i18n="c6_p">Join a squad for co-op raids and world bosses, or establish your dominance as a lone operator. The world bends to those who adapt fastest.</p>
+      </div>
+    </div>
+
+    <div class="stats-row" role="list">
+      <div class="stat-block" role="listitem">
+        <div class="big-stat">200km²</div>
+        <p data-i18n="s1">Open world to explore</p>
+      </div>
+      <div class="stat-block" role="listitem">
+        <div class="big-stat">500+</div>
+        <p data-i18n="s2">Craftable items</p>
+      </div>
+      <div class="stat-block" role="listitem">
+        <div class="big-stat" data-i18n="stat_coop">4-Player</div>
+        <p data-i18n="s3">Co-op squads</p>
+      </div>
+      <div class="stat-block" role="listitem">
+        <div class="big-stat" data-i18n="stat_free">Free</div>
+        <p data-i18n="s4">No entry barrier</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-cyan"/>
+
+<!-- ============================================================
+     CTA BAND #1
+     ============================================================ -->
+<div class="cta-band" id="cta-1">
+  <div class="cta-band-bg" aria-hidden="true"></div>
+  <div class="cta-band-content">
+    <h2 data-i18n="cta1_h">The Mist Has Been Waiting</h2>
+    <p data-i18n="cta1_p">Thousands of survivors are already in. The question is whether you'll enter prepared — or become another cautionary tale in the contaminated dark.</p>
+    <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
+      target="_blank" rel="noopener"
+      class="btn-primary"
+      onclick="trackEvent('cta_click',{location:'cta_band_1',variant:window.LP_VARIANT})"
+      data-i18n="cta1_btn">
+      Enter the World — It's Free
+    </a>
+  </div>
+</div>
+
+<hr class="hr-red"/>
+
+<!-- ============================================================
+     WORLD & THREATS
+     ============================================================ -->
+<section id="world" class="section">
+  <div class="container">
+    <p class="section-eyebrow" data-i18n="world_eye">The Setting</p>
+    <h2 class="section-title" data-i18n-html="world_title">A World That Wants <span class="c">You Dead</span></h2>
+    <p class="section-lead" data-i18n="world_lead">Stardust didn't just contaminate the environment. It rewrote biology, weaponized nature, and gave birth to things that don't play by any rules you know.</p>
+
+    <div class="threat-grid">
+      <div class="threat-card">
+        <div class="threat-img" role="img" aria-label="Contaminated zone screenshot">
+          <img data-src="screenshot_1" alt="Contaminated zone in Once Human" width="640" height="360" loading="lazy"/>
+          <div class="gallery-placeholder" style="position:absolute;inset:0">🌑</div>
+        </div>
+        <div class="threat-body">
+          <span class="threat-tag tag-danger" data-i18n="tag_danger">Danger Zone</span>
+          <h3 data-i18n="t1_h">The Contaminated Zones</h3>
+          <p data-i18n="t1_p">Dense mist, warped physics, and mutant density that scales with how deep you push. Loot quality scales too. Greed is a mechanic here.</p>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-img" role="img" aria-label="Aberration boss encounter">
+          <img data-src="screenshot_2" alt="Stardust Aberration boss in Once Human" width="640" height="360" loading="lazy"/>
+          <div class="gallery-placeholder" style="position:absolute;inset:0">👁️</div>
+        </div>
+        <div class="threat-body">
+          <span class="threat-tag tag-mystery" data-i18n="tag_mystery">Unknown Entity</span>
+          <h3 data-i18n="t2_h">Stardust Aberrations</h3>
+          <p data-i18n="t2_p">These weren't always monsters. Stardust rewrote them at a cellular level. Now they move wrong, sound wrong, and take everything from you if you're unprepared.</p>
+        </div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-img" role="img" aria-label="World event screenshot">
+          <img data-src="screenshot_3" alt="World event in Once Human" width="640" height="360" loading="lazy"/>
+          <div class="gallery-placeholder" style="position:absolute;inset:0">⚡</div>
+        </div>
+        <div class="threat-body">
+          <span class="threat-tag tag-world" data-i18n="tag_world">World Event</span>
+          <h3 data-i18n="t3_h">Dynamic World Events</h3>
+          <p data-i18n="t3_p">Anomaly storms roll in without warning. Broadcast signals activate corrupted fauna. No two nights in the open world are the same. The map is alive and hostile.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY THIS WORLD
+     ============================================================ -->
+<section id="why-world" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="why_eye">Why Players Stay</p>
+      <h2 class="section-title" data-i18n-html="why_title">This World Gets <span class="c">Under Your Skin</span></h2>
+    </div>
+    <div class="pull-list">
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">01</div>
+        <div>
+          <h4 data-i18n="w1_h">Mystery That Actually Pays Off</h4>
+          <p data-i18n="w1_p">The lore of Once Human is layered deep — abandoned research logs, encrypted transmissions, corrupted AI terminals. Players who dig find answers. And those answers raise darker questions.</p>
+        </div>
+      </div>
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">02</div>
+        <div>
+          <h4 data-i18n="w2_h">Danger That Feels Real</h4>
+          <p data-i18n="w2_p">This isn't a game where death is trivial. Losing your loadout to a Stardust storm changes your evening. It creates genuine tension and genuine triumph.</p>
+        </div>
+      </div>
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">03</div>
+        <div>
+          <h4 data-i18n="w3_h">Progression That Compounds</h4>
+          <p data-i18n="w3_p">Every hour you put in shifts the experience. Better gear opens new zones. New zones unlock new crafting. New crafting creates new builds. The ceiling doesn't stop rising.</p>
+        </div>
+      </div>
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">04</div>
+        <div>
+          <h4 data-i18n="w4_h">A Map Worth Getting Lost In</h4>
+          <p data-i18n="w4_p">Ghost towns, research facilities, underground bunkers, flooded lowlands. Every corner of the world was designed to reward the curious and punish the complacent.</p>
+        </div>
+      </div>
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">05</div>
+        <div>
+          <h4 data-i18n="w5_h">Base Building With Soul</h4>
+          <p data-i18n="w5_p">Your base isn't just defensive infrastructure. It's the physical record of your time in the world — every room a decision, every upgrade a story.</p>
+        </div>
+      </div>
+      <div class="pull-item">
+        <div class="pull-num" aria-hidden="true">06</div>
+        <div>
+          <h4 data-i18n="w6_h">Co-op That Changes Everything</h4>
+          <p data-i18n="w6_p">A world boss that destroyed your solo run becomes a highlight reel when four friends stack abilities and cut it down together. The game scales to the number of people playing it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-red"/>
+
+<!-- ============================================================
+     PLAYSTYLE
+     ============================================================ -->
+<section id="playstyle" class="section">
+  <div class="container">
+    <p class="section-eyebrow" data-i18n="play_eye">Your Identity</p>
+    <h2 class="section-title" data-i18n-html="play_title">Choose Your <span class="c">Playstyle</span></h2>
+    <p class="section-lead" data-i18n="play_lead">Once Human doesn't lock you into a class. Your playstyle is defined by your gear, your Deviant abilities, and the choices you make in the field.</p>
+
+    <div class="style-tabs" role="tablist" aria-label="Playstyle options">
+      <button class="style-tab active" role="tab" aria-selected="true" aria-controls="tab-lone" id="tab-btn-lone" onclick="switchTab('lone',this)" data-i18n="tab_lone">Lone Operator</button>
+      <button class="style-tab" role="tab" aria-selected="false" aria-controls="tab-builder" id="tab-btn-builder" onclick="switchTab('builder',this)" data-i18n="tab_builder">Master Builder</button>
+      <button class="style-tab" role="tab" aria-selected="false" aria-controls="tab-squad" id="tab-btn-squad" onclick="switchTab('squad',this)" data-i18n="tab_squad">Squad Leader</button>
+      <button class="style-tab" role="tab" aria-selected="false" aria-controls="tab-hunter" id="tab-btn-hunter" onclick="switchTab('hunter',this)" data-i18n="tab_hunter">Boss Hunter</button>
+    </div>
+
+    <div id="tab-lone" class="style-content active" role="tabpanel" aria-labelledby="tab-btn-lone">
+      <div class="style-text">
+        <h3 data-i18n="lone_h">The Ghost of the Mist</h3>
+        <p data-i18n="lone_p">You prefer silence and speed. You move through contaminated zones before anything can track you, extract resources with surgical precision, and build compact, defensible outposts rather than fortresses. Solo play in Once Human isn't a handicap. It's a different — and often more intense — experience.</p>
+        <div class="style-perks">
+          <span class="perk-chip" data-i18n="lone_p1">Stealth Routes</span>
+          <span class="perk-chip" data-i18n="lone_p2">Compact Builds</span>
+          <span class="perk-chip" data-i18n="lone_p3">Self-Sufficiency</span>
+          <span class="perk-chip" data-i18n="lone_p4">Agile Loadouts</span>
+        </div>
+      </div>
+      <div class="style-visual" aria-label="Lone operator concept">
+        <div class="style-visual-glow" aria-hidden="true"></div>
+        <span style="font-size:5rem;position:relative;z-index:1" aria-hidden="true">🎯</span>
+      </div>
+    </div>
+
+    <div id="tab-builder" class="style-content" role="tabpanel" aria-labelledby="tab-btn-builder">
+      <div class="style-text">
+        <h3 data-i18n="builder_h">Architect of the Ruins</h3>
+        <p data-i18n="builder_p">Your base is an engineering statement. You plan power grids, optimize resource chains, and fortify perimeters that defy anything the world throws at you. Crafting and construction aren't minigames to you — they're the whole point. Every structure is deliberate.</p>
+        <div class="style-perks">
+          <span class="perk-chip" data-i18n="builder_p1">Complex Layouts</span>
+          <span class="perk-chip" data-i18n="builder_p2">Power Grid Design</span>
+          <span class="perk-chip" data-i18n="builder_p3">Max Efficiency</span>
+          <span class="perk-chip" data-i18n="builder_p4">Crafting Chains</span>
+        </div>
+      </div>
+      <div class="style-visual" aria-label="Builder concept">
+        <div class="style-visual-glow" aria-hidden="true"></div>
+        <span style="font-size:5rem;position:relative;z-index:1" aria-hidden="true">🏗️</span>
+      </div>
+    </div>
+
+    <div id="tab-squad" class="style-content" role="tabpanel" aria-labelledby="tab-btn-squad">
+      <div class="style-text">
+        <h3 data-i18n="squad_h">Force Multiplier</h3>
+        <p data-i18n="squad_p">You bring out the best in your team. Coordinating ability combos, managing shared resources, and reading the battlefield — you turn three or four individual players into something that feels unstoppable. World bosses, territory defense, co-op raids: this is where you thrive.</p>
+        <div class="style-perks">
+          <span class="perk-chip" data-i18n="squad_p1">Ability Combos</span>
+          <span class="perk-chip" data-i18n="squad_p2">Shared Loot</span>
+          <span class="perk-chip" data-i18n="squad_p3">Boss Raids</span>
+          <span class="perk-chip" data-i18n="squad_p4">Territory Hold</span>
+        </div>
+      </div>
+      <div class="style-visual" aria-label="Squad leader concept">
+        <div class="style-visual-glow" aria-hidden="true"></div>
+        <span style="font-size:5rem;position:relative;z-index:1" aria-hidden="true">⚡</span>
+      </div>
+    </div>
+
+    <div id="tab-hunter" class="style-content" role="tabpanel" aria-labelledby="tab-btn-hunter">
+      <div class="style-text">
+        <h3 data-i18n="hunter_h">Apex of the Food Chain</h3>
+        <p data-i18n="hunter_p">Bosses are your benchmark. You study their patterns, spec your loadout specifically for the encounter, and return until you hit clean kills. Loot from high-tier aberrations unlocks some of the most powerful gear in the game — and you're willing to earn it.</p>
+        <div class="style-perks">
+          <span class="perk-chip" data-i18n="hunter_p1">Boss Patterns</span>
+          <span class="perk-chip" data-i18n="hunter_p2">Min-Max Builds</span>
+          <span class="perk-chip" data-i18n="hunter_p3">Elite Loot</span>
+          <span class="perk-chip" data-i18n="hunter_p4">Deviant Powers</span>
+        </div>
+      </div>
+      <div class="style-visual" aria-label="Boss hunter concept">
+        <div class="style-visual-glow" aria-hidden="true"></div>
+        <span style="font-size:5rem;position:relative;z-index:1" aria-hidden="true">🎖️</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BASE / TERRITORY
+     ============================================================ -->
+<section id="base" class="section">
+  <div class="container">
+    <div class="base-split">
+      <div class="base-visual" role="img" aria-label="Base building concept">
+        <div class="base-visual-ring" aria-hidden="true"></div>
+        <div class="base-visual-ring" aria-hidden="true"></div>
+        <span style="font-size:6rem;position:relative;z-index:1" aria-hidden="true">🏠</span>
+      </div>
+      <div class="base-text">
+        <p class="section-eyebrow" data-i18n="base_eye">Territory System</p>
+        <h2 data-i18n-html="base_title">Your Base Is Your <span class="c">Declaration</span></h2>
+        <p data-i18n="base_p1">In Once Human, territory isn't just a spawn point. It's the physical manifestation of every hour you've invested. Where you build says something about your strategy. What you build says everything about your ambition.</p>
+        <p data-i18n="base_p2">The territory system is designed with depth. You manage power lines, build specialized workshops, set up automated production, and fortify against Stardust anomalies that push through the perimeter.</p>
+        <div class="base-features">
+          <div class="base-feature">
+            <span class="bf-icon" aria-hidden="true">◈</span>
+            <div class="bf-text">
+              <h5 data-i18n="bf1_h">Modular Construction</h5>
+              <p data-i18n="bf1_p">Hundreds of structural pieces. Full creative control over footprint and height.</p>
+            </div>
+          </div>
+          <div class="base-feature">
+            <span class="bf-icon" aria-hidden="true">◈</span>
+            <div class="bf-text">
+              <h5 data-i18n="bf2_h">Power & Automation</h5>
+              <p data-i18n="bf2_p">Wire up generators, lights, workbenches and automated storage systems.</p>
+            </div>
+          </div>
+          <div class="base-feature">
+            <span class="bf-icon" aria-hidden="true">◈</span>
+            <div class="bf-text">
+              <h5 data-i18n="bf3_h">Deviants & Defense</h5>
+              <p data-i18n="bf3_p">Deploy Deviants as base companions. Build turrets, traps, and layered walls.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CRAFTING & PROGRESSION
+     ============================================================ -->
+<section id="crafting" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="craft_eye">Progression System</p>
+      <h2 class="section-title" data-i18n-html="craft_title">From Scrap to <span class="c">Legend</span></h2>
+      <p class="section-lead" style="margin:0 auto 0" data-i18n="craft_lead">Once Human's crafting tree is an entire game in itself. Every tier you unlock reshapes your capability. Nothing feels disposable. Nothing feels too easy.</p>
+    </div>
+
+    <div class="craft-tree">
+      <div class="craft-node">
+        <span class="craft-node-tier">Tier I</span>
+        <span class="craft-node-icon" aria-hidden="true">🪨</span>
+        <h4 data-i18n="cr1_h">Raw Survival</h4>
+        <p data-i18n="cr1_p">Stone tools, cloth armor, basic shelters. Getting through the first night alive.</p>
+      </div>
+      <div class="craft-node">
+        <span class="craft-node-tier">Tier II</span>
+        <span class="craft-node-icon" aria-hidden="true">⚙️</span>
+        <h4 data-i18n="cr2_h">Industrial Age</h4>
+        <p data-i18n="cr2_p">Metal workbenches, firearms, structural reinforcement. Establishing a real foothold.</p>
+      </div>
+      <div class="craft-node">
+        <span class="craft-node-tier">Tier III</span>
+        <span class="craft-node-icon" aria-hidden="true">🔋</span>
+        <h4 data-i18n="cr3_h">Tech Synthesis</h4>
+        <p data-i18n="cr3_p">Electronics, vehicle parts, automated systems. Your base starts thinking for itself.</p>
+      </div>
+      <div class="craft-node">
+        <span class="craft-node-tier">Tier IV</span>
+        <span class="craft-node-icon" aria-hidden="true">🧬</span>
+        <h4 data-i18n="cr4_h">Stardust Fusion</h4>
+        <p data-i18n="cr4_p">Contaminated alloys, ability augments, exotic weapon mods. Power with a cost.</p>
+      </div>
+      <div class="craft-node">
+        <span class="craft-node-tier">Tier V</span>
+        <span class="craft-node-icon" aria-hidden="true">💠</span>
+        <h4 data-i18n="cr5_h">Metahuman Mastery</h4>
+        <p data-i18n="cr5_p">Deviant-forged equipment, reality-bending gear, the tools that end boss encounters.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WEAPONS & BUILDS
+     ============================================================ -->
+<section id="weapons" class="section">
+  <div class="container">
+    <p class="section-eyebrow" data-i18n="wpn_eye">Arsenal</p>
+    <h2 class="section-title" data-i18n-html="wpn_title">Your Loadout, <span class="c">Your Signature</span></h2>
+    <p class="section-lead" data-i18n="wpn_lead">Guns aren't just stat sticks in Once Human. Mods, blueprints, and Deviant augments create builds that feel genuinely different from anyone else's.</p>
+
+    <div class="weapon-grid">
+      <div class="weapon-card">
+        <span class="weapon-icon" aria-hidden="true">🔫</span>
+        <h3 data-i18n="wpn1_h">Precision Rifles</h3>
+        <p data-i18n="wpn1_p">Long-range lethality. Mod for AP rounds, suppressors, or scope stability. Built for patience.</p>
+        <div class="weapon-stats" aria-label="Weapon stats">
+          <div class="stat-bar"><span class="stat-label">Range</span><div class="stat-track"><div class="stat-fill" style="width:92%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Dmg</span><div class="stat-track"><div class="stat-fill" style="width:80%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Speed</span><div class="stat-track"><div class="stat-fill" style="width:35%"></div></div></div>
+        </div>
+      </div>
+      <div class="weapon-card">
+        <span class="weapon-icon" aria-hidden="true">🪃</span>
+        <h3 data-i18n="wpn2_h">Shotguns</h3>
+        <p data-i18n="wpn2_p">Up close and devastating. Slug rounds vs. buckshot changes your entire playstyle. Zero forgiveness. Maximum satisfaction.</p>
+        <div class="weapon-stats" aria-label="Weapon stats">
+          <div class="stat-bar"><span class="stat-label">Range</span><div class="stat-track"><div class="stat-fill" style="width:28%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Dmg</span><div class="stat-track"><div class="stat-fill" style="width:96%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Speed</span><div class="stat-track"><div class="stat-fill" style="width:55%"></div></div></div>
+        </div>
+      </div>
+      <div class="weapon-card">
+        <span class="weapon-icon" aria-hidden="true">⚡</span>
+        <h3 data-i18n="wpn3_h">Energy Weapons</h3>
+        <p data-i18n="wpn3_p">Stardust-powered and distinctly unnatural. Chain lightning, plasma arcs, and status effects that contaminated units can't resist.</p>
+        <div class="weapon-stats" aria-label="Weapon stats">
+          <div class="stat-bar"><span class="stat-label">Range</span><div class="stat-track"><div class="stat-fill" style="width:65%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Dmg</span><div class="stat-track"><div class="stat-fill" style="width:75%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Speed</span><div class="stat-track"><div class="stat-fill" style="width:82%"></div></div></div>
+        </div>
+      </div>
+      <div class="weapon-card">
+        <span class="weapon-icon" aria-hidden="true">💣</span>
+        <h3 data-i18n="wpn4_h">Explosives</h3>
+        <p data-i18n="wpn4_p">Grenades, launchers, proximity mines. When you want a large part of the map to disagree with something's continued existence.</p>
+        <div class="weapon-stats" aria-label="Weapon stats">
+          <div class="stat-bar"><span class="stat-label">Range</span><div class="stat-track"><div class="stat-fill" style="width:48%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Dmg</span><div class="stat-track"><div class="stat-fill" style="width:90%"></div></div></div>
+          <div class="stat-bar"><span class="stat-label">Speed</span><div class="stat-track"><div class="stat-fill" style="width:42%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODES
+     ============================================================ -->
+<section id="modes" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="mode_eye">Game Modes</p>
+      <h2 class="section-title" data-i18n-html="mode_title">Your World, <span class="c">Your Rules</span></h2>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card">
+        <span class="mode-badge badge-pve" data-i18n="pve_badge">PvE Focus</span>
+        <h3 data-i18n="pve_h">Survival Mode</h3>
+        <p data-i18n="pve_p">The primary experience. You against the world. Contaminated zones, aberrations, world bosses, and the ever-present threat of Stardust anomalies. The environment is your primary adversary — and it's relentless.</p>
+        <div class="mode-features">
+          <div class="mode-feat" data-i18n="pve_f1">Full open world exploration</div>
+          <div class="mode-feat" data-i18n="pve_f2">Co-op enabled, PvP optional</div>
+          <div class="mode-feat" data-i18n="pve_f3">Progressive story missions</div>
+          <div class="mode-feat" data-i18n="pve_f4">World events and boss raids</div>
+          <div class="mode-feat" data-i18n="pve_f5">Full crafting and building access</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <span class="mode-badge badge-pvp" data-i18n="pvp_badge">PvP Optional</span>
+        <h3 data-i18n="pvp_h">Territory Wars</h3>
+        <p data-i18n="pvp_p">When the PvE world isn't enough conflict, you can opt into territory contention. Hold valuable resource nodes, raid rival bases, and defend your investments. This is where alliances are tested and betrayals are remembered.</p>
+        <div class="mode-features">
+          <div class="mode-feat" data-i18n="pvp_f1">Optional — never forced</div>
+          <div class="mode-feat" data-i18n="pvp_f2">Territory control mechanics</div>
+          <div class="mode-feat" data-i18n="pvp_f3">Alliance warfare</div>
+          <div class="mode-feat" data-i18n="pvp_f4">Resource node contention</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-cyan"/>
+
+<!-- ============================================================
+     CTA BAND #2
+     ============================================================ -->
+<div class="cta-band" id="cta-2">
+  <div class="cta-band-bg" aria-hidden="true"></div>
+  <div class="cta-band-content">
+    <h2 data-i18n="cta2_h">Your Loadout Won't Build Itself</h2>
+    <p data-i18n="cta2_p">The best builds in Once Human were designed by players who started exactly where you are now. Free to download. No subscription. No gatekeeping.</p>
+    <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
+      target="_blank" rel="noopener"
+      class="btn-primary"
+      onclick="trackEvent('cta_click',{location:'cta_band_2',variant:window.LP_VARIANT})"
+      data-i18n="cta2_btn">
+      Start Building Your Survivor
+    </a>
+  </div>
+</div>
+
+<hr class="hr-red"/>
+
+<!-- ============================================================
+     CO-OP / SQUAD
+     ============================================================ -->
+<section id="coop" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="coop_eye">Co-op</p>
+      <h2 class="section-title" data-i18n-html="coop_title">Some Moments Only Happen <span class="c">Together</span></h2>
+      <p class="section-lead" style="margin:0 auto 0" data-i18n="coop_lead">Once Human's co-op isn't an afterthought. The game was designed for squad play to create its own distinct, shareable moments.</p>
+    </div>
+    <div class="coop-moments">
+      <div class="coop-moment">
+        <span class="coop-moment-head" aria-hidden="true">🐉</span>
+        <div class="coop-moment-body">
+          <h4 data-i18n="cm1_h">World Boss First Kill</h4>
+          <p data-i18n="cm1_p">Four players, coordinated abilities, a boss fight that took three attempts. The loot split was legendary. So were the failed attempts.</p>
+        </div>
+      </div>
+      <div class="coop-moment">
+        <span class="coop-moment-head" aria-hidden="true">🔥</span>
+        <div class="coop-moment-body">
+          <h4 data-i18n="cm2_h">Base Under Siege</h4>
+          <p data-i18n="cm2_p">A Stardust anomaly hits your base at 2am. Your squadmate logs in. You hold the perimeter. With minutes to spare.</p>
+        </div>
+      </div>
+      <div class="coop-moment">
+        <span class="coop-moment-head" aria-hidden="true">🗺️</span>
+        <div class="coop-moment-body">
+          <h4 data-i18n="cm3_h">The Deep Zone Run</h4>
+          <p data-i18n="cm3_p">You push into a Tier 5 contaminated zone as a full squad. Everyone comes back changed — some with elite loot, all with a story.</p>
+        </div>
+      </div>
+      <div class="coop-moment">
+        <span class="coop-moment-head" aria-hidden="true">🤝</span>
+        <div class="coop-moment-body">
+          <h4 data-i18n="cm4_h">Resource Division</h4>
+          <p data-i18n="cm4_p">One player crafts. One scouts. One defends. One researches. When it clicks, Once Human becomes the most efficient social experience in survival gaming.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     START GUIDE
+     ============================================================ -->
+<section id="start-guide" class="section-sm">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="guide_eye">Getting Started</p>
+      <h2 class="section-title" data-i18n-html="guide_title">Your First <span class="c">Hour</span></h2>
+      <p class="section-lead" style="margin:0 auto 0" data-i18n="guide_lead">Once Human doesn't bury you in tutorials. Here's what to focus on when you first land in the contaminated world.</p>
+    </div>
+    <ol class="guide-steps" aria-label="Getting started guide">
+      <li class="guide-step">
+        <div class="guide-step-num" aria-hidden="true">1</div>
+        <div class="guide-step-content">
+          <h4 data-i18n="gs1_h">Land and Breathe</h4>
+          <p data-i18n="gs1_p">Your starting zone is manageable. Collect basic resources — wood, stone, fiber. Ignore the urge to explore immediately. You need a workbench first.</p>
+        </div>
+      </li>
+      <li class="guide-step">
+        <div class="guide-step-num" aria-hidden="true">2</div>
+        <div class="guide-step-content">
+          <h4 data-i18n="gs2_h">Claim Your Territory</h4>
+          <p data-i18n="gs2_p">Use your Territory Marker early. Find slightly elevated ground near water. This will become your base — choose deliberately rather than conveniently.</p>
+        </div>
+      </li>
+      <li class="guide-step">
+        <div class="guide-step-num" aria-hidden="true">3</div>
+        <div class="guide-step-content">
+          <h4 data-i18n="gs3_h">Build the Core Four</h4>
+          <p data-i18n="gs3_p">Workbench, Furnace, Storage, Shelter. These four structures are your minimum viable base. Everything else builds on top of them.</p>
+        </div>
+      </li>
+      <li class="guide-step">
+        <div class="guide-step-num" aria-hidden="true">4</div>
+        <div class="guide-step-content">
+          <h4 data-i18n="gs4_h">Find Your First Deviant</h4>
+          <p data-i18n="gs4_p">Deviants are your companions. Capture your first one early — even a low-tier Deviant can make early exploration significantly safer and more efficient.</p>
+        </div>
+      </li>
+      <li class="guide-step">
+        <div class="guide-step-num" aria-hidden="true">5</div>
+        <div class="guide-step-content">
+          <h4 data-i18n="gs5_h">Enter the First Contaminated Zone</h4>
+          <p data-i18n="gs5_p">Once you have basic armor and a ranged weapon, push into the nearest marked contaminated zone. What you find inside will answer your first real questions about this world.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMPARISON
+     ============================================================ -->
+<section id="comparison" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="cmp_eye">Why Once Human</p>
+      <h2 class="section-title" data-i18n-html="cmp_title">How It <span class="c">Stands Apart</span></h2>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="compare-table" aria-label="Game comparison table">
+        <thead>
+          <tr>
+            <th data-i18n="cmp_feature">Feature</th>
+            <th class="compare-col-ours" data-i18n="cmp_oh">Once Human</th>
+            <th data-i18n="cmp_game2">Typical Survival A</th>
+            <th data-i18n="cmp_game3">Typical Survival B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="cmp_r1">Free to Play</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes">✓</span></td>
+            <td><span class="cross" aria-label="No">✗</span></td>
+            <td><span class="cross" aria-label="No">✗</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r2">Open World Size</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes" data-i18n="cval_massive">Massive</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_medium">Medium</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_small">Small</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r3">Lore & Narrative</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes" data-i18n="cval_deep">✓ Deep</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_minimal">Minimal</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_basic">Basic</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r4">PvE-First Design</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes">✓</span></td>
+            <td><span class="cross" aria-label="No">✗</span></td>
+            <td><span class="check" aria-label="Yes">✓</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r5">Base Building Depth</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes" data-i18n="cval_advanced">✓ Advanced</span></td>
+            <td><span class="partial" aria-label="Partial">Basic</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_moderate">Moderate</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r6">Deviant/Companion System</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes" data-i18n="cval_unique">✓ Unique</span></td>
+            <td><span class="cross" aria-label="No">✗</span></td>
+            <td><span class="cross" aria-label="No">✗</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="cmp_r7">Regular Content Updates</td>
+            <td class="compare-col-ours"><span class="check" aria-label="Yes">✓</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_slow">Slow</span></td>
+            <td><span class="partial" aria-label="Partial" data-i18n="cval_occasional">Occasional</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     GALLERY
+     ============================================================ -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="gal_eye">Screenshots</p>
+      <h2 class="section-title" data-i18n-html="gal_title">See the <span class="c">World</span></h2>
+    </div>
+    <div class="gallery-grid" role="list" aria-label="Game screenshots">
+      <div class="gallery-item" role="listitem" tabindex="0" aria-label="Game screenshot 1">
+        <img data-src="screenshot_1" alt="Once Human world landscape" width="640" height="360" loading="lazy"/>
+        <div class="gallery-placeholder" aria-hidden="true">🌄</div>
+      </div>
+      <div class="gallery-item" role="listitem" tabindex="0" aria-label="Game screenshot 2">
+        <img data-src="screenshot_2" alt="Once Human base building" width="640" height="360" loading="lazy"/>
+        <div class="gallery-placeholder" aria-hidden="true">🏗️</div>
+      </div>
+      <div class="gallery-item" role="listitem" tabindex="0" aria-label="Game screenshot 3">
+        <img data-src="screenshot_3" alt="Once Human combat" width="640" height="360" loading="lazy"/>
+        <div class="gallery-placeholder" aria-hidden="true">⚔️</div>
+      </div>
+      <div class="gallery-item" role="listitem" tabindex="0" aria-label="Game screenshot 4">
+        <img data-src="screenshot_4" alt="Once Human crafting" width="640" height="360" loading="lazy"/>
+        <div class="gallery-placeholder" aria-hidden="true">🔧</div>
+      </div>
+      <div class="gallery-item" role="listitem" tabindex="0" aria-label="Game screenshot 5">
+        <img data-src="screenshot_5" alt="Once Human boss encounter" width="640" height="360" loading="lazy"/>
+        <div class="gallery-placeholder" aria-hidden="true">👾</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRAILER
+     ============================================================ -->
+<section id="trailer" class="section-sm">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:40px">
+      <p class="section-eyebrow" data-i18n="trail_eye">Preview</p>
+      <h2 class="section-title" data-i18n-html="trail_title">Watch the <span class="c">Contamination</span></h2>
+    </div>
+    <div class="trailer-wrap">
+      <div class="trailer-placeholder">
+        <div class="play-btn" role="button" aria-label="Play trailer" tabindex="0" onclick="playTrailer()" onkeydown="if(event.key==='Enter')playTrailer()">▶</div>
+        <span class="trailer-label" data-i18n="trail_label">Official Gameplay Trailer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr-cyan"/>
+
+<!-- ============================================================
+     CTA BAND #3
+     ============================================================ -->
+<div class="cta-band" id="cta-3">
+  <div class="cta-band-bg" aria-hidden="true"></div>
+  <div class="cta-band-content">
+    <h2 data-i18n="cta3_h">Still on the Fence?</h2>
+    <p data-i18n="cta3_p">Once Human is free. There's nothing to lose and an entire contaminated world to gain. The only regret is starting later than everyone else.</p>
+    <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
+      target="_blank" rel="noopener"
+      class="btn-primary"
+      onclick="trackEvent('cta_click',{location:'cta_band_3',variant:window.LP_VARIANT})"
+      data-i18n="cta3_btn">
+      Play Free — Start Now
+    </a>
+    <p style="margin-top:14px;font-size:.82rem;color:var(--text-dim)" data-i18n="cta3_sub">No credit card. No commitment. Free to play.</p>
+  </div>
+</div>
+
+<hr class="hr-red"/>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="text-center">
+      <p class="section-eyebrow" data-i18n="faq_eye">Questions</p>
+      <h2 class="section-title" data-i18n-html="faq_title">Everything You Want to <span class="c">Know</span></h2>
+    </div>
+    <div class="faq-list" role="list">
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq1_q">Is Once Human really free to play?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq1_a">Yes. Once Human is free to download and play. There are cosmetic options available, but none of the core gameplay, progression, or content is locked behind a paywall. You can experience everything the game has to offer without spending a cent.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq2_q">Can I play solo or is group play required?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq2_a">Solo play is fully supported and deliberately designed to be satisfying. The world scales appropriately, and many players prefer the focused, high-stakes intensity of solo survival. Squad play adds a different dimension — especially for world bosses and deep contaminated zones — but it's never required.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq3_q">Is PvP forced on me?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq3_a">No. PvP in Once Human is opt-in. The default PvE experience keeps you focused on the world itself — contaminated zones, aberrations, and environmental threats. Territory Wars and PvP modes exist for those who want them, but they're never imposed on players who prefer pure survival.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq4_q">What are Deviants?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq4_a">Deviants are anomalous entities you can capture and bond with. They serve as companions, base workers, and ability augmenters. Each Deviant has unique skills — some enhance crafting, some defend your base, others augment your combat abilities in the field. Building a strong Deviant roster is one of the most rewarding meta-progressions in the game.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq5_q">How does base building work?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq5_a">You claim territory using a Territory Marker, then build freely within that zone. Construction is modular — walls, floors, roofs, furniture, power infrastructure, turrets, traps. As you progress, you unlock more complex blueprints. Your base can be a minimalist survival outpost or an elaborate fortress, depending on your playstyle and ambitions.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq6_q">Is there a story or is it purely sandbox?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq6_a">Both. There's a genuine narrative with missions, lore, encrypted terminals, and a central mystery about the origin of Stardust and what happened to humanity. The story is layered and rewards players who actively engage with it. But the sandbox survives on its own merits if you prefer to ignore the narrative and simply build and explore.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq7_q">What are the PC requirements?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq7_a">Once Human is optimized to run on a wide range of hardware. Minimum specs: Intel Core i5-4460 / AMD FX-6300, 8GB RAM, GTX 970 / RX 470, 50GB storage. Recommended specs: Intel Core i7-6700K / Ryzen 5 1600, 16GB RAM, GTX 1080 / RX 5700. The game also supports mobile platforms.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq8_q">Does Once Human have regular updates?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq8_a">Yes. The development team actively releases seasonal content updates, new zones, new Deviants, balance patches, and community-driven improvements. The game has a development roadmap that's publicly shared with the player community, and major updates typically arrive every 6-8 weeks.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq9_q">Will I lose progress if my base is destroyed?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq9_a">In PvE mode, your base is protected from other players. Stardust anomalies can damage structures, but the progression systems are designed so that setbacks are recoverable. You never lose your blueprints, research, or Deviant bonds. The recovery arc after a tough base event is often more motivating than never facing one.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq10_q">How large is the game world?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq10_a">The base map spans well over 200 square kilometers, with different biomes — forests, industrial ruins, swamp zones, deep contaminated regions, and underground facilities. Seasonal updates introduce new areas. After hundreds of hours, players report still encountering locations they've never visited before.</div>
+        </div>
+      </div>
+
+      <div class="faq-item" role="listitem" aria-expanded="false">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFaq(this)">
+          <span data-i18n="faq11_q">Is this game pay-to-win?</span>
+          <span class="faq-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner" data-i18n="faq11_a">No. The monetization in Once Human is cosmetic-focused. Purchasable items include appearance customizations for your character, base decorations, and visual upgrades to equipment. No premium currency buys better stats, better loot, or progression shortcuts. Competitive advantage in this game comes from time and skill — not wallet size.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REASSURANCE ROW
+     ============================================================ -->
+<div id="reassurance">
+  <div class="reassure-row" role="list">
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">🆓</span>
+      <span data-i18n="re1">100% Free to Play</span>
+    </div>
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">🚫</span>
+      <span data-i18n="re2">No Pay-to-Win</span>
+    </div>
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">🌍</span>
+      <span data-i18n="re3">Global Servers</span>
+    </div>
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">🔒</span>
+      <span data-i18n="re4">Secure Platform</span>
+    </div>
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">♻️</span>
+      <span data-i18n="re5">Regular Updates</span>
+    </div>
+    <div class="reassure-item" role="listitem">
+      <span class="reassure-icon" aria-hidden="true">🎮</span>
+      <span data-i18n="re6">Cross-Platform</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="topbar-logo">
+        <div class="topbar-logo-mark" aria-hidden="true">OH</div>
+        <span class="topbar-name">Once Human</span>
+      </div>
+      <p data-i18n="footer_brand_p">An open-world survival experience set in a contaminated future. Build your base. Fight the dark. Uncover the truth. Free to play.</p>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col1">Play</h5>
+      <ul>
+        <li><a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314" target="_blank" rel="noopener" onclick="trackEvent('cta_click',{location:'footer'})" data-i18n="footer_play1">Download Free</a></li>
+        <li><a href="#modes" data-i18n="footer_play2">Game Modes</a></li>
+        <li><a href="#playstyle" data-i18n="footer_play3">Playstyles</a></li>
+        <li><a href="#start-guide" data-i18n="footer_play4">New Player Guide</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col2">Explore</h5>
+      <ul>
+        <li><a href="#world" data-i18n="footer_ex1">The World</a></li>
+        <li><a href="#crafting" data-i18n="footer_ex2">Crafting</a></li>
+        <li><a href="#weapons" data-i18n="footer_ex3">Weapons</a></li>
+        <li><a href="#base" data-i18n="footer_ex4">Base Building</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5 data-i18n="footer_col3">Legal</h5>
+      <ul>
+        <li><a href="?modal=privacy" onclick="openModal('privacy');return false;" data-i18n="footer_priv">Privacy Policy</a></li>
+        <li><a href="?modal=terms" onclick="openModal('terms');return false;" data-i18n="footer_terms">Terms of Use</a></li>
+        <li><a href="#faq" data-i18n="footer_faq">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p data-i18n="footer_copy">© 2024 Once Human. All rights reserved. Game content and trademarks are property of their respective owners.</p>
+    <div class="footer-links">
+      <a href="?modal=privacy" onclick="openModal('privacy');return false;" data-i18n="footer_priv2">Privacy</a>
+      <a href="?modal=terms" onclick="openModal('terms');return false;" data-i18n="footer_terms2">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     STICKY CTA BAR
+     ============================================================ -->
+<div id="sticky-bar" role="complementary" aria-label="Quick play bar">
+  <div class="sticky-left">
+    <span class="sticky-live" aria-hidden="true"></span>
+    <span data-i18n="sticky_label">Once Human is Live</span>
+  </div>
+  <div class="sticky-right">
+    <span class="sticky-reassurance" data-i18n="sticky_reassure">Free · No credit card required</span>
+    <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
+      target="_blank" rel="noopener"
+      class="btn-sticky"
+      id="sticky-cta"
+      onclick="trackEvent('cta_click',{location:'sticky_bar',variant:window.LP_VARIANT})"
+      data-i18n="sticky_btn">
+      Play Free →
+    </a>
+  </div>
+</div>
+
+<!-- Back to top -->
+<button id="back-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ============================================================
+     MODALS
+     ============================================================ -->
+<div class="modal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="modal-privacy-title" onclick="if(event.target===this)closeModal('privacy')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-privacy-title" data-i18n="priv_title">Privacy Policy</h3>
+      <button class="modal-close" onclick="closeModal('privacy')" aria-label="Close privacy policy">✕</button>
+    </div>
+    <div class="modal-body">
+      <p data-i18n="priv_p1">This landing page is operated by an independent affiliate partner. We do not collect personally identifiable information beyond standard analytics data (page views, interactions, and session behavior) processed by Google Analytics 4.</p>
+      <h4 data-i18n="priv_h2">Data We Collect</h4>
+      <p data-i18n="priv_p2">We use Google Analytics 4 (GA4) to collect anonymized data about how visitors interact with this page. This includes page views, session duration, CTA click events, scroll depth, and language or theme preferences. This data is used solely to optimize the landing page experience.</p>
+      <h4 data-i18n="priv_h3">Cookies</h4>
+      <p data-i18n="priv_p3">We use localStorage to remember your language preference and theme preference between visits. We do not set advertising cookies. GA4 may set cookies as part of its analytics tracking; you can opt out via your browser settings or Google's opt-out tools.</p>
+      <h4 data-i18n="priv_h4">Third-Party Links</h4>
+      <p data-i18n="priv_p4">This page links to the Once Human game platform via an affiliate URL. Once you leave this page, the privacy practices of that platform apply. We are not responsible for external data practices.</p>
+      <h4 data-i18n="priv_h5">Your Rights</h4>
+      <p data-i18n="priv_p5">You have the right to request deletion or access to any data held about you. As we collect only anonymized analytics, there is typically no personally identifiable record to access or delete. For questions, contact the site operator.</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="modal-terms-title" onclick="if(event.target===this)closeModal('terms')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3 id="modal-terms-title" data-i18n="terms_title">Terms of Use</h3>
+      <button class="modal-close" onclick="closeModal('terms')" aria-label="Close terms of use">✕</button>
+    </div>
+    <div class="modal-body">
+      <p data-i18n="terms_p1">By accessing this landing page, you agree to these Terms of Use. This page is operated by an independent affiliate partner and is not an official Once Human page. All game content, trademarks, and intellectual property referenced belong to their respective owners.</p>
+      <h4 data-i18n="terms_h2">Affiliate Disclosure</h4>
+      <p data-i18n="terms_p2">This page contains affiliate links. If you click through and register for Once Human, we may receive a commission. This does not affect the price you pay (the game is free to play) and does not influence our description of the product.</p>
+      <h4 data-i18n="terms_h3">Accuracy</h4>
+      <p data-i18n="terms_p3">We make reasonable efforts to keep information about Once Human accurate and up to date. However, game features, content, and availability may change. For the most current information, refer to the official Once Human platform.</p>
+      <h4 data-i18n="terms_h4">Prohibited Use</h4>
+      <p data-i18n="terms_p4">You may not reproduce, redistribute, or modify content from this page without express written permission. Automated scraping, framing, or mirroring of this page is prohibited.</p>
+      <h4 data-i18n="terms_h5">Limitation of Liability</h4>
+      <p data-i18n="terms_p5">This page is provided in good faith and for informational purposes. We are not liable for decisions made based on content herein, or for any issues arising from use of the Once Human platform. All game decisions are the responsibility of the platform operators.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+(function(){
+'use strict';
+
+/* ---- CONFIG ---- */
+var CTA_URL='https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314';
+
+/* ---- A/B VARIANTS ---- */
+var VARIANTS={
+  1:{
+    title:'Something in the Mist<br>Is <span class="accent-red">Watching You</span>',
+    subtitle:'The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.',
+    cta:'Enter If You Dare — It\'s Free',
+    micro:'Join over 10 million survivors. No credit card required.'
+  },
+  2:{
+    title:'The World Ended.<br><span class="accent-cyan">You Didn\'t.</span>',
+    subtitle:'Stardust contaminated everything. Mutants walk the ruins. But you\'re still breathing — and that means you still have options.',
+    cta:'Survive the Contamination Free',
+    micro:'Download and play immediately. Zero cost to start.'
+  },
+  3:{
+    title:'From Scavenger to<br><span class="accent-cyan">Apex Predator</span>',
+    subtitle:'You start with nothing. You end with a fortified base, elite weapons, and the respect of every other survivor in the region. The arc is real.',
+    cta:'Claim Your Power — Play Free',
+    micro:'Full progression. No paywalls. Pure skill.'
+  },
+  4:{
+    title:'No One<br><span class="accent-cyan">Survives Alone</span>',
+    subtitle:'The contamination is too wide, too deep, and too strange for any one person to map. Your squad isn\'t just helpful — it\'s the only reason some zones get explored at all.',
+    cta:'Play With Friends — 100% Free',
+    micro:'Up to 4 players. Cross-platform co-op. Start tonight.'
+  },
+  5:{
+    title:'Who Will You Become<br>in the <span class="accent-red">Ruins?</span>',
+    subtitle:'Once Human doesn\'t assign your role. Your playstyle, your base, your Deviants — every choice is yours. The survivor you become is earned, not selected from a menu.',
+    cta:'Define Your Survivor — Free',
+    micro:'Unique builds. Endless customization. No templates.'
+  },
+  6:{
+    title:'The Contamination<br>Claims <span class="accent-cyan">Everyone.</span><br><span style="font-size:.6em;opacity:.7">Except You.</span>',
+    subtitle:'Most don\'t last the first night. The ones who do build, adapt, and push deeper. The question isn\'t whether you can survive. It\'s how far you\'re willing to go.',
+    cta:'Prove You Can Survive — Free',
+    micro:'Brutal. Rewarding. Free to play.'
+  }
+};
+
+/* ---- TRANSLATIONS ---- */
+var I18N={
+  en:{
+    site_name:'Once Human',
+    hero_eyebrow:'Free to Play · Open World Survival',
+    watch_trailer:'▶ Watch Trailer',
+    proof_1:'Players Worldwide',proof_2:'Massive Contaminated Map',proof_3:'No Paywalls, All Skill',
+    proof_4:'Your Rules',proof_5:'Optional PvP',proof_6:'Multi-Platform',
+    core_eye:'What You\'ll Actually Do',
+    core_title:'The Loop That <span class="c">Never Gets Old</span>',
+    core_lead:'Every session in Once Human builds on the last. Explore. Scavenge. Build. Fight. Level up. Repeat — but it never feels like a treadmill.',
+    c1_h:'Explore the Mist',c1_p:'Venture into contaminated zones. Every biome hides different threats, loot tiers, and world events.',
+    c2_h:'Scavenge & Craft',c2_p:'Strip abandoned facilities. Combine raw materials into gear that changes how you play.',
+    c3_h:'Build Your Base',c3_p:'Claim territory. Raise walls. Your base is a statement about who you are in this world.',
+    c4_h:'Fight & Overcome',c4_p:'Face Stardust Aberrations and corrupted bosses. Combat rewards coordination — not button mashing.',
+    c5_h:'Research & Upgrade',c5_p:'Unlock blueprints, evolve your Metahuman abilities, push your power ceiling.',
+    c6_h:'Connect or Conquer',c6_p:'Join a squad for raids or establish dominance as a lone operator.',
+    s1:'Open world to explore',s2:'Craftable items',s3:'Co-op squads',s4:'No entry barrier',
+    cta1_h:'The Mist Has Been Waiting',cta1_p:'Thousands of survivors are already in. Will you enter prepared — or become another cautionary tale?',cta1_btn:'Enter the World — It\'s Free',
+    world_eye:'The Setting',world_title:'A World That Wants <span class="c">You Dead</span>',
+    world_lead:'Stardust didn\'t just contaminate the environment. It rewrote biology and gave birth to things that don\'t play by any rules you know.',
+    tag_danger:'Danger Zone',tag_mystery:'Unknown Entity',tag_world:'World Event',
+    t1_h:'The Contaminated Zones',t1_p:'Dense mist, warped physics, and mutant density that scales with how deep you push.',
+    t2_h:'Stardust Aberrations',t2_p:'These weren\'t always monsters. Stardust rewrote them. Now they take everything from you if you\'re unprepared.',
+    t3_h:'Dynamic World Events',t3_p:'Anomaly storms roll in without warning. No two nights in the open world are the same.',
+    why_eye:'Why Players Stay',why_title:'This World Gets <span class="c">Under Your Skin</span>',
+    w1_h:'Mystery That Actually Pays Off',w1_p:'Layered lore — abandoned research logs, encrypted transmissions, corrupted AI terminals. Players who dig find answers.',
+    w2_h:'Danger That Feels Real',w2_p:'Losing your loadout to a Stardust storm changes your evening. It creates genuine tension and genuine triumph.',
+    w3_h:'Progression That Compounds',w3_p:'Every hour you invest shifts the experience. The ceiling doesn\'t stop rising.',
+    w4_h:'A Map Worth Getting Lost In',w4_p:'Ghost towns, bunkers, flooded lowlands. Every corner rewards the curious.',
+    w5_h:'Base Building With Soul',w5_p:'Your base is the physical record of your time in the world — every room a decision.',
+    w6_h:'Co-op That Changes Everything',w6_p:'A boss that destroyed your solo run becomes a highlight reel with four friends.',
+    play_eye:'Your Identity',play_title:'Choose Your <span class="c">Playstyle</span>',
+    play_lead:'Once Human doesn\'t lock you into a class. Your playstyle is defined by your gear and the choices you make.',
+    tab_lone:'Lone Operator',tab_builder:'Master Builder',tab_squad:'Squad Leader',tab_hunter:'Boss Hunter',
+    lone_h:'The Ghost of the Mist',lone_p:'You move through contaminated zones with surgical precision. Solo play is a different — and often more intense — experience.',
+    lone_p1:'Stealth Routes',lone_p2:'Compact Builds',lone_p3:'Self-Sufficiency',lone_p4:'Agile Loadouts',
+    builder_h:'Architect of the Ruins',builder_p:'Your base is an engineering statement. Construction isn\'t a minigame — it\'s the whole point.',
+    builder_p1:'Complex Layouts',builder_p2:'Power Grid Design',builder_p3:'Max Efficiency',builder_p4:'Crafting Chains',
+    squad_h:'Force Multiplier',squad_p:'Coordinating ability combos and managing shared resources — you turn four players into something unstoppable.',
+    squad_p1:'Ability Combos',squad_p2:'Shared Loot',squad_p3:'Boss Raids',squad_p4:'Territory Hold',
+    hunter_h:'Apex of the Food Chain',hunter_p:'Bosses are your benchmark. You spec for the encounter and return until you hit clean kills.',
+    hunter_p1:'Boss Patterns',hunter_p2:'Min-Max Builds',hunter_p3:'Elite Loot',hunter_p4:'Deviant Powers',
+    base_eye:'Territory System',base_title:'Your Base Is Your <span class="c">Declaration</span>',
+    base_p1:'Territory isn\'t just a spawn point. It\'s the physical manifestation of every hour you\'ve invested.',
+    base_p2:'Manage power lines, build workshops, set up automated production, and fortify against anomalies.',
+    bf1_h:'Modular Construction',bf1_p:'Hundreds of structural pieces. Full creative control over footprint and height.',
+    bf2_h:'Power & Automation',bf2_p:'Wire up generators, lights, workbenches and automated storage systems.',
+    bf3_h:'Deviants & Defense',bf3_p:'Deploy Deviants as base companions. Build turrets, traps, and layered walls.',
+    craft_eye:'Progression System',craft_title:'From Scrap to <span class="c">Legend</span>',
+    craft_lead:'Once Human\'s crafting tree is an entire game in itself. Every tier reshapes your capability.',
+    cr1_h:'Raw Survival',cr1_p:'Stone tools, cloth armor, basic shelters.',
+    cr2_h:'Industrial Age',cr2_p:'Metal workbenches, firearms, structural reinforcement.',
+    cr3_h:'Tech Synthesis',cr3_p:'Electronics, vehicle parts, automated systems.',
+    cr4_h:'Stardust Fusion',cr4_p:'Contaminated alloys, ability augments, exotic weapon mods.',
+    cr5_h:'Metahuman Mastery',cr5_p:'Deviant-forged equipment and reality-bending gear.',
+    wpn_eye:'Arsenal',wpn_title:'Your Loadout, <span class="c">Your Signature</span>',
+    wpn_lead:'Mods, blueprints, and Deviant augments create builds that feel genuinely different.',
+    wpn1_h:'Precision Rifles',wpn1_p:'Long-range lethality. Built for patience.',
+    wpn2_h:'Shotguns',wpn2_p:'Up close and devastating. Zero forgiveness. Maximum satisfaction.',
+    wpn3_h:'Energy Weapons',wpn3_p:'Stardust-powered. Status effects that contaminated units can\'t resist.',
+    wpn4_h:'Explosives',wpn4_p:'When you want a large part of the map to disagree with something\'s existence.',
+    mode_eye:'Game Modes',mode_title:'Your World, <span class="c">Your Rules</span>',
+    pve_badge:'PvE Focus',pve_h:'Survival Mode',pve_p:'You against the world. Contaminated zones, aberrations, and the ever-present threat of Stardust anomalies.',
+    pve_f1:'Full open world exploration',pve_f2:'Co-op enabled, PvP optional',pve_f3:'Progressive story missions',pve_f4:'World events and boss raids',pve_f5:'Full crafting and building access',
+    pvp_badge:'PvP Optional',pvp_h:'Territory Wars',pvp_p:'When the PvE world isn\'t enough conflict. Hold resource nodes, raid rival bases, and defend your investments.',
+    pvp_f1:'Optional — never forced',pvp_f2:'Territory control mechanics',pvp_f3:'Alliance warfare',pvp_f4:'Resource node contention',
+    cta2_h:'Your Loadout Won\'t Build Itself',cta2_p:'The best builds were designed by players who started exactly where you are. Free to download.',cta2_btn:'Start Building Your Survivor',
+    coop_eye:'Co-op',coop_title:'Some Moments Only Happen <span class="c">Together</span>',
+    coop_lead:'Once Human\'s co-op was designed to create its own distinct, shareable moments.',
+    cm1_h:'World Boss First Kill',cm1_p:'Four players, coordinated abilities, a boss fight that took three attempts. Legendary.',
+    cm2_h:'Base Under Siege',cm2_p:'A Stardust anomaly hits at 2am. Your squadmate logs in. You hold the perimeter. With minutes to spare.',
+    cm3_h:'The Deep Zone Run',cm3_p:'A full squad pushes into a Tier 5 zone. Everyone comes back changed.',
+    cm4_h:'Resource Division',cm4_p:'One crafts. One scouts. One defends. One researches. When it clicks, it\'s extraordinary.',
+    guide_eye:'Getting Started',guide_title:'Your First <span class="c">Hour</span>',
+    guide_lead:'Once Human doesn\'t bury you in tutorials. Here\'s what to focus on first.',
+    gs1_h:'Land and Breathe',gs1_p:'Collect basic resources. Ignore the urge to explore immediately. You need a workbench first.',
+    gs2_h:'Claim Your Territory',gs2_p:'Use your Territory Marker early. Find elevated ground near water.',
+    gs3_h:'Build the Core Four',gs3_p:'Workbench, Furnace, Storage, Shelter. These are your minimum viable base.',
+    gs4_h:'Find Your First Deviant',gs4_p:'Capture your first Deviant early — even a low-tier one makes exploration safer.',
+    gs5_h:'Enter the First Contaminated Zone',gs5_p:'Once you have basic armor and a ranged weapon, push in. What you find will answer your first real questions.',
+    cmp_eye:'Why Once Human',cmp_title:'How It <span class="c">Stands Apart</span>',
+    cmp_feature:'Feature',cmp_oh:'Once Human',cmp_game2:'Typical Survival A',cmp_game3:'Typical Survival B',
+    cmp_r1:'Free to Play',cmp_r2:'Open World Size',cmp_r3:'Lore & Narrative',cmp_r4:'PvE-First Design',
+    cmp_r5:'Base Building Depth',cmp_r6:'Deviant/Companion System',cmp_r7:'Regular Content Updates',
+    gal_eye:'Screenshots',gal_title:'See the <span class="c">World</span>',
+    trail_eye:'Preview',trail_title:'Watch the <span class="c">Contamination</span>',trail_label:'Official Gameplay Trailer',
+    cta3_h:'Still on the Fence?',cta3_p:'Once Human is free. Nothing to lose and an entire world to gain.',cta3_btn:'Play Free — Start Now',cta3_sub:'No credit card. No commitment. Free to play.',
+    faq_eye:'Questions',faq_title:'Everything You Want to <span class="c">Know</span>',
+    faq1_q:'Is Once Human really free to play?',faq1_a:'Yes. Free to download and play. No core content locked behind a paywall.',
+    faq2_q:'Can I play solo?',faq2_a:'Solo play is fully supported and deliberately designed to be satisfying.',
+    faq3_q:'Is PvP forced on me?',faq3_a:'No. PvP is opt-in. The default experience is PvE-focused.',
+    faq4_q:'What are Deviants?',faq4_a:'Anomalous entities you capture and bond with. Companions, base workers, and ability augmenters.',
+    faq5_q:'How does base building work?',faq5_a:'Claim territory, build modularly — walls, floors, power infrastructure, turrets, traps.',
+    faq6_q:'Is there a story?',faq6_a:'Both narrative and sandbox. A genuine mystery about Stardust that rewards engagement.',
+    faq7_q:'What are the PC requirements?',faq7_a:'Minimum: i5-4460, 8GB RAM, GTX 970, 50GB storage. Recommended: i7-6700K, 16GB RAM, GTX 1080.',
+    faq8_q:'Does it have regular updates?',faq8_a:'Yes. Seasonal content, new zones, new Deviants. Major updates every 6–8 weeks.',
+    faq9_q:'Will I lose progress if my base is destroyed?',faq9_a:'In PvE mode, other players can\'t destroy your base. You never lose blueprints or research.',
+    faq10_q:'How large is the game world?',faq10_a:'Over 200 square kilometers. Different biomes. After hundreds of hours, players still find new locations.',
+    faq11_q:'Is this game pay-to-win?',faq11_a:'No. Monetization is cosmetic-only. Competitive advantage comes from time and skill.',
+    re1:'100% Free to Play',re2:'No Pay-to-Win',re3:'Global Servers',re4:'Secure Platform',re5:'Regular Updates',re6:'Cross-Platform',
+    sticky_label:'Once Human is Live',sticky_reassure:'Free · No credit card required',sticky_btn:'Play Free →',
+    footer_brand_p:'An open-world survival experience in a contaminated future. Build. Fight. Uncover the truth. Free to play.',
+    footer_col1:'Play',footer_play1:'Download Free',footer_play2:'Game Modes',footer_play3:'Playstyles',footer_play4:'New Player Guide',
+    footer_col2:'Explore',footer_ex1:'The World',footer_ex2:'Crafting',footer_ex3:'Weapons',footer_ex4:'Base Building',
+    footer_col3:'Legal',footer_priv:'Privacy Policy',footer_terms:'Terms of Use',footer_faq:'FAQ',
+    footer_copy:'© 2024 Once Human. All rights reserved. Trademarks are property of their respective owners.',
+    footer_priv2:'Privacy',footer_terms2:'Terms',
+    priv_title:'Privacy Policy',
+    priv_p1:'This landing page is operated by an independent affiliate partner. We collect only anonymized analytics data via Google Analytics 4.',
+    priv_h2:'Data We Collect',priv_p2:'GA4 collects anonymized page views, session data, and interaction events to optimize this page.',
+    priv_h3:'Cookies',priv_p3:'We use localStorage for language/theme preferences. GA4 may set analytics cookies.',
+    priv_h4:'Third-Party Links',priv_p4:'Clicking to the Once Human platform subjects you to their privacy practices.',
+    priv_h5:'Your Rights',priv_p5:'You can request access or deletion of your data. Contact the site operator for questions.',
+    terms_title:'Terms of Use',
+    terms_p1:'By accessing this page, you agree to these terms. This is operated by an independent affiliate partner.',
+    terms_h2:'Affiliate Disclosure',terms_p2:'This page contains affiliate links. We may earn a commission if you register. The game remains free.',
+    terms_h3:'Accuracy',terms_p3:'We maintain accurate information, but game features may change. Check the official platform for current info.',
+    terms_h4:'Prohibited Use',terms_p4:'Reproduction or scraping of this content is prohibited without written permission.',
+    terms_h5:'Limitation of Liability',terms_p5:'This page is informational. We are not liable for decisions made from its content.',
+    pnum_2:'Open World',pnum_3:'Free',pnum_4:'Solo & Squad',pnum_5:'PvE-First',pnum_6:'PC & More',stat_coop:'4-Player',stat_free:'Free',cval_massive:'Massive',cval_medium:'Medium',cval_small:'Small',cval_deep:'✓ Deep',cval_minimal:'Minimal',cval_basic:'Basic',cval_advanced:'✓ Advanced',cval_moderate:'Moderate',cval_unique:'✓ Unique',cval_slow:'Slow',cval_occasional:'Occasional'
+  },
+  fr:{
+    site_name:'Once Human',
+    hero_eyebrow:'Gratuit · Survie en Monde Ouvert',
+    watch_trailer:'▶ Voir la Bande-Annonce',
+    proof_1:'Joueurs dans le Monde',proof_2:'Carte Contaminée Massive',proof_3:'Sans Paywalls, que du Skill',
+    proof_4:'Vos Règles',proof_5:'PvP Optionnel',proof_6:'Multi-Plateforme',
+    core_eye:'Ce que vous allez faire',
+    core_title:'La Boucle qui ne <span class="c">Lasse Jamais</span>',
+    core_lead:'Chaque session dans Once Human s\'appuie sur la précédente. Explorer. Récupérer. Construire. Combattre.',
+    c1_h:'Explorer le Brouillard',c1_p:'Aventurez-vous dans des zones contaminées. Chaque biome cache des menaces et des butins différents.',
+    c2_h:'Récupérer & Fabriquer',c2_p:'Pilllez les installations abandonnées. Transformez des matières premières en équipement.',
+    c3_h:'Construire votre Base',c3_p:'Revendiquez un territoire. Élevez des murs. Votre base vous définit.',
+    c4_h:'Combattre & Surmonter',c4_p:'Affrontez les Aberrations Stardust et les boss corrompus.',
+    c5_h:'Rechercher & Améliorer',c5_p:'Débloquez des plans, évoluez vos capacités Métahumaines.',
+    c6_h:'S\'allier ou Conquérir',c6_p:'Rejoignez une escouade ou imposez votre domination en solitaire.',
+    s1:'Monde ouvert à explorer',s2:'Objets fabriquables',s3:'Escouades co-op',s4:'Aucune barrière d\'entrée',
+    cta1_h:'Le Brouillard Vous Attend',cta1_p:'Des milliers de survivants sont déjà là. Entrerez-vous préparé ?',cta1_btn:'Entrer dans le Monde — Gratuit',
+    world_eye:'Le Cadre',world_title:'Un Monde qui Veut <span class="c">Votre Mort</span>',
+    world_lead:'Le Stardust a réécrit la biologie et donné naissance à des choses qui ne respectent aucune règle.',
+    tag_danger:'Zone Dangereuse',tag_mystery:'Entité Inconnue',tag_world:'Événement Mondial',
+    t1_h:'Les Zones Contaminées',t1_p:'Brouillard dense, physique déformée, densité de mutants qui croît avec la profondeur.',
+    t2_h:'Aberrations Stardust',t2_p:'Ces créatures n\'étaient pas toujours des monstres. Le Stardust les a réécrites.',
+    t3_h:'Événements Dynamiques',t3_p:'Les tempêtes d\'anomalies arrivent sans prévenir. Aucune nuit ne se ressemble.',
+    why_eye:'Pourquoi les Joueurs Restent',why_title:'Ce Monde <span class="c">Vous Rentre Sous la Peau</span>',
+    w1_h:'Mystère qui Porte ses Fruits',w1_p:'Lore en couches — journaux de recherche, transmissions cryptées, terminaux IA.',
+    w2_h:'Danger Palpable',w2_p:'Perdre votre équipement dans une tempête Stardust change votre soirée.',
+    w3_h:'Progression Cumulative',w3_p:'Chaque heure investie transforme l\'expérience.',
+    w4_h:'Une Carte qui Mérite d\'Être Perdue',w4_p:'Villes fantômes, bunkers, basses terres inondées. Chaque recoin récompense la curiosité.',
+    w5_h:'Construction avec Âme',w5_p:'Votre base est le registre physique de votre temps dans ce monde.',
+    w6_h:'Co-op qui Change Tout',w6_p:'Un boss qui vous a détruit en solo devient un moment mémorable avec des amis.',
+    play_eye:'Votre Identité',play_title:'Choisissez Votre <span class="c">Style</span>',
+    play_lead:'Once Human ne vous enferme pas dans une classe. Votre style est défini par vos choix.',
+    tab_lone:'Opérateur Solitaire',tab_builder:'Maître Constructeur',tab_squad:'Chef d\'Escouade',tab_hunter:'Chasseur de Boss',
+    lone_h:'Le Fantôme du Brouillard',lone_p:'Vous traversez les zones contaminées avec précision chirurgicale.',
+    lone_p1:'Routes Furtives',lone_p2:'Constructions Compactes',lone_p3:'Autosuffisance',lone_p4:'Équipements Agiles',
+    builder_h:'Architecte des Ruines',builder_p:'Votre base est une déclaration d\'ingénierie.',
+    builder_p1:'Mises en page Complexes',builder_p2:'Réseau Électrique',builder_p3:'Efficacité Max',builder_p4:'Chaînes d\'Artisanat',
+    squad_h:'Multiplicateur de Force',squad_p:'Vous transformez quatre joueurs en quelque chose d\'inarrêtable.',
+    squad_p1:'Combos d\'Aptitudes',squad_p2:'Butin Partagé',squad_p3:'Raids de Boss',squad_p4:'Contrôle Territorial',
+    hunter_h:'Apex de la Chaîne Alimentaire',hunter_p:'Les boss sont votre référence. Vous vous spécialisez pour les rencontres.',
+    hunter_p1:'Patterns de Boss',hunter_p2:'Builds Optimaux',hunter_p3:'Butin d\'Élite',hunter_p4:'Pouvoirs Deviants',
+    base_eye:'Système de Territoire',base_title:'Votre Base Est Votre <span class="c">Déclaration</span>',
+    base_p1:'Le territoire n\'est pas qu\'un point de réapparition. C\'est la manifestation physique de chaque heure investie.',
+    base_p2:'Gérez les lignes électriques, construisez des ateliers et fortifiez-vous.',
+    bf1_h:'Construction Modulaire',bf1_p:'Des centaines de pièces structurelles. Contrôle créatif total.',
+    bf2_h:'Énergie & Automatisation',bf2_p:'Câblez des générateurs, des lumières et des systèmes de stockage automatisés.',
+    bf3_h:'Deviants & Défense',bf3_p:'Déployez des Deviants comme compagnons. Construisez des tourelles et des pièges.',
+    craft_eye:'Système de Progression',craft_title:'De la Ferraille à la <span class="c">Légende</span>',
+    craft_lead:'L\'arbre d\'artisanat d\'Once Human est un jeu entier en lui-même.',
+    cr1_h:'Survie Brute',cr1_p:'Outils en pierre, armure en tissu, abris basiques.',
+    cr2_h:'Ère Industrielle',cr2_p:'Établis métalliques, armes à feu, renforcement structurel.',
+    cr3_h:'Synthèse Technologique',cr3_p:'Électronique, pièces de véhicule, systèmes automatisés.',
+    cr4_h:'Fusion Stardust',cr4_p:'Alliages contaminés, augmentations d\'aptitudes, mods d\'armes exotiques.',
+    cr5_h:'Maîtrise Métahumaine',cr5_p:'Équipement forgé par les Deviants et armement déformant la réalité.',
+    wpn_eye:'Arsenal',wpn_title:'Votre Équipement, <span class="c">Votre Signature</span>',
+    wpn_lead:'Mods, plans et augmentations Deviant créent des builds vraiment uniques.',
+    wpn1_h:'Fusils de Précision',wpn1_p:'Létalité à longue portée. Fait pour la patience.',
+    wpn2_h:'Fusils à Pompe',wpn2_p:'Dévastateurs à courte portée. Zéro compromis.',
+    wpn3_h:'Armes Énergétiques',wpn3_p:'Alimentées par le Stardust. Effets de statut irrésistibles.',
+    wpn4_h:'Explosifs',wpn4_p:'Pour ceux qui veulent que tout s\'embrasse en même temps.',
+    mode_eye:'Modes de Jeu',mode_title:'Votre Monde, <span class="c">Vos Règles</span>',
+    pve_badge:'Axé PvE',pve_h:'Mode Survie',pve_p:'Vous contre le monde. Zones contaminées, aberrations, et menaces environnementales permanentes.',
+    pve_f1:'Exploration monde ouvert complet',pve_f2:'Co-op activé, PvP optionnel',pve_f3:'Missions narrative progressives',pve_f4:'Événements mondiaux et raids de boss',pve_f5:'Artisanat et construction complets',
+    pvp_badge:'PvP Optionnel',pvp_h:'Guerres Territoriales',pvp_p:'Quand le monde PvE ne suffit plus. Contrôlez des nœuds de ressources, raidez des bases.',
+    pvp_f1:'Optionnel — jamais forcé',pvp_f2:'Mécaniques de contrôle territorial',pvp_f3:'Guerre d\'alliances',pvp_f4:'Contention de nœuds de ressources',
+    cta2_h:'Votre Équipement ne se Construira pas Tout Seul',cta2_p:'Les meilleurs builds ont été créés par des joueurs qui ont commencé exactement là où vous êtes.',cta2_btn:'Commencer à Construire votre Survivant',
+    coop_eye:'Co-op',coop_title:'Certains Moments N\'Arrivent <span class="c">qu\'Ensemble</span>',
+    coop_lead:'Le co-op d\'Once Human a été conçu pour créer des moments partagés inoubliables.',
+    cm1_h:'Premier Kill de Boss Mondial',cm1_p:'Quatre joueurs, aptitudes coordonnées. Légendaire.',
+    cm2_h:'Base Assiégée',cm2_p:'Une anomalie frappe à 2h du matin. Votre coéquipier se connecte. Vous tenez le périmètre.',
+    cm3_h:'La Course en Zone Profonde',cm3_p:'Une escouade complète s\'enfonce dans une zone de Niveau 5. Tout le monde revient changé.',
+    cm4_h:'Division des Ressources',cm4_p:'Un fabrique. Un explore. Un défend. Un recherche. Quand ça clique, c\'est extraordinaire.',
+    guide_eye:'Commencer',guide_title:'Votre Première <span class="c">Heure</span>',
+    guide_lead:'Once Human ne vous noie pas dans les tutoriels. Voici ce sur quoi vous concentrer.',
+    gs1_h:'Atterrir et Souffler',gs1_p:'Collectez des ressources de base. Résistez à l\'envie d\'explorer immédiatement.',
+    gs2_h:'Revendiquer votre Territoire',gs2_p:'Utilisez votre Marqueur de Territoire tôt. Trouvez un terrain élevé près de l\'eau.',
+    gs3_h:'Construire les Quatre Essentiels',gs3_p:'Établi, Fourneau, Stockage, Abri. Votre base viable minimale.',
+    gs4_h:'Trouver votre Premier Deviant',gs4_p:'Capturez un Deviant tôt — même de bas niveau, il rend l\'exploration plus sûre.',
+    gs5_h:'Entrer dans la Première Zone Contaminée',gs5_p:'Avec une armure de base et une arme à distance, poussez. Ce que vous trouverez répondra à vos premières vraies questions.',
+    cmp_eye:'Pourquoi Once Human',cmp_title:'Ce qui le <span class="c">Distingue</span>',
+    cmp_feature:'Fonctionnalité',cmp_oh:'Once Human',cmp_game2:'Survie Typique A',cmp_game3:'Survie Typique B',
+    cmp_r1:'Gratuit',cmp_r2:'Taille du Monde Ouvert',cmp_r3:'Lore & Narratif',cmp_r4:'Conception PvE-First',
+    cmp_r5:'Profondeur Construction de Base',cmp_r6:'Système Deviant/Compagnon',cmp_r7:'Mises à Jour Régulières',
+    gal_eye:'Captures d\'écran',gal_title:'Voir le <span class="c">Monde</span>',
+    trail_eye:'Aperçu',trail_title:'Voir la <span class="c">Contamination</span>',trail_label:'Bande-annonce Officielle',
+    cta3_h:'Encore Hésitant ?',cta3_p:'Once Human est gratuit. Rien à perdre et un monde entier à gagner.',cta3_btn:'Jouer Gratuitement — Maintenant',cta3_sub:'Sans carte bancaire. Sans engagement.',
+    faq_eye:'Questions',faq_title:'Tout ce que vous Voulez <span class="c">Savoir</span>',
+    faq1_q:'Once Human est-il vraiment gratuit ?',faq1_a:'Oui. Gratuit à télécharger et à jouer. Aucun contenu principal bloqué.',
+    faq2_q:'Puis-je jouer en solo ?',faq2_a:'Le jeu solo est pleinement supporté et conçu pour être satisfaisant.',
+    faq3_q:'Le PvP est-il forcé ?',faq3_a:'Non. Le PvP est optionnel. L\'expérience par défaut est axée PvE.',
+    faq4_q:'Que sont les Deviants ?',faq4_a:'Des entités anormales que vous capturez et dont vous devenez l\'allié.',
+    faq5_q:'Comment fonctionne la construction de base ?',faq5_a:'Revendiquez un territoire et construisez librement avec un système modulaire.',
+    faq6_q:'Y a-t-il une histoire ?',faq6_a:'Les deux. Une narration et un bac à sable coexistent harmonieusement.',
+    faq7_q:'Quelle est la configuration PC requise ?',faq7_a:'Minimum : i5-4460, 8 Go RAM, GTX 970, 50 Go. Recommandé : i7-6700K, 16 Go RAM, GTX 1080.',
+    faq8_q:'Y a-t-il des mises à jour régulières ?',faq8_a:'Oui. Contenu saisonnier et nouvelles zones toutes les 6 à 8 semaines.',
+    faq9_q:'Perdrai-je ma progression si ma base est détruite ?',faq9_a:'En mode PvE, les autres joueurs ne peuvent pas détruire votre base. Vous ne perdez jamais vos plans.',
+    faq10_q:'Quelle est la taille du monde de jeu ?',faq10_a:'Plus de 200 kilomètres carrés. Des biomes différents. Des heures de contenu inexploré.',
+    faq11_q:'Le jeu est-il pay-to-win ?',faq11_a:'Non. La monétisation est uniquement cosmétique. L\'avantage vient du temps et des compétences.',
+    re1:'100% Gratuit',re2:'Pas de Pay-to-Win',re3:'Serveurs Mondiaux',re4:'Plateforme Sécurisée',re5:'Mises à Jour Régulières',re6:'Multi-Plateforme',
+    sticky_label:'Once Human est En Ligne',sticky_reassure:'Gratuit · Sans carte bancaire',sticky_btn:'Jouer →',
+    footer_brand_p:'Une expérience de survie en monde ouvert dans un futur contaminé. Gratuit.',
+    footer_col1:'Jouer',footer_play1:'Télécharger Gratuitement',footer_play2:'Modes de Jeu',footer_play3:'Styles de Jeu',footer_play4:'Guide Nouveau Joueur',
+    footer_col2:'Explorer',footer_ex1:'Le Monde',footer_ex2:'Artisanat',footer_ex3:'Armes',footer_ex4:'Construction de Base',
+    footer_col3:'Légal',footer_priv:'Politique de Confidentialité',footer_terms:'Conditions d\'Utilisation',footer_faq:'FAQ',
+    footer_copy:'© 2024 Once Human. Tous droits réservés.',footer_priv2:'Confidentialité',footer_terms2:'Conditions',
+    priv_title:'Politique de Confidentialité',
+    priv_p1:'Cette page est exploitée par un partenaire affilié indépendant. Nous collectons uniquement des données analytiques anonymisées via Google Analytics 4.',
+    priv_h2:'Données Collectées',priv_p2:'GA4 collecte des vues de page anonymisées et des événements d\'interaction.',
+    priv_h3:'Cookies',priv_p3:'Nous utilisons localStorage pour les préférences de langue/thème.',
+    priv_h4:'Liens Tiers',priv_p4:'En cliquant vers la plateforme Once Human, vous êtes soumis à leurs pratiques de confidentialité.',
+    priv_h5:'Vos Droits',priv_p5:'Vous pouvez demander l\'accès ou la suppression de vos données.',
+    terms_title:'Conditions d\'Utilisation',
+    terms_p1:'En accédant à cette page, vous acceptez ces conditions. Exploité par un partenaire affilié indépendant.',
+    terms_h2:'Divulgation d\'Affiliation',terms_p2:'Cette page contient des liens affiliés. Le jeu reste gratuit.',
+    terms_h3:'Exactitude',terms_p3:'Nous maintenons des informations exactes, mais les fonctionnalités peuvent changer.',
+    terms_h4:'Utilisation Interdite',terms_p4:'La reproduction ou le scraping de ce contenu est interdit.',
+    terms_h5:'Limitation de Responsabilité',terms_p5:'Cette page est informative. Nous ne sommes pas responsables des décisions prises sur la base de son contenu.',
+    pnum_2:'Monde Ouvert',pnum_3:'Gratuit',pnum_4:'Solo & Escouade',pnum_5:'PvE-First',pnum_6:'PC & Plus',stat_coop:'4 Joueurs',stat_free:'Gratuit',cval_massive:'Massive',cval_medium:'Moyen',cval_small:'Petit',cval_deep:'✓ Profond',cval_minimal:'Minimal',cval_basic:'Basique',cval_advanced:'✓ Avancé',cval_moderate:'Modéré',cval_unique:'✓ Unique',cval_slow:'Lent',cval_occasional:'Occasionnel'
+  },
+  de:{
+    site_name:'Once Human',
+    hero_eyebrow:'Kostenlos · Open-World-Überleben',
+    watch_trailer:'▶ Trailer ansehen',
+    proof_1:'Spieler Weltweit',proof_2:'Riesige Kontaminierte Karte',proof_3:'Kein Paywall, Nur Können',
+    proof_4:'Ihre Regeln',proof_5:'Optionales PvP',proof_6:'Plattformübergreifend',
+    core_eye:'Was Sie tun werden',
+    core_title:'Der Loop, der <span class="c">nie alt wird</span>',
+    core_lead:'Jede Session in Once Human baut auf der vorherigen auf. Erkunden. Sammeln. Bauen. Kämpfen.',
+    c1_h:'Den Nebel erkunden',c1_p:'Betreten Sie verseuchte Zonen. Jedes Biom birgt andere Bedrohungen und Beute.',
+    c2_h:'Sammeln & Herstellen',c2_p:'Plündern Sie verlassene Einrichtungen. Verwandeln Sie Rohstoffe in Ausrüstung.',
+    c3_h:'Basis bauen',c3_p:'Beanspruchen Sie Territorium. Errichten Sie Mauern. Ihre Basis definiert Sie.',
+    c4_h:'Kämpfen & Überwinden',c4_p:'Stellen Sie sich Stardust-Aberrationen und korrumpierten Bossen.',
+    c5_h:'Forschen & Aufwerten',c5_p:'Schalten Sie Blaupausen frei und entwickeln Sie Ihre Metahuman-Fähigkeiten.',
+    c6_h:'Verbinden oder Besiegen',c6_p:'Schließen Sie sich einem Trupp an oder dominieren Sie als Einzelkämpfer.',
+    s1:'Offene Welt zum Erkunden',s2:'Herstellbare Gegenstände',s3:'Koop-Trupps',s4:'Kein Eintrittsbarriere',
+    cta1_h:'Der Nebel wartet',cta1_p:'Tausende Überlebende sind bereits drin. Werden Sie vorbereitet eintreten?',cta1_btn:'Welt betreten — Kostenlos',
+    world_eye:'Das Setting',world_title:'Eine Welt, die Sie <span class="c">töten will</span>',
+    world_lead:'Stardust hat nicht nur die Umwelt verseucht. Es hat die Biologie neu geschrieben.',
+    tag_danger:'Gefahrenzone',tag_mystery:'Unbekannte Entität',tag_world:'Weltereignis',
+    t1_h:'Die verseuchten Zonen',t1_p:'Dichter Nebel, verzerrte Physik, Mutantendichte die mit der Tiefe steigt.',
+    t2_h:'Stardust-Aberrationen',t2_p:'Diese Kreaturen waren nicht immer Monster. Stardust hat sie neu geschrieben.',
+    t3_h:'Dynamische Weltereignisse',t3_p:'Anomalie-Stürme kommen ohne Vorwarnung. Keine zwei Nächte sind gleich.',
+    why_eye:'Warum Spieler bleiben',why_title:'Diese Welt geht <span class="c">unter die Haut</span>',
+    w1_h:'Mysterien die sich auszahlen',w1_p:'Vielschichtiges Lore — Forschungstagebücher, verschlüsselte Transmissionen.',
+    w2_h:'Gefahr, die sich echt anfühlt',w2_p:'Ihr Ausrüstungsverlust durch einen Stardust-Sturm verändert Ihren Abend.',
+    w3_h:'Progression die sich aufbaut',w3_p:'Jede investierte Stunde verändert das Erlebnis.',
+    w4_h:'Eine Karte, in der man sich verlieren kann',w4_p:'Geisterstädte, Bunker, überflutete Niederungen. Jede Ecke belohnt Neugier.',
+    w5_h:'Basenbau mit Seele',w5_p:'Ihre Basis ist das physische Protokoll Ihrer Zeit in dieser Welt.',
+    w6_h:'Koop der alles verändert',w6_p:'Ein Boss, der Ihren Solo-Versuch vernichtet hat, wird mit Freunden legendär.',
+    play_eye:'Ihre Identität',play_title:'Wählen Sie Ihren <span class="c">Spielstil</span>',
+    play_lead:'Once Human sperrt Sie nicht in eine Klasse. Ihr Stil wird durch Ihre Ausrüstung und Entscheidungen definiert.',
+    tab_lone:'Einzelkämpfer',tab_builder:'Meisterbauer',tab_squad:'Truppenführer',tab_hunter:'Bossjäger',
+    lone_h:'Der Geist im Nebel',lone_p:'Sie bewegen sich mit chirurgischer Präzision durch verseuchte Zonen.',
+    lone_p1:'Stealth-Routen',lone_p2:'Kompakte Bauten',lone_p3:'Selbstversorgung',lone_p4:'Agile Ausrüstung',
+    builder_h:'Architekt der Ruinen',builder_p:'Ihre Basis ist ein Ingenieursausdruck. Bauen ist der eigentliche Kern.',
+    builder_p1:'Komplexe Grundrisse',builder_p2:'Stromnetzentwurf',builder_p3:'Maximale Effizienz',builder_p4:'Herstellketten',
+    squad_h:'Kraftmultiplikator',squad_p:'Sie verwandeln vier Spieler in etwas Unaufhaltsames.',
+    squad_p1:'Fähigkeits-Kombos',squad_p2:'Geteilte Beute',squad_p3:'Boss-Überfälle',squad_p4:'Territoriumshalten',
+    hunter_h:'Apex der Nahrungskette',hunter_p:'Bosse sind Ihr Maßstab. Sie bauen speziell für die Begegnung.',
+    hunter_p1:'Boss-Muster',hunter_p2:'Min-Max-Builds',hunter_p3:'Elite-Beute',hunter_p4:'Deviant-Kräfte',
+    base_eye:'Territoriumssystem',base_title:'Ihre Basis ist Ihre <span class="c">Erklärung</span>',
+    base_p1:'Territorium ist nicht nur ein Startpunkt. Es ist die physische Manifestation jeder investierten Stunde.',
+    base_p2:'Verwalten Sie Stromleitungen, bauen Sie Werkstätten und befestigen Sie sich.',
+    bf1_h:'Modularer Bau',bf1_p:'Hunderte von Strukturteilen. Volle kreative Kontrolle.',
+    bf2_h:'Energie & Automatisierung',bf2_p:'Verkabeln Sie Generatoren, Lichter und automatisierte Lagersysteme.',
+    bf3_h:'Deviants & Verteidigung',bf3_p:'Setzen Sie Deviants als Basis-Begleiter ein. Bauen Sie Türme und Fallen.',
+    craft_eye:'Progressionssystem',craft_title:'Von Schrott zur <span class="c">Legende</span>',
+    craft_lead:'Der Herstellungsbaum von Once Human ist ein ganzes Spiel in sich.',
+    cr1_h:'Rohe Überlebensfähigkeit',cr1_p:'Steinwerkzeuge, Stoffrüstung, einfache Unterkünfte.',
+    cr2_h:'Industriezeitalter',cr2_p:'Metallbänke, Schusswaffen, Strukturverstärkung.',
+    cr3_h:'Technologiesynthese',cr3_p:'Elektronik, Fahrzeugteile, automatisierte Systeme.',
+    cr4_h:'Stardust-Fusion',cr4_p:'Verseuchte Legierungen, Fähigkeitsverstärker, exotische Waffenmods.',
+    cr5_h:'Metahuman-Meisterschaft',cr5_p:'Deviant-geschmiedete Ausrüstung und realitätsverändernde Waffen.',
+    wpn_eye:'Arsenal',wpn_title:'Ihre Ausrüstung, <span class="c">Ihre Signatur</span>',
+    wpn_lead:'Mods, Blaupausen und Deviant-Verstärker schaffen wirklich einzigartige Builds.',
+    wpn1_h:'Präzisionsgewehre',wpn1_p:'Tödlich auf lange Distanz. Für Geduld gebaut.',
+    wpn2_h:'Schrotflinten',wpn2_p:'Verheerend auf kurze Distanz. Null Kompromisse.',
+    wpn3_h:'Energiewaffen',wpn3_p:'Stardust-betrieben. Statuseffekte, denen verseuchte Einheiten nicht widerstehen können.',
+    wpn4_h:'Sprengstoff',wpn4_p:'Wenn Sie wollen, dass ein großer Teil der Karte brennt.',
+    mode_eye:'Spielmodi',mode_title:'Ihre Welt, <span class="c">Ihre Regeln</span>',
+    pve_badge:'PvE-Fokus',pve_h:'Überlebensmodus',pve_p:'Sie gegen die Welt. Verseuchte Zonen und eine unerbittliche Umgebung.',
+    pve_f1:'Vollständige Open-World-Erkundung',pve_f2:'Koop aktiviert, PvP optional',pve_f3:'Progressive Story-Missionen',pve_f4:'Weltereignisse und Boss-Überfälle',pve_f5:'Vollständiger Zugang zu Herstellung und Bau',
+    pvp_badge:'PvP Optional',pvp_h:'Territorialkriege',pvp_p:'Wenn die PvE-Welt nicht genug Konflikt bietet. Überfallen Sie Rivalen-Basen.',
+    pvp_f1:'Optional — niemals erzwungen',pvp_f2:'Territoriumskontrollmechaniken',pvp_f3:'Allianzkriegsführung',pvp_f4:'Ressourcenknoten-Wettbewerb',
+    cta2_h:'Ihre Ausrüstung baut sich nicht von selbst',cta2_p:'Die besten Builds wurden von Spielern entwickelt, die genau dort angefangen haben, wo Sie jetzt sind.',cta2_btn:'Überlebenden aufbauen beginnen',
+    coop_eye:'Koop',coop_title:'Manche Momente entstehen <span class="c">nur zusammen</span>',
+    coop_lead:'Der Koop von Once Human wurde entwickelt, um einzigartige gemeinsame Momente zu schaffen.',
+    cm1_h:'Erster World-Boss-Kill',cm1_p:'Vier Spieler, koordinierte Fähigkeiten. Legendär.',
+    cm2_h:'Basis unter Belagerung',cm2_p:'Eine Anomalie trifft um 2 Uhr nachts. Ihr Kamerad loggt sich ein. Sie halten den Perimeter.',
+    cm3_h:'Der Tiefzoneneinsatz',cm3_p:'Ein vollständiger Trupp dringt in Zone 5 vor. Alle kommen verändert zurück.',
+    cm4_h:'Ressourcenteilung',cm4_p:'Einer fertigt. Einer erkundet. Einer verteidigt. Einer forscht. Wenn es klappt, ist es außerordentlich.',
+    guide_eye:'Einstieg',guide_title:'Ihre erste <span class="c">Stunde</span>',
+    guide_lead:'Once Human überhäuft Sie nicht mit Tutorials. Hier ist, worauf Sie sich zuerst konzentrieren sollten.',
+    gs1_h:'Landen und Durchatmen',gs1_p:'Sammeln Sie grundlegende Ressourcen. Widerstehen Sie dem Drang, sofort zu erkunden.',
+    gs2_h:'Territorium beanspruchen',gs2_p:'Verwenden Sie früh Ihren Gebietsmarkierer. Finden Sie erhöhtes Gelände nahe Wasser.',
+    gs3_h:'Die vier Kerngebäude bauen',gs3_p:'Werkbank, Ofen, Lager, Schutzraum. Ihre Mindestbasis.',
+    gs4_h:'Ihren ersten Deviant finden',gs4_p:'Fangen Sie früh einen Deviant — selbst ein niedrigstufiger macht das Erkunden sicherer.',
+    gs5_h:'Die erste verseuchte Zone betreten',gs5_p:'Mit Grundrüstung und einer Fernkampfwaffe, dringen Sie vor.',
+    cmp_eye:'Warum Once Human',cmp_title:'Wie es sich <span class="c">abhebt</span>',
+    cmp_feature:'Funktion',cmp_oh:'Once Human',cmp_game2:'Typisches Überleben A',cmp_game3:'Typisches Überleben B',
+    cmp_r1:'Kostenlos spielen',cmp_r2:'Open-World-Größe',cmp_r3:'Lore & Erzählung',cmp_r4:'PvE-First-Design',
+    cmp_r5:'Tiefe des Basisbaues',cmp_r6:'Deviant/Begleitersystem',cmp_r7:'Regelmäßige Updates',
+    gal_eye:'Screenshots',gal_title:'Die Welt <span class="c">sehen</span>',
+    trail_eye:'Vorschau',trail_title:'Die <span class="c">Kontamination</span> erleben',trail_label:'Offizieller Gameplay-Trailer',
+    cta3_h:'Noch unentschlossen?',cta3_p:'Once Human ist kostenlos. Nichts zu verlieren und eine ganze Welt zu gewinnen.',cta3_btn:'Kostenlos spielen — Jetzt starten',cta3_sub:'Keine Kreditkarte. Kein Abonnement.',
+    faq_eye:'Fragen',faq_title:'Alles, was Sie <span class="c">wissen wollen</span>',
+    faq1_q:'Ist Once Human wirklich kostenlos?',faq1_a:'Ja. Kostenlos herunterladen und spielen. Kein Kern-Inhalt ist gesperrt.',
+    faq2_q:'Kann ich solo spielen?',faq2_a:'Solo-Spiel wird vollständig unterstützt und ist bewusst befriedigend gestaltet.',
+    faq3_q:'Wird PvP erzwungen?',faq3_a:'Nein. PvP ist optional. Das Standarderlebnis ist PvE-fokussiert.',
+    faq4_q:'Was sind Deviants?',faq4_a:'Anomale Entitäten, die Sie fangen und mit denen Sie sich verbinden können.',
+    faq5_q:'Wie funktioniert der Basenbau?',faq5_a:'Beanspruchen Sie Territorium und bauen Sie modular — Wände, Böden, Energie, Fallen.',
+    faq6_q:'Gibt es eine Geschichte?',faq6_a:'Beides. Eine echte Erzählung und eine Sandbox koexistieren harmonisch.',
+    faq7_q:'Welche PC-Anforderungen gibt es?',faq7_a:'Minimum: i5-4460, 8GB RAM, GTX 970, 50GB. Empfohlen: i7-6700K, 16GB RAM, GTX 1080.',
+    faq8_q:'Gibt es regelmäßige Updates?',faq8_a:'Ja. Saisonale Inhalte und neue Zonen alle 6–8 Wochen.',
+    faq9_q:'Verliere ich Fortschritte, wenn meine Basis zerstört wird?',faq9_a:'Im PvE-Modus können andere Spieler Ihre Basis nicht zerstören. Blaupausen gehen nie verloren.',
+    faq10_q:'Wie groß ist die Spielwelt?',faq10_a:'Über 200 Quadratkilometer. Verschiedene Biome. Nach hunderten von Stunden entdecken Spieler noch neue Orte.',
+    faq11_q:'Ist das Spiel Pay-to-Win?',faq11_a:'Nein. Monetarisierung ist nur kosmetisch. Vorteile kommen aus Zeit und Können.',
+    re1:'100% Kostenlos',re2:'Kein Pay-to-Win',re3:'Globale Server',re4:'Sichere Plattform',re5:'Regelmäßige Updates',re6:'Plattformübergreifend',
+    sticky_label:'Once Human ist Live',sticky_reassure:'Kostenlos · Keine Kreditkarte',sticky_btn:'Spielen →',
+    footer_brand_p:'Ein Open-World-Überlebenserlebnis in einer verseuchten Zukunft. Kostenlos.',
+    footer_col1:'Spielen',footer_play1:'Kostenlos herunterladen',footer_play2:'Spielmodi',footer_play3:'Spielstile',footer_play4:'Einsteigerleitfaden',
+    footer_col2:'Erkunden',footer_ex1:'Die Welt',footer_ex2:'Herstellung',footer_ex3:'Waffen',footer_ex4:'Basenbau',
+    footer_col3:'Rechtliches',footer_priv:'Datenschutzerklärung',footer_terms:'Nutzungsbedingungen',footer_faq:'FAQ',
+    footer_copy:'© 2024 Once Human. Alle Rechte vorbehalten.',footer_priv2:'Datenschutz',footer_terms2:'Bedingungen',
+    priv_title:'Datenschutzerklärung',
+    priv_p1:'Diese Seite wird von einem unabhängigen Affiliate-Partner betrieben. Wir erfassen nur anonymisierte Analysedaten über Google Analytics 4.',
+    priv_h2:'Erfasste Daten',priv_p2:'GA4 erfasst anonymisierte Seitenaufrufe und Interaktionsereignisse.',
+    priv_h3:'Cookies',priv_p3:'Wir verwenden localStorage für Sprach-/Themeneinstellungen.',
+    priv_h4:'Links Dritter',priv_p4:'Beim Klick auf Once Human-Plattform gelten deren Datenschutzpraktiken.',
+    priv_h5:'Ihre Rechte',priv_p5:'Sie können Zugang oder Löschung Ihrer Daten beantragen.',
+    terms_title:'Nutzungsbedingungen',
+    terms_p1:'Durch den Zugriff auf diese Seite stimmen Sie diesen Bedingungen zu.',
+    terms_h2:'Offenlegung der Zugehörigkeit',terms_p2:'Diese Seite enthält Affiliate-Links. Das Spiel bleibt kostenlos.',
+    terms_h3:'Genauigkeit',terms_p3:'Wir bemühen uns um genaue Informationen, aber Spielfunktionen können sich ändern.',
+    terms_h4:'Verbotene Nutzung',terms_p4:'Die Vervielfältigung oder das Scraping dieses Inhalts ist untersagt.',
+    terms_h5:'Haftungsbeschränkung',terms_p5:'Diese Seite ist informativ. Wir haften nicht für auf der Grundlage ihres Inhalts getroffene Entscheidungen.',
+    pnum_2:'Offene Welt',pnum_3:'Kostenlos',pnum_4:'Solo & Trupp',pnum_5:'PvE-First',pnum_6:'PC & Mehr',stat_coop:'4 Spieler',stat_free:'Kostenlos',cval_massive:'Riesig',cval_medium:'Mittel',cval_small:'Klein',cval_deep:'✓ Tiefgehend',cval_minimal:'Minimal',cval_basic:'Einfach',cval_advanced:'✓ Fortgeschritten',cval_moderate:'Mäßig',cval_unique:'✓ Einzigartig',cval_slow:'Langsam',cval_occasional:'Gelegentlich'
+  },
+  es:{
+    site_name:'Once Human',
+    hero_eyebrow:'Gratis · Supervivencia en Mundo Abierto',
+    watch_trailer:'▶ Ver Tráiler',
+    proof_1:'Jugadores en el Mundo',proof_2:'Mapa Contaminado Masivo',proof_3:'Sin Paywalls, Pura Habilidad',
+    proof_4:'Tus Reglas',proof_5:'PvP Opcional',proof_6:'Multiplataforma',
+    core_eye:'Lo que harás',
+    core_title:'El Bucle que <span class="c">Nunca Envejece</span>',
+    core_lead:'Cada sesión en Once Human se construye sobre la anterior. Explorar. Saquear. Construir. Luchar.',
+    c1_h:'Explorar la Niebla',c1_p:'Adéntrate en zonas contaminadas. Cada bioma esconde amenazas y botín diferente.',
+    c2_h:'Saquear y Fabricar',c2_p:'Saquea instalaciones abandonadas. Convierte materias primas en equipo.',
+    c3_h:'Construir tu Base',c3_p:'Reclama territorio. Levanta muros. Tu base te define.',
+    c4_h:'Luchar y Superar',c4_p:'Enfréntate a Aberraciones Stardust y jefes corrompidos.',
+    c5_h:'Investigar y Mejorar',c5_p:'Desbloquea planos y evoluciona tus habilidades Metahumanas.',
+    c6_h:'Aliarse o Conquistar',c6_p:'Únete a un escuadrón o domina como operador solitario.',
+    s1:'Mundo abierto para explorar',s2:'Objetos fabricables',s3:'Escuadrones co-op',s4:'Sin barrera de entrada',
+    cta1_h:'La Niebla Ha Estado Esperando',cta1_p:'Miles de supervivientes ya están dentro. ¿Entrarás preparado?',cta1_btn:'Entrar al Mundo — Gratis',
+    world_eye:'El Escenario',world_title:'Un Mundo que Quiere <span class="c">Matarte</span>',
+    world_lead:'El Stardust no solo contaminó el entorno. Reescribió la biología y dio origen a cosas que no siguen ninguna regla.',
+    tag_danger:'Zona de Peligro',tag_mystery:'Entidad Desconocida',tag_world:'Evento Mundial',
+    t1_h:'Las Zonas Contaminadas',t1_p:'Niebla densa, física distorsionada, densidad de mutantes que escala con la profundidad.',
+    t2_h:'Aberraciones Stardust',t2_p:'Estas criaturas no siempre fueron monstruos. El Stardust las reescribió.',
+    t3_h:'Eventos Dinámicos',t3_p:'Las tormentas de anomalías llegan sin aviso. No hay dos noches iguales.',
+    why_eye:'Por qué los Jugadores se Quedan',why_title:'Este Mundo se te Mete <span class="c">Bajo la Piel</span>',
+    w1_h:'Misterio que Vale la Pena',w1_p:'Lore en capas — registros de investigación, transmisiones cifradas, terminales IA.',
+    w2_h:'Peligro que se Siente Real',w2_p:'Perder tu equipo en una tormenta Stardust cambia tu sesión.',
+    w3_h:'Progresión que se Acumula',w3_p:'Cada hora invertida transforma la experiencia.',
+    w4_h:'Un Mapa que Vale Perderse',w4_p:'Pueblos fantasma, búnkeres, tierras bajas inundadas. Cada rincón recompensa la curiosidad.',
+    w5_h:'Construcción con Alma',w5_p:'Tu base es el registro físico de tu tiempo en este mundo.',
+    w6_h:'Co-op que lo Cambia Todo',w6_p:'Un jefe que destruyó tu partida en solitario se vuelve legendario con amigos.',
+    play_eye:'Tu Identidad',play_title:'Elige tu <span class="c">Estilo</span>',
+    play_lead:'Once Human no te encierra en una clase. Tu estilo se define por tu equipo y tus decisiones.',
+    tab_lone:'Operador Solitario',tab_builder:'Maestro Constructor',tab_squad:'Líder de Escuadrón',tab_hunter:'Cazador de Jefes',
+    lone_h:'El Fantasma de la Niebla',lone_p:'Te mueves por zonas contaminadas con precisión quirúrgica.',
+    lone_p1:'Rutas Sigilosas',lone_p2:'Construcciones Compactas',lone_p3:'Autosuficiencia',lone_p4:'Equipos Ágiles',
+    builder_h:'Arquitecto de las Ruinas',builder_p:'Tu base es una declaración de ingeniería.',
+    builder_p1:'Diseños Complejos',builder_p2:'Diseño de Red Eléctrica',builder_p3:'Eficiencia Máxima',builder_p4:'Cadenas de Fabricación',
+    squad_h:'Multiplicador de Fuerza',squad_p:'Conviertes cuatro jugadores en algo imparable.',
+    squad_p1:'Combos de Habilidades',squad_p2:'Botín Compartido',squad_p3:'Incursiones de Jefes',squad_p4:'Control Territorial',
+    hunter_h:'Cima de la Cadena Alimentaria',hunter_p:'Los jefes son tu referencia. Te especializas para el encuentro.',
+    hunter_p1:'Patrones de Jefes',hunter_p2:'Builds Optimizados',hunter_p3:'Botín de Élite',hunter_p4:'Poderes Deviant',
+    base_eye:'Sistema de Territorio',base_title:'Tu Base es tu <span class="c">Declaración</span>',
+    base_p1:'El territorio no es solo un punto de reaparición. Es la manifestación física de cada hora invertida.',
+    base_p2:'Gestiona líneas eléctricas, construye talleres y fortifícate contra anomalías.',
+    bf1_h:'Construcción Modular',bf1_p:'Cientos de piezas estructurales. Control creativo total.',
+    bf2_h:'Energía y Automatización',bf2_p:'Conecta generadores, luces y sistemas de almacenamiento automatizados.',
+    bf3_h:'Deviants y Defensa',bf3_p:'Despliega Deviants como compañeros. Construye torretas y trampas.',
+    craft_eye:'Sistema de Progresión',craft_title:'De la Chatarra a la <span class="c">Leyenda</span>',
+    craft_lead:'El árbol de fabricación de Once Human es un juego completo en sí mismo.',
+    cr1_h:'Supervivencia Bruta',cr1_p:'Herramientas de piedra, armadura de tela, refugios básicos.',
+    cr2_h:'Era Industrial',cr2_p:'Bancos de metal, armas de fuego, refuerzo estructural.',
+    cr3_h:'Síntesis Tecnológica',cr3_p:'Electrónica, piezas de vehículos, sistemas automatizados.',
+    cr4_h:'Fusión Stardust',cr4_p:'Aleaciones contaminadas, aumentos de habilidades, mods de armas exóticos.',
+    cr5_h:'Maestría Metahumana',cr5_p:'Equipo forjado por Deviants y armamento que dobla la realidad.',
+    wpn_eye:'Arsenal',wpn_title:'Tu Equipo, <span class="c">tu Firma</span>',
+    wpn_lead:'Mods, planos y aumentos Deviant crean builds genuinamente únicos.',
+    wpn1_h:'Rifles de Precisión',wpn1_p:'Letalidad de largo alcance. Construido para la paciencia.',
+    wpn2_h:'Escopetas',wpn2_p:'Devastadoras a corta distancia. Cero concesiones.',
+    wpn3_h:'Armas de Energía',wpn3_p:'Alimentadas por Stardust. Efectos de estado irresistibles.',
+    wpn4_h:'Explosivos',wpn4_p:'Cuando quieres que todo el mapa discrepe con la existencia de algo.',
+    mode_eye:'Modos de Juego',mode_title:'Tu Mundo, <span class="c">tus Reglas</span>',
+    pve_badge:'Enfoque PvE',pve_h:'Modo Supervivencia',pve_p:'Tú contra el mundo. Zonas contaminadas, aberraciones y amenazas ambientales implacables.',
+    pve_f1:'Exploración completa de mundo abierto',pve_f2:'Co-op activado, PvP opcional',pve_f3:'Misiones narrativas progresivas',pve_f4:'Eventos mundiales e incursiones de jefes',pve_f5:'Acceso completo a fabricación y construcción',
+    pvp_badge:'PvP Opcional',pvp_h:'Guerras Territoriales',pvp_p:'Cuando el mundo PvE no basta. Controla nodos de recursos y saquea bases rivales.',
+    pvp_f1:'Opcional — nunca forzado',pvp_f2:'Mecánicas de control territorial',pvp_f3:'Guerra de alianzas',pvp_f4:'Contención de nodos de recursos',
+    cta2_h:'Tu Equipo no se Construirá Solo',cta2_p:'Los mejores builds fueron diseñados por jugadores que empezaron exactamente donde estás ahora.',cta2_btn:'Empieza a Construir tu Superviviente',
+    coop_eye:'Co-op',coop_title:'Algunos Momentos Solo Ocurren <span class="c">Juntos</span>',
+    coop_lead:'El co-op de Once Human fue diseñado para crear momentos únicos y memorables.',
+    cm1_h:'Primer Kill de Jefe Mundial',cm1_p:'Cuatro jugadores, habilidades coordinadas. Legendario.',
+    cm2_h:'Base Bajo Asedio',cm2_p:'Una anomalía golpea a las 2am. Tu compañero se conecta. Aguantáis el perímetro.',
+    cm3_h:'La Corrida por Zona Profunda',cm3_p:'Un escuadrón completo se adentra en Zona 5. Todos regresan cambiados.',
+    cm4_h:'División de Recursos',cm4_p:'Uno fabrica. Uno explora. Uno defiende. Uno investiga. Cuando funciona, es extraordinario.',
+    guide_eye:'Empezar',guide_title:'Tu Primera <span class="c">Hora</span>',
+    guide_lead:'Once Human no te ahoga en tutoriales. Esto es en lo que debes centrarte primero.',
+    gs1_h:'Aterrizar y Respirar',gs1_p:'Recolecta recursos básicos. Resiste el impulso de explorar de inmediato.',
+    gs2_h:'Reclamar tu Territorio',gs2_p:'Usa tu Marcador de Territorio pronto. Busca terreno elevado cerca del agua.',
+    gs3_h:'Construir los Cuatro Básicos',gs3_p:'Banco de trabajo, Horno, Almacenamiento, Refugio. Tu base mínima viable.',
+    gs4_h:'Encontrar tu Primer Deviant',gs4_p:'Captura un Deviant pronto — incluso de bajo nivel hace la exploración más segura.',
+    gs5_h:'Entrar en la Primera Zona Contaminada',gs5_p:'Con armadura básica y un arma a distancia, avanza. Lo que encuentres responderá tus primeras preguntas reales.',
+    cmp_eye:'Por Qué Once Human',cmp_title:'Cómo se <span class="c">Diferencia</span>',
+    cmp_feature:'Característica',cmp_oh:'Once Human',cmp_game2:'Supervivencia Típica A',cmp_game3:'Supervivencia Típica B',
+    cmp_r1:'Gratis para Jugar',cmp_r2:'Tamaño del Mundo Abierto',cmp_r3:'Lore y Narrativa',cmp_r4:'Diseño PvE-First',
+    cmp_r5:'Profundidad de Construcción de Base',cmp_r6:'Sistema Deviant/Compañero',cmp_r7:'Actualizaciones Regulares',
+    gal_eye:'Capturas de Pantalla',gal_title:'Ver el <span class="c">Mundo</span>',
+    trail_eye:'Vista Previa',trail_title:'Ver la <span class="c">Contaminación</span>',trail_label:'Tráiler Oficial de Gameplay',
+    cta3_h:'¿Aún Dudando?',cta3_p:'Once Human es gratis. Nada que perder y un mundo entero por ganar.',cta3_btn:'Jugar Gratis — Empezar Ahora',cta3_sub:'Sin tarjeta de crédito. Sin compromiso.',
+    faq_eye:'Preguntas',faq_title:'Todo lo que Quieres <span class="c">Saber</span>',
+    faq1_q:'¿Es Once Human realmente gratis?',faq1_a:'Sí. Gratis para descargar y jugar. Ningún contenido principal bloqueado.',
+    faq2_q:'¿Puedo jugar en solitario?',faq2_a:'El juego en solitario es completamente compatible y diseñado deliberadamente para ser satisfactorio.',
+    faq3_q:'¿El PvP es obligatorio?',faq3_a:'No. El PvP es opcional. La experiencia predeterminada está enfocada en PvE.',
+    faq4_q:'¿Qué son los Deviants?',faq4_a:'Entidades anómalas que capturas y con las que te vinculas.',
+    faq5_q:'¿Cómo funciona la construcción de base?',faq5_a:'Reclama territorio y construye libremente con un sistema modular.',
+    faq6_q:'¿Hay una historia?',faq6_a:'Ambas. Una narrativa genuina y un sandbox coexisten armoniosamente.',
+    faq7_q:'¿Cuáles son los requisitos del PC?',faq7_a:'Mínimo: i5-4460, 8GB RAM, GTX 970, 50GB. Recomendado: i7-6700K, 16GB RAM, GTX 1080.',
+    faq8_q:'¿Tiene actualizaciones regulares?',faq8_a:'Sí. Contenido de temporada y nuevas zonas cada 6-8 semanas.',
+    faq9_q:'¿Perderé progreso si destruyen mi base?',faq9_a:'En modo PvE, otros jugadores no pueden destruir tu base. Nunca pierdes planos.',
+    faq10_q:'¿Qué tan grande es el mundo del juego?',faq10_a:'Más de 200 kilómetros cuadrados. Diferentes biomas. Tras cientos de horas, los jugadores aún descubren lugares nuevos.',
+    faq11_q:'¿Es pay-to-win?',faq11_a:'No. La monetización es solo cosmética. La ventaja competitiva viene del tiempo y la habilidad.',
+    re1:'100% Gratis',re2:'Sin Pay-to-Win',re3:'Servidores Globales',re4:'Plataforma Segura',re5:'Actualizaciones Regulares',re6:'Multiplataforma',
+    sticky_label:'Once Human está en Vivo',sticky_reassure:'Gratis · Sin tarjeta de crédito',sticky_btn:'Jugar →',
+    footer_brand_p:'Una experiencia de supervivencia en mundo abierto en un futuro contaminado. Gratis.',
+    footer_col1:'Jugar',footer_play1:'Descargar Gratis',footer_play2:'Modos de Juego',footer_play3:'Estilos de Juego',footer_play4:'Guía para Nuevos Jugadores',
+    footer_col2:'Explorar',footer_ex1:'El Mundo',footer_ex2:'Fabricación',footer_ex3:'Armas',footer_ex4:'Construcción de Base',
+    footer_col3:'Legal',footer_priv:'Política de Privacidad',footer_terms:'Términos de Uso',footer_faq:'Preguntas Frecuentes',
+    footer_copy:'© 2024 Once Human. Todos los derechos reservados.',footer_priv2:'Privacidad',footer_terms2:'Términos',
+    priv_title:'Política de Privacidad',
+    priv_p1:'Esta página es operada por un socio afiliado independiente. Solo recopilamos datos analíticos anonimizados a través de Google Analytics 4.',
+    priv_h2:'Datos que Recopilamos',priv_p2:'GA4 recopila vistas de página anonimizadas y eventos de interacción.',
+    priv_h3:'Cookies',priv_p3:'Usamos localStorage para preferencias de idioma/tema.',
+    priv_h4:'Enlaces de Terceros',priv_p4:'Al hacer clic en la plataforma Once Human, se aplican sus prácticas de privacidad.',
+    priv_h5:'Tus Derechos',priv_p5:'Puedes solicitar acceso o eliminación de tus datos.',
+    terms_title:'Términos de Uso',
+    terms_p1:'Al acceder a esta página, aceptas estos términos.',
+    terms_h2:'Divulgación de Afiliados',terms_p2:'Esta página contiene enlaces de afiliados. El juego sigue siendo gratuito.',
+    terms_h3:'Precisión',terms_p3:'Mantenemos información precisa, pero las características del juego pueden cambiar.',
+    terms_h4:'Uso Prohibido',terms_p4:'La reproducción o scraping de este contenido está prohibido.',
+    terms_h5:'Limitación de Responsabilidad',terms_p5:'Esta página es informativa. No somos responsables de las decisiones tomadas basándose en su contenido.',
+    pnum_2:'Mundo Abierto',pnum_3:'Gratis',pnum_4:'Solo y Escuadrón',pnum_5:'PvE-Primero',pnum_6:'PC y Más',stat_coop:'4 Jugadores',stat_free:'Gratis',cval_massive:'Masivo',cval_medium:'Mediano',cval_small:'Pequeño',cval_deep:'✓ Profundo',cval_minimal:'Mínimo',cval_basic:'Básico',cval_advanced:'✓ Avanzado',cval_moderate:'Moderado',cval_unique:'✓ Único',cval_slow:'Lento',cval_occasional:'Ocasional'
+  }
+};
+
+/* ---- STATE ---- */
+var currentLang='en';
+var currentTheme='dark';
+window.LP_VARIANT=1;
+
+/* ---- SAFE STORAGE ---- */
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+
+/* ---- SAFE HISTORY ---- */
+function safeReplaceState(url){try{history.replaceState(null,'',url);}catch(e){}}
+function safePushState(url){try{history.pushState(null,'',url);}catch(e){}}
+
+/* ---- SAFE URL PARAMS ---- */
+function getParams(){
+  try{return new URLSearchParams(window.location.search);}catch(e){return new URLSearchParams('');}
+}
+
+/* ---- INIT ---- */
+function init(){
+  // URL params
+  var params=getParams();
+
+  // Variant
+  var pv=params.get('variant');
+  var sv=lsGet('lp_variant');
+  if(pv&&VARIANTS[pv]){window.LP_VARIANT=parseInt(pv);}
+  else if(sv&&VARIANTS[sv]){window.LP_VARIANT=parseInt(sv);}
+  else{window.LP_VARIANT=Math.floor(Math.random()*6)+1;}
+  lsSet('lp_variant',window.LP_VARIANT);
+  applyVariant(window.LP_VARIANT);
+
+  // Language
+  var pl=params.get('lang');
+  var sl=lsGet('lp_lang');
+  var bl=navigator.language?navigator.language.slice(0,2).toLowerCase():'en';
+  var lang=pl||sl||(I18N[bl]?bl:'en');
+  setLang(lang,true);
+
+  // Theme
+  var pt=params.get('theme');
+  var st=lsGet('lp_theme');
+  var bt=window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';
+  var theme=pt||st||bt;
+  setTheme(theme,true);
+
+  // Modal from URL
+  var modal=params.get('modal');
+  if(modal==='privacy')openModal('privacy',true);
+  else if(modal==='terms')openModal('terms',true);
+
+  // Sticky bar
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  // Lazy images
+  setupLazyLoad();
+
+  // Scroll depth
+  setupScrollDepth();
+}
+
+function applyVariant(v){
+  var vd=VARIANTS[v];
+  if(!vd)return;
+  var t=document.getElementById('hero-title');
+  var s=document.getElementById('hero-subtitle');
+  var cta=document.getElementById('hero-cta');
+  var mc=document.getElementById('hero-microcopy');
+  if(t)t.innerHTML=vd.title;
+  if(s)s.textContent=vd.subtitle;
+  if(cta)cta.textContent=vd.cta;
+  if(mc)mc.textContent=vd.micro;
+}
+
+/* ---- LANGUAGE ---- */
+function setLang(lang,silent){
+  if(!I18N[lang])lang='en';
+  currentLang=lang;
+  lsSet('lp_lang',lang);
+  document.documentElement.lang=lang;
+
+  // Update URL
+  var p=getParams();
+  p.set('lang',lang);
+  safeReplaceState('?'+p.toString());
+
+  // Re-apply translations
+  var t=I18N[lang];
+  // Handle plain text keys
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n');
+    if(t[key]===undefined)return;
+    if(el.tagName==='INPUT'){el.value=t[key];}
+    else{el.textContent=t[key];}
+  });
+  // Handle HTML keys (elements with child markup that must be preserved via innerHTML)
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(t[key]!==undefined)el.innerHTML=t[key];
+  });
+
+  // Update lang button states
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.classList.toggle('active',btn.getAttribute('data-lang')===lang);
+  });
+
+  // Re-apply variant (CTA text may differ per lang, but we keep variant hero)
+  applyVariant(window.LP_VARIANT);
+
+  if(!silent)trackEvent('language_change',{language:lang});
+}
+
+/* ---- THEME ---- */
+function setTheme(theme,silent){
+  currentTheme=theme;
+  lsSet('lp_theme',theme);
+  document.documentElement.setAttribute('data-theme',theme);
+
+  var p=getParams();
+  p.set('theme',theme);
+  safeReplaceState('?'+p.toString());
+
+  var btn=document.getElementById('theme-toggle');
+  if(btn)btn.textContent=theme==='dark'?'☀️':'🌙';
+
+  if(!silent)trackEvent('theme_change',{theme:theme});
+}
+
+function toggleTheme(){
+  setTheme(currentTheme==='dark'?'light':'dark');
+}
+
+/* ---- SCROLL ---- */
+function onScroll(){
+  var y=window.scrollY||window.pageYOffset;
+  var sb=document.getElementById('sticky-bar');
+  var bt=document.getElementById('back-top');
+  if(sb){sb.classList.toggle('visible',y>400);}
+  if(bt){bt.classList.toggle('visible',y>600);}
+}
+
+/* ---- LAZY LOAD ---- */
+function setupLazyLoad(){
+  var imgs=document.querySelectorAll('img[data-src]');
+  if(!imgs.length)return;
+  if('IntersectionObserver' in window){
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var img=e.target;
+          var src=img.getAttribute('data-src');
+          if(src&&src!=='screenshot_1'&&src!=='screenshot_2'&&src!=='screenshot_3'&&src!=='screenshot_4'&&src!=='screenshot_5'){
+            img.src=src;
+            img.addEventListener('load',function(){img.classList.add('loaded');});
+          }
+          obs.unobserve(img);
+        }
+      });
+    },{rootMargin:'200px'});
+    imgs.forEach(function(img){obs.observe(img);});
+  }
+}
+
+/* ---- SCROLL DEPTH ---- */
+function setupScrollDepth(){
+  var marks=[25,50,75,90];
+  var fired={};
+  window.addEventListener('scroll',function(){
+    var pct=Math.round((window.scrollY+window.innerHeight)/document.body.scrollHeight*100);
+    marks.forEach(function(m){
+      if(pct>=m&&!fired[m]){
+        fired[m]=true;
+        trackEvent('scroll_depth',{depth:m});
+      }
+    });
+  },{passive:true});
+}
+
+/* ---- FAQ ---- */
+function toggleFaq(btn){
+  var item=btn.closest('.faq-item');
+  var isOpen=item.getAttribute('aria-expanded')==='true';
+  // close others
+  document.querySelectorAll('.faq-item[aria-expanded="true"]').forEach(function(el){
+    el.setAttribute('aria-expanded','false');
+    el.querySelector('.faq-question').setAttribute('aria-expanded','false');
+  });
+  if(!isOpen){
+    item.setAttribute('aria-expanded','true');
+    btn.setAttribute('aria-expanded','true');
+    var key=btn.getAttribute('data-i18n');
+    if(key)trackEvent('faq_open',{question:key});
+  }
+}
+
+/* ---- PLAYSTYLE TABS ---- */
+function switchTab(id,btn){
+  document.querySelectorAll('.style-content').forEach(function(el){el.classList.remove('active');});
+  document.querySelectorAll('.style-tab').forEach(function(el){el.classList.remove('active');el.setAttribute('aria-selected','false');});
+  var tab=document.getElementById('tab-'+id);
+  if(tab)tab.classList.add('active');
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+}
+
+/* ---- MODALS ---- */
+var prevModalURL='';
+function openModal(type,silent){
+  var overlay=document.getElementById('modal-'+type);
+  if(!overlay)return;
+  prevModalURL=window.location.search;
+
+  var p=getParams();
+  p.set('modal',type);
+  safePushState('?'+p.toString());
+
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+
+  // Focus trap
+  var close=overlay.querySelector('.modal-close');
+  if(close)setTimeout(function(){close.focus();},100);
+
+  if(!silent)trackEvent('legal_modal_open',{modal_type:type});
+}
+
+function closeModal(type){
+  var overlay=document.getElementById('modal-'+type);
+  if(!overlay)return;
+  overlay.classList.remove('open');
+  document.body.style.overflow='';
+
+  // Restore URL
+  var p=getParams();
+  p.delete('modal');
+  var qs=p.toString();
+  safeReplaceState(qs?'?'+qs:window.location.pathname);
+}
+
+// Keyboard close
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-overlay.open').forEach(function(el){
+      var type=el.id.replace('modal-','');
+      closeModal(type);
+    });
+  }
+});
+
+/* ---- TRAILER ---- */
+function playTrailer(){
+  // Placeholder: would open YouTube or embed video
+  window.open('https://www.youtube.com/results?search_query=Once+Human+gameplay+trailer','_blank','noopener');
+}
+
+/* ---- EXPOSE TO GLOBAL SCOPE (required for inline onclick attributes) ---- */
+window.setLang      = setLang;
+window.toggleTheme  = toggleTheme;
+window.switchTab    = switchTab;
+window.toggleFaq    = toggleFaq;
+window.openModal    = openModal;
+window.closeModal   = closeModal;
+window.playTrailer  = playTrailer;
+
+init();
+})();
+</script>
+
+</body>
+</html>
