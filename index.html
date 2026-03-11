@@ -214,10 +214,12 @@ body::before{
 /* L10 — text content (always on top) */
 .hero-content{
   position:relative;z-index:10;
-  width:100%;max-width:900px;
-  padding:80px 24px 110px;
-  margin:0 auto;
-  text-align:center;
+  width:100%;
+  /* left column: takes ~50% of viewport, leaves right side open */
+  max-width:560px;
+  padding:100px 0 110px 6vw;
+  margin:0;
+  text-align:left;
 }
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:8px;
@@ -244,23 +246,23 @@ body::before{
   font-weight:800;
   line-height:1.05;
   letter-spacing:-0.5px;
-  color:var(--text);
-  text-shadow:0 0 60px rgba(36,194,196,0.25);
+  color:#FFFFFF;
+  text-shadow:0 2px 30px rgba(0,0,0,0.8), 0 0 60px rgba(36,194,196,0.25);
   margin-bottom:20px;
   animation:fadeUp .7s .1s ease both;
 }
 .hero-title .accent-cyan{color:var(--cyan-e);text-shadow:0 0 30px rgba(40,240,242,0.5);}
 .hero-title .accent-red{color:var(--red);text-shadow:0 0 30px rgba(246,52,59,0.4);}
 .hero-subtitle{
-  font-size:clamp(1rem,2.5vw,1.25rem);
+  font-size:clamp(1rem,2.5vw,1.2rem);
   font-weight:300;
   color:var(--text-muted);
-  max-width:600px;margin:0 auto 36px;
-  line-height:1.7;
+  max-width:480px;margin:0 0 36px;
+  line-height:1.75;
   animation:fadeUp .8s .2s ease both;
 }
 .hero-cta-row{
-  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:14px;
   animation:fadeUp .9s .3s ease both;
 }
 .btn-primary{
@@ -1186,7 +1188,7 @@ img.loaded{opacity:1}
    ============================================================ */
 
 /* ── Hero enhancements ─────────────────────────────────────── */
-.hero-content{padding:80px 24px 110px;}
+.hero-content{padding:100px 0 110px 6vw;max-width:560px;text-align:left;margin:0;}
 .hero-title{
   font-size:clamp(3rem,8.5vw,6.2rem);
   letter-spacing:-1.5px;
@@ -1203,7 +1205,7 @@ img.loaded{opacity:1}
   box-shadow:0 8px 70px rgba(36,194,196,0.65),0 4px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
 }
 .hero-proof-chips{
-  display:flex;flex-wrap:wrap;justify-content:center;
+  display:flex;flex-wrap:wrap;justify-content:flex-start;
   gap:8px;margin-top:22px;
   animation:fadeUp 1s .5s ease both;
 }
@@ -1607,8 +1609,13 @@ img.loaded{opacity:1}
 
 /* ── Mobile ─────────────────────────────────────────────────── */
 @media(max-width:640px){
-  .hero-title{font-size:clamp(2.4rem,9.5vw,3.6rem);}
-  .hero-content{padding:50px 16px 90px;}
+  .hero-title{font-size:clamp(2.2rem,9vw,3.4rem);}
+  .hero-content{
+    padding:70px 20px 100px;
+    max-width:100%;
+    text-align:left;
+  }
+  .hero-subtitle{max-width:100%;}
   .btn-primary{font-size:14px;padding:15px 30px;}
   .btn-xl{font-size:14px;padding:16px 36px;}
   .feat-adv-grid{grid-template-columns:1fr;}
