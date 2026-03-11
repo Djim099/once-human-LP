@@ -216,8 +216,8 @@ body::before{
   position:relative;z-index:10;
   width:100%;
   /* left column: takes ~50% of viewport, leaves right side open */
-  width:calc(100% - 13vw - 5vw);
-  max-width:620px;
+  width:calc(100% - 13vw - 4vw);
+  max-width:680px;
   padding:100px 0 110px 13vw;
   margin:0;
   text-align:left;
@@ -245,12 +245,15 @@ body::before{
   font-family:var(--font-display);
   font-size:clamp(2.4rem,7vw,5.2rem);
   font-weight:800;
-  line-height:1.05;
+  line-height:1.1;
   letter-spacing:-0.5px;
   color:#FFFFFF;
   text-shadow:0 2px 30px rgba(0,0,0,0.8), 0 0 60px rgba(36,194,196,0.25);
   margin-bottom:20px;
   animation:fadeUp .7s .1s ease both;
+  max-width:660px;
+  word-break:normal;
+  overflow-wrap:normal;
 }
 .hero-title .accent-cyan{color:var(--cyan-e);text-shadow:0 0 30px rgba(40,240,242,0.5);}
 .hero-title .accent-red{color:var(--red);text-shadow:0 0 30px rgba(246,52,59,0.4);}
@@ -258,7 +261,7 @@ body::before{
   font-size:clamp(1rem,2.5vw,1.2rem);
   font-weight:300;
   color:var(--text-muted);
-  max-width:580px;margin:0 0 36px;
+  max-width:640px;margin:0 0 36px;
   line-height:1.75;
   animation:fadeUp .8s .2s ease both;
 }
@@ -1189,7 +1192,7 @@ img.loaded{opacity:1}
    ============================================================ */
 
 /* ── Hero enhancements ─────────────────────────────────────── */
-.hero-content{padding:100px 0 110px 13vw;width:calc(100% - 13vw - 5vw);max-width:620px;text-align:left;margin:0;}
+.hero-content{padding:100px 0 110px 13vw;width:calc(100% - 13vw - 4vw);max-width:680px;text-align:left;margin:0;}
 .hero-title{
   font-size:clamp(3rem,8.5vw,6.2rem);
   letter-spacing:-1.5px;
@@ -2872,37 +2875,37 @@ var CTA_URL='https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=163
 var VARIANTS={
   en:{
     1:{
-      title:'Something in the Mist<br>Is <span class="accent-red">Watching You</span>',
+      title:'Something in the Mist Is <span class="accent-red">Watching You</span>',
       subtitle:'The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.',
       cta:'Enter If You Dare — It\'s Free',
       micro:'Join over 10 million survivors. No credit card required.'
     },
     2:{
-      title:'The World Ended.<br><span class="accent-cyan">You Didn\'t.</span>',
+      title:'The World Ended. <span class="accent-cyan">You Didn\'t.</span>',
       subtitle:'Stardust contaminated everything. Mutants walk the ruins. But you\'re still breathing — and that means you still have options.',
       cta:'Survive the Contamination Free',
       micro:'Download and play immediately. Zero cost to start.'
     },
     3:{
-      title:'From Scavenger to<br><span class="accent-cyan">Apex Predator</span>',
+      title:'From Scavenger to <span class="accent-cyan">Apex Predator</span>',
       subtitle:'You start with nothing. You end with a fortified base, elite weapons, and the respect of every other survivor in the region. The arc is real.',
       cta:'Claim Your Power — Play Free',
       micro:'Full progression. No paywalls. Pure skill.'
     },
     4:{
-      title:'No One<br><span class="accent-cyan">Survives Alone</span>',
+      title:'No One <span class="accent-cyan">Survives Alone</span>',
       subtitle:'The contamination is too wide, too deep, and too strange for any one person to map. Your squad isn\'t just helpful — it\'s the only reason some zones get explored at all.',
       cta:'Play With Friends — 100% Free',
       micro:'Up to 4 players. Cross-platform co-op. Start tonight.'
     },
     5:{
-      title:'Who Will You Become<br>in the <span class="accent-red">Ruins?</span>',
+      title:'Who Will You Become in the <span class="accent-red">Ruins?</span>',
       subtitle:'Once Human doesn\'t assign your role. Your playstyle, your base, your Deviants — every choice is yours. The survivor you become is earned, not selected from a menu.',
       cta:'Define Your Survivor — Free',
       micro:'Unique builds. Endless customization. No templates.'
     },
     6:{
-      title:'The Contamination<br>Claims <span class="accent-cyan">Everyone.</span><br><span style="font-size:.6em;opacity:.7">Except You.</span>',
+      title:'The Contamination Claims <span class="accent-cyan">Everyone.</span> <span style="font-size:.6em;opacity:.7">Except You.</span>',
       subtitle:'Most don\'t last the first night. The ones who do build, adapt, and push deeper. The question isn\'t whether you can survive. It\'s how far you\'re willing to go.',
       cta:'Prove You Can Survive — Free',
       micro:'Brutal. Rewarding. Free to play.'
@@ -2910,37 +2913,37 @@ var VARIANTS={
   },
   fr:{
     1:{
-      title:'Quelque Chose dans le Brouillard<br><span class="accent-red">Vous Observe</span>',
+      title:'Quelque Chose dans le Brouillard <span class="accent-red">Vous Observe</span>',
       subtitle:'La contamination a tout réécrit. Les règles que vous connaissiez n\'existent plus. Le monde est devenu hostile — et ce qui rôde là-dehors est d\'une patience redoutable.',
       cta:'Entrez si Vous l\'Osez — C\'est Gratuit',
       micro:'Rejoignez des millions de survivants. Sans carte bancaire.'
     },
     2:{
-      title:'Le Monde a Sombré.<br><span class="accent-cyan">Pas Vous.</span>',
+      title:'Le Monde a Sombré. <span class="accent-cyan">Pas Vous.</span>',
       subtitle:'Le Stardust a tout contaminé. Des mutants errent dans les ruines. Mais vous respirez encore — et ça change tout.',
       cta:'Survivre à la Contamination — Gratuit',
       micro:'Téléchargez et jouez immédiatement. Sans aucun frais.'
     },
     3:{
-      title:'Du Pillard au<br><span class="accent-cyan">Prédateur Suprême</span>',
+      title:'Du Pillard au <span class="accent-cyan">Prédateur Suprême</span>',
       subtitle:'Vous démarrez avec rien. Vous finissez avec une base fortifiée, des armes d\'élite, et le respect de chaque survivant de la région. L\'ascension est réelle.',
       cta:'Réclamez Votre Puissance — Gratuit',
       micro:'Progression complète. Sans paywalls. Que du skill.'
     },
     4:{
-      title:'Personne ne<br><span class="accent-cyan">Survit Seul</span>',
+      title:'Personne ne <span class="accent-cyan">Survit Seul</span>',
       subtitle:'La contamination est trop vaste, trop profonde, trop étrange pour qu\'un seul homme puisse la cartographier. Votre escouade n\'est pas un luxe — c\'est une nécessité.',
       cta:'Jouer avec des Amis — 100% Gratuit',
       micro:'Jusqu\'à 4 joueurs. Co-op multiplateforme. Commencez ce soir.'
     },
     5:{
-      title:'Qui Deviendrez-Vous<br>dans les <span class="accent-red">Ruines ?</span>',
+      title:'Qui Deviendrez-Vous dans les <span class="accent-red">Ruines ?</span>',
       subtitle:'Once Human ne vous impose aucun rôle. Votre style de jeu, votre base, vos Deviants — chaque choix vous appartient. Le survivant que vous devenez se mérite.',
       cta:'Forgez Votre Survivant — Gratuit',
       micro:'Builds uniques. Personnalisation sans fin. Aucun modèle imposé.'
     },
     6:{
-      title:'La Contamination<br>Emporte <span class="accent-cyan">Tout le Monde.</span><br><span style="font-size:.6em;opacity:.7">Sauf Vous.</span>',
+      title:'La Contamination Emporte <span class="accent-cyan">Tout le Monde.</span> <span style="font-size:.6em;opacity:.7">Sauf Vous.</span>',
       subtitle:'La plupart ne passent pas la première nuit. Ceux qui survivent construisent, s\'adaptent, et plongent toujours plus loin. La vraie question n\'est pas si vous pouvez survivre. C\'est jusqu\'où vous irez.',
       cta:'Prouvez que Vous Pouvez Survivre — Gratuit',
       micro:'Brutal. Addictif. Gratuit.'
@@ -2948,37 +2951,37 @@ var VARIANTS={
   },
   de:{
     1:{
-      title:'Etwas im Nebel<br><span class="accent-red">Beobachtet Sie</span>',
+      title:'Etwas im Nebel <span class="accent-red">Beobachtet Sie</span>',
       subtitle:'Die Kontamination hat alles neu geschrieben, was Sie über Überleben wussten. Die Regeln existieren nicht mehr. Die Welt ist feindlich — und draußen lauert etwas mit unendlicher Geduld.',
       cta:'Eintreten wenn Sie sich trauen — Kostenlos',
       micro:'Millionen von Überlebenden warten. Keine Kreditkarte nötig.'
     },
     2:{
-      title:'Die Welt ist Untergegangen.<br><span class="accent-cyan">Sie Nicht.</span>',
+      title:'Die Welt ist Untergegangen. <span class="accent-cyan">Sie Nicht.</span>',
       subtitle:'Stardust hat alles verseucht. Mutanten durchstreifen die Ruinen. Aber Sie atmen noch — und das bedeutet, Sie haben noch Möglichkeiten.',
       cta:'Die Kontamination Überleben — Kostenlos',
       micro:'Sofort herunterladen und spielen. Null Kosten.'
     },
     3:{
-      title:'Vom Plünderer zum<br><span class="accent-cyan">Apex-Raubtier</span>',
+      title:'Vom Plünderer zum <span class="accent-cyan">Apex-Raubtier</span>',
       subtitle:'Sie beginnen mit nichts. Sie enden mit einer befestigten Basis, Elite-Waffen und dem Respekt jedes Überlebenden in der Region. Der Aufstieg ist real.',
       cta:'Beanspruchen Sie Ihre Macht — Kostenlos',
       micro:'Volle Progression. Keine Paywalls. Reines Können.'
     },
     4:{
-      title:'Niemand<br><span class="accent-cyan">Überlebt Allein</span>',
+      title:'Niemand <span class="accent-cyan">Überlebt Allein</span>',
       subtitle:'Die Kontamination ist zu weit, zu tief und zu fremd, als dass ein Einzelner sie kartographieren könnte. Ihr Trupp ist kein Bonus — er ist der Grund, warum manche Zonen überhaupt erkundet werden.',
       cta:'Mit Freunden Spielen — 100% Kostenlos',
       micro:'Bis zu 4 Spieler. Plattformübergreifendes Co-op. Heute Nacht starten.'
     },
     5:{
-      title:'Wer Werden Sie<br>in den <span class="accent-red">Ruinen?</span>',
+      title:'Wer Werden Sie in den <span class="accent-red">Ruinen?</span>',
       subtitle:'Once Human weist Ihnen keine Rolle zu. Ihr Spielstil, Ihre Basis, Ihre Deviants — jede Entscheidung gehört Ihnen. Der Überlebende, der Sie werden, muss verdient werden.',
       cta:'Ihren Überlebenden Gestalten — Kostenlos',
       micro:'Einzigartige Builds. Endlose Anpassung. Keine Schablonen.'
     },
     6:{
-      title:'Die Kontamination<br>Fordert <span class="accent-cyan">Alle.</span><br><span style="font-size:.6em;opacity:.7">Außer Ihnen.</span>',
+      title:'Die Kontamination Fordert <span class="accent-cyan">Alle.</span> <span style="font-size:.6em;opacity:.7">Außer Ihnen.</span>',
       subtitle:'Die meisten überleben die erste Nacht nicht. Die wenigen, die es tun, bauen, passen sich an und dringen immer tiefer vor. Die Frage ist nicht ob Sie überleben können. Sondern wie weit Sie bereit sind zu gehen.',
       cta:'Beweisen Sie, Dass Sie Überleben — Kostenlos',
       micro:'Brutal. Fesselnd. Kostenlos.'
@@ -2986,37 +2989,37 @@ var VARIANTS={
   },
   es:{
     1:{
-      title:'Algo en la Niebla<br><span class="accent-red">Te Está Observando</span>',
+      title:'Algo en la Niebla <span class="accent-red">Te Está Observando</span>',
       subtitle:'La contaminación reescribió todo lo que sabías sobre supervivencia. Las reglas han desaparecido. El mundo es hostil — y lo que acecha ahí fuera tiene una paciencia inquietante.',
       cta:'Entra si Te Atreves — Es Gratis',
       micro:'Millones de supervivientes ya están dentro. Sin tarjeta de crédito.'
     },
     2:{
-      title:'El Mundo Terminó.<br><span class="accent-cyan">Tú No.</span>',
+      title:'El Mundo Terminó. <span class="accent-cyan">Tú No.</span>',
       subtitle:'El Stardust lo contaminó todo. Los mutantes recorren las ruinas. Pero tú todavía respiras — y eso lo cambia todo.',
       cta:'Sobrevive a la Contaminación — Gratis',
       micro:'Descarga y juega de inmediato. Sin ningún coste.'
     },
     3:{
-      title:'De Carroñero a<br><span class="accent-cyan">Depredador Supremo</span>',
+      title:'De Carroñero a <span class="accent-cyan">Depredador Supremo</span>',
       subtitle:'Empiezas sin nada. Terminas con una base fortificada, armas de élite y el respeto de cada superviviente de la región. El ascenso es real.',
       cta:'Reclama Tu Poder — Juega Gratis',
       micro:'Progresión completa. Sin muros de pago. Pura habilidad.'
     },
     4:{
-      title:'Nadie<br><span class="accent-cyan">Sobrevive Solo</span>',
+      title:'Nadie <span class="accent-cyan">Sobrevive Solo</span>',
       subtitle:'La contaminación es demasiado vasta, demasiado profunda y demasiado extraña para que una sola persona la cartografíe. Tu escuadrón no es útil — es imprescindible.',
       cta:'Juega con Amigos — 100% Gratis',
       micro:'Hasta 4 jugadores. Co-op multiplataforma. Empieza esta noche.'
     },
     5:{
-      title:'¿En Quién te Convertirás<br>entre las <span class="accent-red">Ruinas?</span>',
+      title:'¿En Quién te Convertirás entre las <span class="accent-red">Ruinas?</span>',
       subtitle:'Once Human no te asigna un rol. Tu estilo de juego, tu base, tus Deviants — cada decisión es tuya. El superviviente en que te conviertes se gana, no se elige de un menú.',
       cta:'Define tu Superviviente — Gratis',
       micro:'Builds únicos. Personalización infinita. Sin plantillas.'
     },
     6:{
-      title:'La Contaminación<br>Se Lleva a <span class="accent-cyan">Todos.</span><br><span style="font-size:.6em;opacity:.7">Menos a Ti.</span>',
+      title:'La Contaminación Se Lleva a <span class="accent-cyan">Todos.</span> <span style="font-size:.6em;opacity:.7">Menos a Ti.</span>',
       subtitle:'La mayoría no sobrevive la primera noche. Los que lo logran construyen, se adaptan y se adentran más. La pregunta no es si puedes sobrevivir. Es hasta dónde estás dispuesto a llegar.',
       cta:'Demuestra que Puedes Sobrevivir — Gratis',
       micro:'Brutal. Adictivo. Gratis.'
@@ -3152,7 +3155,7 @@ var I18N={
     trail_desc:'See Once Human in motion — the biomes, the aberrations, the base raids, the moments that make players stay for months. Every frame is a world you\'ll actually survive in.',
     trail_cta:'Play Free Now →',
     close_eye:'The Mist Doesn\'t Wait',
-    close_title:'Your Survival Story<br>Starts <span class="c">Right Now</span>',
+    close_title:'Your Survival Story Starts <span class="c">Right Now</span>',
     close_sub:'Once Human costs nothing to enter. The world is live — full of players building, fighting, and carving out territory. Every day you wait is a day they\'re ahead of you.',
     close_cta:'Claim Your Territory — Free →',
     close_micro:'Free to play · PC & Mobile · No credit card required',
@@ -3296,7 +3299,7 @@ var I18N={
     trail_desc:'Regardez Once Human en mouvement — les biomes, les aberrations, les raids de base. Chaque image est un monde dans lequel vous survivrez vraiment.',
     trail_cta:'Jouer Gratuitement →',
     close_eye:'Le Brouillard N\'Attend Pas',
-    close_title:'Votre Histoire de Survie<br>Commence <span class="c">Maintenant</span>',
+    close_title:'Votre Histoire de Survie Commence <span class="c">Maintenant</span>',
     close_sub:'Once Human ne coûte rien pour entrer. Le monde est en direct — rempli de joueurs construisant et se battant pour leur territoire. Chaque jour d\'attente est un jour de retard.',
     close_cta:'Revendiquer votre Territoire — Gratuit →',
     close_micro:'Gratuit · PC & Mobile · Sans carte bancaire',
@@ -3440,7 +3443,7 @@ var I18N={
     trail_desc:'Sieh Once Human in Bewegung — die Biome, die Aberrationen, die Basis-Überfälle. Jedes Bild zeigt eine Welt, in der du wirklich überleben wirst.',
     trail_cta:'Jetzt Kostenlos Spielen →',
     close_eye:'Der Nebel Wartet Nicht',
-    close_title:'Deine Überlebensgeschichte<br>Beginnt <span class="c">Jetzt</span>',
+    close_title:'Deine Überlebensgeschichte Beginnt <span class="c">Jetzt</span>',
     close_sub:'Once Human kostet nichts zum Einsteigen. Die Welt ist live — voller Spieler, die Basen bauen und ihr Territorium abstecken. Jeder Tag des Wartens ist ein Rückstand.',
     close_cta:'Territorium Beanspruchen — Kostenlos →',
     close_micro:'Kostenlos · PC & Mobile · Keine Kreditkarte erforderlich',
@@ -3584,7 +3587,7 @@ var I18N={
     trail_desc:'Mira Once Human en movimiento — los biomas, las aberraciones, las incursiones a bases. Cada imagen es un mundo en el que realmente sobrevivirás.',
     trail_cta:'Jugar Gratis Ahora →',
     close_eye:'La Niebla No Espera',
-    close_title:'Tu Historia de Supervivencia<br>Comienza <span class="c">Ahora</span>',
+    close_title:'Tu Historia de Supervivencia Comienza <span class="c">Ahora</span>',
     close_sub:'Once Human no cuesta nada para entrar. El mundo está en vivo — lleno de jugadores construyendo y reclamando territorio. Cada día que esperas es un día de retraso.',
     close_cta:'Reclamar Tu Territorio — Gratis →',
     close_micro:'Gratis · PC y Móvil · Sin tarjeta de crédito',
