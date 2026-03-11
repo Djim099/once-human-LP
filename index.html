@@ -49,7 +49,7 @@ function trackEvent(name,params){gtag('event',name,params||{});}
   --font-display:'Oxanium',sans-serif;
   --font-body:'Barlow',sans-serif;
   --font-cond:'Barlow Condensed',sans-serif;
-  --topbar-h:48px;
+  --topbar-h:90px;
   --sticky-h:64px;
 }
 html{scroll-behavior:smooth;font-size:16px}
@@ -99,6 +99,7 @@ body::before{
 }
 .topbar-logo{
   display:flex;align-items:center;gap:10px;
+  margin-left:90px;
 }
 .topbar-logo-mark{
   width:32px;height:32px;
@@ -115,7 +116,7 @@ body::before{
   letter-spacing:2px;text-transform:uppercase;
   color:var(--text);
 }
-.topbar-controls{display:flex;align-items:center;gap:8px;}
+.topbar-controls{display:flex;align-items:center;gap:8px;margin-right:90px;}
 .lang-btn{
   background:transparent;
   border:1px solid rgba(36,194,196,0.25);
@@ -898,7 +899,7 @@ body::before{
   align-items:center;justify-content:center;gap:20px;
 }
 .play-btn{
-  width:80px;height:80px;
+  width:80px;height:120px;
   border-radius:50%;
   background:rgba(36,194,196,0.15);
   border:2px solid var(--cyan);
@@ -1667,21 +1668,19 @@ img.loaded{opacity:1}
 
 /* ── Logo image ───────────────────────────────────────────── */
 .topbar-logo-img{
-  height:52px;
+  height:72px;
   width:auto;
   object-fit:contain;
   display:block;
-  /* mix-blend-mode:screen makes pure black (#000) fully transparent */
   mix-blend-mode:screen;
-  filter:drop-shadow(0 0 10px rgba(36,194,196,0.4));
+  filter:drop-shadow(0 0 12px rgba(36,194,196,0.45));
 }
 .footer-logo-img{
-  height:80px;
+  height:90px;
   margin-bottom:10px;
   mix-blend-mode:screen;
   filter:drop-shadow(0 0 14px rgba(36,194,196,0.35));
 }
-/* light theme: use lighten blend so logo still shows on pale bg */
 [data-theme="light"] .topbar-logo-img,
 [data-theme="light"] .footer-logo-img{
   mix-blend-mode:multiply;
