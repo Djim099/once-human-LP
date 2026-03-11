@@ -230,8 +230,8 @@ body::before{
 /* L10 — text content (always on top) */
 .hero-content{
   position:relative;z-index:10;
-  width:calc(100% - 13vw - 8vw);
-  max-width:560px;
+  width:calc(100% - 13vw - 6vw);
+  max-width:700px;
   padding:40px 0 60px 13vw;
   margin:0;
   text-align:left;
@@ -266,9 +266,10 @@ body::before{
   text-shadow:0 2px 40px rgba(0,0,0,0.9), 0 0 50px rgba(36,194,196,0.2);
   margin-bottom:18px;
   animation:fadeUp .7s .1s ease both;
-  max-width:520px;
+  max-width:680px;
   word-break:normal;
   overflow-wrap:normal;
+  white-space:nowrap;
 }
 .hero-title .accent-cyan{color:var(--cyan-e);text-shadow:0 0 30px rgba(40,240,242,0.5);}
 .hero-title .accent-red{color:var(--red);text-shadow:0 0 30px rgba(246,52,59,0.4);}
@@ -1207,7 +1208,7 @@ img.loaded{opacity:1}
    ============================================================ */
 
 /* ── Hero enhancements ─────────────────────────────────────── */
-.hero-content{padding:40px 0 60px 13vw;width:calc(100% - 13vw - 8vw);max-width:560px;text-align:left;margin:0;}
+.hero-content{padding:40px 0 60px 13vw;width:calc(100% - 13vw - 6vw);max-width:700px;text-align:left;margin:0;}
 .hero-title{
   font-size:clamp(2.6rem,5.5vw,4.4rem);
   letter-spacing:-1px;
@@ -1751,22 +1752,18 @@ img.loaded{opacity:1}
     <div class="hero-eyebrow" aria-label="Game category">
       <span data-i18n="hero_eyebrow">Free to Play · Open World Survival</span>
     </div>
-    <h1 class="hero-title" id="hero-title"><!-- injected by A/B --></h1>
-    <p class="hero-subtitle" id="hero-subtitle"><!-- injected by A/B --></p>
+    <h1 class="hero-title" id="hero-title">Something in the Mist Is<br><span class="accent-cyan">Watching You</span></h1>
+    <p class="hero-subtitle" id="hero-subtitle">The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.</p>
     <div class="hero-cta-row">
       <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
         target="_blank" rel="noopener"
         class="btn-primary"
         id="hero-cta"
-        onclick="trackEvent('cta_click',{location:'hero',variant:window.LP_VARIANT})"
-        data-i18n-btn="hero">
-        <!-- injected by A/B -->
+        onclick="trackEvent('cta_click',{location:'hero'})">
+        Enter If You Dare — It's Free
       </a>
-
     </div>
-    <p class="hero-microcopy" id="hero-microcopy" data-i18n-micro="hero">
-      <!-- injected by A/B -->
-    </p>
+    <p class="hero-microcopy" id="hero-microcopy">Join over 10 million survivors. No credit card required.</p>
     <div class="hero-proof-chips" aria-hidden="true">
       <span class="hero-chip"><span class="hero-chip-dot"></span><span data-i18n="pnum_3">Free to Play</span></span>
       <span class="hero-chip"><span class="hero-chip-dot"></span>No Pay-to-Win</span>
@@ -2884,161 +2881,7 @@ img.loaded{opacity:1}
 /* ---- CONFIG ---- */
 var CTA_URL='https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314';
 
-/* ---- A/B VARIANTS (multilingual) ---- */
-var VARIANTS={
-  en:{
-    1:{
-      title:'Something in the Mist Is <span class="accent-red">Watching You</span>',
-      subtitle:'The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.',
-      cta:'Enter If You Dare — It\'s Free',
-      micro:'Join over 10 million survivors. No credit card required.'
-    },
-    2:{
-      title:'The World Ended. <span class="accent-cyan">You Didn\'t.</span>',
-      subtitle:'Stardust contaminated everything. Mutants walk the ruins. But you\'re still breathing — and that means you still have options.',
-      cta:'Survive the Contamination Free',
-      micro:'Download and play immediately. Zero cost to start.'
-    },
-    3:{
-      title:'From Scavenger to <span class="accent-cyan">Apex Predator</span>',
-      subtitle:'You start with nothing. You end with a fortified base, elite weapons, and the respect of every other survivor in the region. The arc is real.',
-      cta:'Claim Your Power — Play Free',
-      micro:'Full progression. No paywalls. Pure skill.'
-    },
-    4:{
-      title:'No One <span class="accent-cyan">Survives Alone</span>',
-      subtitle:'The contamination is too wide, too deep, and too strange for any one person to map. Your squad isn\'t just helpful — it\'s the only reason some zones get explored at all.',
-      cta:'Play With Friends — 100% Free',
-      micro:'Up to 4 players. Cross-platform co-op. Start tonight.'
-    },
-    5:{
-      title:'Who Will You Become in the <span class="accent-red">Ruins?</span>',
-      subtitle:'Once Human doesn\'t assign your role. Your playstyle, your base, your Deviants — every choice is yours. The survivor you become is earned, not selected from a menu.',
-      cta:'Define Your Survivor — Free',
-      micro:'Unique builds. Endless customization. No templates.'
-    },
-    6:{
-      title:'The Contamination Claims <span class="accent-cyan">Everyone.</span> <span style="font-size:.6em;opacity:.7">Except You.</span>',
-      subtitle:'Most don\'t last the first night. The ones who do build, adapt, and push deeper. The question isn\'t whether you can survive. It\'s how far you\'re willing to go.',
-      cta:'Prove You Can Survive — Free',
-      micro:'Brutal. Rewarding. Free to play.'
-    }
-  },
-  fr:{
-    1:{
-      title:'Quelque Chose dans le Brouillard <span class="accent-red">Vous Observe</span>',
-      subtitle:'La contamination a tout réécrit. Les règles que vous connaissiez n\'existent plus. Le monde est devenu hostile — et ce qui rôde là-dehors est d\'une patience redoutable.',
-      cta:'Entrez si Vous l\'Osez — C\'est Gratuit',
-      micro:'Rejoignez des millions de survivants. Sans carte bancaire.'
-    },
-    2:{
-      title:'Le Monde a Sombré. <span class="accent-cyan">Pas Vous.</span>',
-      subtitle:'Le Stardust a tout contaminé. Des mutants errent dans les ruines. Mais vous respirez encore — et ça change tout.',
-      cta:'Survivre à la Contamination — Gratuit',
-      micro:'Téléchargez et jouez immédiatement. Sans aucun frais.'
-    },
-    3:{
-      title:'Du Pillard au <span class="accent-cyan">Prédateur Suprême</span>',
-      subtitle:'Vous démarrez avec rien. Vous finissez avec une base fortifiée, des armes d\'élite, et le respect de chaque survivant de la région. L\'ascension est réelle.',
-      cta:'Réclamez Votre Puissance — Gratuit',
-      micro:'Progression complète. Sans paywalls. Que du skill.'
-    },
-    4:{
-      title:'Personne ne <span class="accent-cyan">Survit Seul</span>',
-      subtitle:'La contamination est trop vaste, trop profonde, trop étrange pour qu\'un seul homme puisse la cartographier. Votre escouade n\'est pas un luxe — c\'est une nécessité.',
-      cta:'Jouer avec des Amis — 100% Gratuit',
-      micro:'Jusqu\'à 4 joueurs. Co-op multiplateforme. Commencez ce soir.'
-    },
-    5:{
-      title:'Qui Deviendrez-Vous dans les <span class="accent-red">Ruines ?</span>',
-      subtitle:'Once Human ne vous impose aucun rôle. Votre style de jeu, votre base, vos Deviants — chaque choix vous appartient. Le survivant que vous devenez se mérite.',
-      cta:'Forgez Votre Survivant — Gratuit',
-      micro:'Builds uniques. Personnalisation sans fin. Aucun modèle imposé.'
-    },
-    6:{
-      title:'La Contamination Emporte <span class="accent-cyan">Tout le Monde.</span> <span style="font-size:.6em;opacity:.7">Sauf Vous.</span>',
-      subtitle:'La plupart ne passent pas la première nuit. Ceux qui survivent construisent, s\'adaptent, et plongent toujours plus loin. La vraie question n\'est pas si vous pouvez survivre. C\'est jusqu\'où vous irez.',
-      cta:'Prouvez que Vous Pouvez Survivre — Gratuit',
-      micro:'Brutal. Addictif. Gratuit.'
-    }
-  },
-  de:{
-    1:{
-      title:'Etwas im Nebel <span class="accent-red">Beobachtet Sie</span>',
-      subtitle:'Die Kontamination hat alles neu geschrieben, was Sie über Überleben wussten. Die Regeln existieren nicht mehr. Die Welt ist feindlich — und draußen lauert etwas mit unendlicher Geduld.',
-      cta:'Eintreten wenn Sie sich trauen — Kostenlos',
-      micro:'Millionen von Überlebenden warten. Keine Kreditkarte nötig.'
-    },
-    2:{
-      title:'Die Welt ist Untergegangen. <span class="accent-cyan">Sie Nicht.</span>',
-      subtitle:'Stardust hat alles verseucht. Mutanten durchstreifen die Ruinen. Aber Sie atmen noch — und das bedeutet, Sie haben noch Möglichkeiten.',
-      cta:'Die Kontamination Überleben — Kostenlos',
-      micro:'Sofort herunterladen und spielen. Null Kosten.'
-    },
-    3:{
-      title:'Vom Plünderer zum <span class="accent-cyan">Apex-Raubtier</span>',
-      subtitle:'Sie beginnen mit nichts. Sie enden mit einer befestigten Basis, Elite-Waffen und dem Respekt jedes Überlebenden in der Region. Der Aufstieg ist real.',
-      cta:'Beanspruchen Sie Ihre Macht — Kostenlos',
-      micro:'Volle Progression. Keine Paywalls. Reines Können.'
-    },
-    4:{
-      title:'Niemand <span class="accent-cyan">Überlebt Allein</span>',
-      subtitle:'Die Kontamination ist zu weit, zu tief und zu fremd, als dass ein Einzelner sie kartographieren könnte. Ihr Trupp ist kein Bonus — er ist der Grund, warum manche Zonen überhaupt erkundet werden.',
-      cta:'Mit Freunden Spielen — 100% Kostenlos',
-      micro:'Bis zu 4 Spieler. Plattformübergreifendes Co-op. Heute Nacht starten.'
-    },
-    5:{
-      title:'Wer Werden Sie in den <span class="accent-red">Ruinen?</span>',
-      subtitle:'Once Human weist Ihnen keine Rolle zu. Ihr Spielstil, Ihre Basis, Ihre Deviants — jede Entscheidung gehört Ihnen. Der Überlebende, der Sie werden, muss verdient werden.',
-      cta:'Ihren Überlebenden Gestalten — Kostenlos',
-      micro:'Einzigartige Builds. Endlose Anpassung. Keine Schablonen.'
-    },
-    6:{
-      title:'Die Kontamination Fordert <span class="accent-cyan">Alle.</span> <span style="font-size:.6em;opacity:.7">Außer Ihnen.</span>',
-      subtitle:'Die meisten überleben die erste Nacht nicht. Die wenigen, die es tun, bauen, passen sich an und dringen immer tiefer vor. Die Frage ist nicht ob Sie überleben können. Sondern wie weit Sie bereit sind zu gehen.',
-      cta:'Beweisen Sie, Dass Sie Überleben — Kostenlos',
-      micro:'Brutal. Fesselnd. Kostenlos.'
-    }
-  },
-  es:{
-    1:{
-      title:'Algo en la Niebla <span class="accent-red">Te Está Observando</span>',
-      subtitle:'La contaminación reescribió todo lo que sabías sobre supervivencia. Las reglas han desaparecido. El mundo es hostil — y lo que acecha ahí fuera tiene una paciencia inquietante.',
-      cta:'Entra si Te Atreves — Es Gratis',
-      micro:'Millones de supervivientes ya están dentro. Sin tarjeta de crédito.'
-    },
-    2:{
-      title:'El Mundo Terminó. <span class="accent-cyan">Tú No.</span>',
-      subtitle:'El Stardust lo contaminó todo. Los mutantes recorren las ruinas. Pero tú todavía respiras — y eso lo cambia todo.',
-      cta:'Sobrevive a la Contaminación — Gratis',
-      micro:'Descarga y juega de inmediato. Sin ningún coste.'
-    },
-    3:{
-      title:'De Carroñero a <span class="accent-cyan">Depredador Supremo</span>',
-      subtitle:'Empiezas sin nada. Terminas con una base fortificada, armas de élite y el respeto de cada superviviente de la región. El ascenso es real.',
-      cta:'Reclama Tu Poder — Juega Gratis',
-      micro:'Progresión completa. Sin muros de pago. Pura habilidad.'
-    },
-    4:{
-      title:'Nadie <span class="accent-cyan">Sobrevive Solo</span>',
-      subtitle:'La contaminación es demasiado vasta, demasiado profunda y demasiado extraña para que una sola persona la cartografíe. Tu escuadrón no es útil — es imprescindible.',
-      cta:'Juega con Amigos — 100% Gratis',
-      micro:'Hasta 4 jugadores. Co-op multiplataforma. Empieza esta noche.'
-    },
-    5:{
-      title:'¿En Quién te Convertirás entre las <span class="accent-red">Ruinas?</span>',
-      subtitle:'Once Human no te asigna un rol. Tu estilo de juego, tu base, tus Deviants — cada decisión es tuya. El superviviente en que te conviertes se gana, no se elige de un menú.',
-      cta:'Define tu Superviviente — Gratis',
-      micro:'Builds únicos. Personalización infinita. Sin plantillas.'
-    },
-    6:{
-      title:'La Contaminación Se Lleva a <span class="accent-cyan">Todos.</span> <span style="font-size:.6em;opacity:.7">Menos a Ti.</span>',
-      subtitle:'La mayoría no sobrevive la primera noche. Los que lo logran construyen, se adaptan y se adentran más. La pregunta no es si puedes sobrevivir. Es hasta dónde estás dispuesto a llegar.',
-      cta:'Demuestra que Puedes Sobrevivir — Gratis',
-      micro:'Brutal. Adictivo. Gratis.'
-    }
-  }
-};
+/* A/B variants removed — single fixed copy */
 
 /* ---- TRANSLATIONS ---- */
 var I18N={
@@ -3644,16 +3487,6 @@ function init(){
   // URL params
   var params=getParams();
 
-  // Variant
-  var pv=params.get('variant');
-  var sv=lsGet('lp_variant');
-  var enVars=VARIANTS['en'];
-  if(pv&&enVars[pv]){window.LP_VARIANT=parseInt(pv);}
-  else if(sv&&enVars[sv]){window.LP_VARIANT=parseInt(sv);}
-  else{window.LP_VARIANT=Math.floor(Math.random()*6)+1;}
-  lsSet('lp_variant',window.LP_VARIANT);
-  // NOTE: applyVariant is called inside setLang below, after language is resolved
-
   // Language
   var pl=params.get('lang');
   var sl=lsGet('lp_lang');
@@ -3684,20 +3517,6 @@ function init(){
   initVideoFallback();
 }
 
-function applyVariant(v){
-  var lang=currentLang||'en';
-  var langVars=VARIANTS[lang]||VARIANTS['en'];
-  var vd=langVars[v];
-  if(!vd)return;
-  var t=document.getElementById('hero-title');
-  var s=document.getElementById('hero-subtitle');
-  var cta=document.getElementById('hero-cta');
-  var mc=document.getElementById('hero-microcopy');
-  if(t)t.innerHTML=vd.title;
-  if(s)s.textContent=vd.subtitle;
-  if(cta)cta.textContent=vd.cta;
-  if(mc)mc.textContent=vd.micro;
-}
 
 /* ---- LANGUAGE ---- */
 function setLang(lang,silent){
@@ -3732,7 +3551,6 @@ function setLang(lang,silent){
   });
 
   // Re-apply variant (CTA text may differ per lang, but we keep variant hero)
-  applyVariant(window.LP_VARIANT);
 
   if(!silent)trackEvent('language_change',{language:lang});
 }
