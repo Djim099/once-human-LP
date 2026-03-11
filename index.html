@@ -287,14 +287,14 @@ body::before{
 }
 .btn-primary{
   display:inline-flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,var(--cyan) 0%,#1AA8AA 100%);
-  color:#07090F;
+  background:linear-gradient(135deg,var(--red) 0%,var(--magenta) 100%);
+  color:#FFFFFF;
   font-family:var(--font-display);
   font-size:15px;font-weight:700;
   letter-spacing:1.5px;text-transform:uppercase;
   padding:15px 36px;border-radius:6px;
   border:none;
-  box-shadow:0 4px 32px rgba(36,194,196,0.4),0 2px 8px rgba(0,0,0,0.4);
+  box-shadow:0 4px 32px rgba(246,52,59,0.5),0 2px 8px rgba(0,0,0,0.4);
   transition:all .25s ease;
   position:relative;overflow:hidden;
 }
@@ -305,7 +305,7 @@ body::before{
 }
 .btn-primary:hover{
   transform:translateY(-2px);
-  box-shadow:0 8px 48px rgba(36,194,196,0.55),0 4px 16px rgba(0,0,0,0.5);
+  box-shadow:0 8px 52px rgba(246,52,59,0.65),0 4px 16px rgba(0,0,0,0.5);
 }
 .btn-primary:hover::before{opacity:1}
 .btn-primary:active{transform:translateY(0)}
@@ -1219,10 +1219,10 @@ img.loaded{opacity:1}
   padding:16px 40px;
   border-radius:5px;
   letter-spacing:2px;
-  box-shadow:0 4px 44px rgba(36,194,196,0.5),0 2px 10px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
+  box-shadow:0 4px 44px rgba(246,52,59,0.55),0 2px 10px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
 }
 .btn-primary:hover{
-  box-shadow:0 8px 70px rgba(36,194,196,0.65),0 4px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
+  box-shadow:0 8px 70px rgba(246,52,59,0.7),0 4px 20px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.18);
 }
 .hero-proof-chips{
   display:flex;flex-wrap:wrap;justify-content:flex-start;
@@ -1752,18 +1752,19 @@ img.loaded{opacity:1}
     <div class="hero-eyebrow" aria-label="Game category">
       <span data-i18n="hero_eyebrow">Free to Play · Open World Survival</span>
     </div>
-    <h1 class="hero-title" id="hero-title">Something in the Mist Is<br><span class="accent-cyan">Watching You</span></h1>
-    <p class="hero-subtitle" id="hero-subtitle">The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.</p>
+    <h1 class="hero-title" id="hero-title"><span data-i18n="hero_title">Something in the Mist Is</span><br><span class="accent-cyan" data-i18n="hero_title2">Watching You</span></h1>
+    <p class="hero-subtitle" id="hero-subtitle" data-i18n="hero_sub">The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.</p>
     <div class="hero-cta-row">
       <a href="https://to.wendiro.com/u?k=24c3cf9a5dde4dd896352d1314e9aacd&via=16314"
         target="_blank" rel="noopener"
         class="btn-primary"
         id="hero-cta"
+        data-i18n="hero_cta"
         onclick="trackEvent('cta_click',{location:'hero'})">
         Enter If You Dare — It's Free
       </a>
     </div>
-    <p class="hero-microcopy" id="hero-microcopy">Join over 10 million survivors. No credit card required.</p>
+    <p class="hero-microcopy" id="hero-microcopy" data-i18n="hero_micro">Join over 10 million survivors. No credit card required.</p>
     <div class="hero-proof-chips" aria-hidden="true">
       <span class="hero-chip"><span class="hero-chip-dot"></span><span data-i18n="pnum_3">Free to Play</span></span>
       <span class="hero-chip"><span class="hero-chip-dot"></span>No Pay-to-Win</span>
@@ -2888,6 +2889,11 @@ var I18N={
   en:{
     site_name:'Once Human',
     hero_eyebrow:'Free to Play · Open World Survival',
+    hero_title:'Something in the Mist Is',
+    hero_title2:'Watching You',
+    hero_sub:'The contamination rewrote everything you knew about survival. The rules are gone. The world is hostile. And something out there is patient.',
+    hero_cta:'Enter If You Dare — It\'s Free',
+    hero_micro:'Join over 10 million survivors. No credit card required.',
     watch_trailer:'▶ Watch Trailer',
     proof_1:'Players Worldwide',proof_2:'Massive Contaminated Map',proof_3:'No Paywalls, All Skill',
     proof_4:'Your Rules',proof_5:'Optional PvP',proof_6:'Multi-Platform',
@@ -3033,6 +3039,11 @@ var I18N={
   fr:{
     site_name:'Once Human',
     hero_eyebrow:'Gratuit · Survie en Monde Ouvert',
+    hero_title:'Quelque Chose dans le Brouillard',
+    hero_title2:'Vous Observe',
+    hero_sub:'La contamination a tout réécrit. Les règles que vous connaissiez n\'existent plus. Le monde est devenu hostile — et ce qui rôde là-dehors est d\'une patience redoutable.',
+    hero_cta:'Entrez si Vous l\'Osez — C\'est Gratuit',
+    hero_micro:'Rejoignez des millions de survivants. Sans carte bancaire.',
     watch_trailer:'▶ Voir la Bande-Annonce',
     proof_1:'Joueurs dans le Monde',proof_2:'Carte Contaminée Massive',proof_3:'Sans Paywalls, que du Skill',
     proof_4:'Vos Règles',proof_5:'PvP Optionnel',proof_6:'Multi-Plateforme',
@@ -3177,6 +3188,11 @@ var I18N={
   de:{
     site_name:'Once Human',
     hero_eyebrow:'Kostenlos · Open-World-Überleben',
+    hero_title:'Etwas im Nebel',
+    hero_title2:'Beobachtet Sie',
+    hero_sub:'Die Kontamination hat alles neu geschrieben, was Sie über Überleben wussten. Die Regeln existieren nicht mehr. Die Welt ist feindlich — und draußen lauert etwas mit unendlicher Geduld.',
+    hero_cta:'Eintreten wenn Sie sich trauen — Kostenlos',
+    hero_micro:'Millionen von Überlebenden warten. Keine Kreditkarte nötig.',
     watch_trailer:'▶ Trailer ansehen',
     proof_1:'Spieler Weltweit',proof_2:'Riesige Kontaminierte Karte',proof_3:'Kein Paywall, Nur Können',
     proof_4:'Ihre Regeln',proof_5:'Optionales PvP',proof_6:'Plattformübergreifend',
@@ -3321,6 +3337,11 @@ var I18N={
   es:{
     site_name:'Once Human',
     hero_eyebrow:'Gratis · Supervivencia en Mundo Abierto',
+    hero_title:'Algo en la Niebla',
+    hero_title2:'Te Está Observando',
+    hero_sub:'La contaminación reescribió todo lo que sabías sobre supervivencia. Las reglas han desaparecido. El mundo es hostil — y lo que acecha ahí fuera tiene una paciencia inquietante.',
+    hero_cta:'Entra si Te Atreves — Es Gratis',
+    hero_micro:'Millones de supervivientes ya están dentro. Sin tarjeta de crédito.',
     watch_trailer:'▶ Ver Tráiler',
     proof_1:'Jugadores en el Mundo',proof_2:'Mapa Contaminado Masivo',proof_3:'Sin Paywalls, Pura Habilidad',
     proof_4:'Tus Reglas',proof_5:'PvP Opcional',proof_6:'Multiplataforma',
