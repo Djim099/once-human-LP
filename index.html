@@ -216,7 +216,8 @@ body::before{
   position:relative;z-index:10;
   width:100%;
   /* left column: takes ~50% of viewport, leaves right side open */
-  max-width:560px;
+  width:calc(100% - 13vw - 5vw);
+  max-width:620px;
   padding:100px 0 110px 13vw;
   margin:0;
   text-align:left;
@@ -257,7 +258,7 @@ body::before{
   font-size:clamp(1rem,2.5vw,1.2rem);
   font-weight:300;
   color:var(--text-muted);
-  max-width:480px;margin:0 0 36px;
+  max-width:580px;margin:0 0 36px;
   line-height:1.75;
   animation:fadeUp .8s .2s ease both;
 }
@@ -1188,7 +1189,7 @@ img.loaded{opacity:1}
    ============================================================ */
 
 /* ── Hero enhancements ─────────────────────────────────────── */
-.hero-content{padding:100px 0 110px 13vw;max-width:560px;text-align:left;margin:0;}
+.hero-content{padding:100px 0 110px 13vw;width:calc(100% - 13vw - 5vw);max-width:620px;text-align:left;margin:0;}
 .hero-title{
   font-size:clamp(3rem,8.5vw,6.2rem);
   letter-spacing:-1.5px;
